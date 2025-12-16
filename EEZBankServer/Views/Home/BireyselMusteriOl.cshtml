@@ -16,19 +16,24 @@
             <!-- Ad Soyad -->
             <div style="margin-bottom:20px;">
                 <label style="font-weight:600; color:var(--dark-color);">Ad Soyad</label>
-                <input type="text" name="FullName"
-                       class="form-control"
-                       style="width:100%; padding:14px; border:1px solid var(--border-color); border-radius:8px;"
-                       placeholder="Adınızı ve soyadınızı giriniz" required />
+                @Html.TextBox("FullName", null, new { 
+                    @class = "form-control", 
+                    placeholder = "Adınızı ve soyadınızı giriniz", 
+                    required = "required",
+                    style = "width:100%; padding:14px; border:1px solid var(--border-color); border-radius:8px;" 
+                })
             </div>
 
             <!-- TC Kimlik -->
             <div style="margin-bottom:20px;">
                 <label style="font-weight:600; color:var(--dark-color);">TC Kimlik No</label>
-                <input type="text" name="TC" maxlength="11"
-                       class="form-control"
-                       style="width:100%; padding:14px; border:1px solid var(--border-color); border-radius:8px;"
-                       placeholder="11 haneli kimlik numarası" required />
+                @Html.TextBox("TC", null, new {
+                    @class = "form-control",
+                    maxlength = "11",
+                    placeholder = "11 haneli kimlik numarası",
+                    required = "required",
+                    style = "width:100%; padding:14px; border:1px solid var(--border-color); border-radius:8px;"
+                })
             </div>
 
             <!-- Telefon -->
@@ -61,10 +66,12 @@
             <!-- Adres -->
             <div style="margin-bottom:20px;">
                 <label style="font-weight:600; color:var(--dark-color);">Adres</label>
-                <textarea name="Address"
-                          class="form-control"
-                          style="width:100%; padding:14px; border:1px solid var(--border-color); border-radius:8px; height:120px;"
-                          placeholder="Adres bilgisi" required></textarea>
+                @Html.TextArea("Address", null, new {
+                    @class = "form-control",
+                    placeholder = "Adres bilgisi",
+                    required = "required",
+                    style = "width:100%; padding:14px; border:1px solid var(--border-color); border-radius:8px; height:120px;"
+                })
             </div>
 
             <!-- KVKK & Sözleşme -->
