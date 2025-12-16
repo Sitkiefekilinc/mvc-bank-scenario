@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "Bireysel Müşteri Ol";
+}
+
+<link rel="stylesheet" href="~/css/site.css" />
+
+<main class="container" style="padding: 60px 0;">
+
+    <h1 class="section-title">Bireysel Müşteri Ol</h1>
+
+    <div class="form-wrapper"
+         style="max-width:700px; margin:auto; background:#fff; padding:40px; border-radius:12px; box-shadow: var(--shadow-lg);">
+
+        <form asp-action="BireyselKayit" method="post">
+
+            <!-- Ad Soyad -->
+            <div style="margin-bottom:20px;">
+                <label style="font-weight:600; color:var(--dark-color);">Ad Soyad</label>
+                <input type="text" name="FullName"
+                       class="form-control"
+                       style="width:100%; padding:14px; border:1px solid var(--border-color); border-radius:8px;"
+                       placeholder="Adınızı ve soyadınızı giriniz" required />
+            </div>
+
+            <!-- TC Kimlik -->
+            <div style="margin-bottom:20px;">
+                <label style="font-weight:600; color:var(--dark-color);">TC Kimlik No</label>
+                <input type="text" name="TC" maxlength="11"
+                       class="form-control"
+                       style="width:100%; padding:14px; border:1px solid var(--border-color); border-radius:8px;"
+                       placeholder="11 haneli kimlik numarası" required />
+            </div>
+
+            <!-- Telefon -->
+            <div style="margin-bottom:20px;">
+                <label style="font-weight:600; color:var(--dark-color);">Telefon Numarası</label>
+                <input type="text" name="Phone"
+                       class="form-control"
+                       style="width:100%; padding:14px; border:1px solid var(--border-color); border-radius:8px;"
+                       placeholder="05XX XXX XX XX" required />
+            </div>
+
+            <!-- Email -->
+            <div style="margin-bottom:20px;">
+                <label style="font-weight:600; color:var(--dark-color);">E-Posta</label>
+                <input type="email" name="Email"
+                       class="form-control"
+                       style="width:100%; padding:14px; border:1px solid var(--border-color); border-radius:8px;"
+                       placeholder="E-posta adresiniz" required />
+            </div>
+
+            <!-- Doğum Tarihi -->
+            <div style="margin-bottom:20px;">
+                <label style="font-weight:600; color:var(--dark-color);">Doğum Tarihi</label>
+                <input type="date" name="BirthDate"
+                       class="form-control"
+                       style="width:100%; padding:14px; border:1px solid var(--border-color); border-radius:8px;"
+                       required />
+            </div>
+
+            <!-- Adres -->
+            <div style="margin-bottom:20px;">
+                <label style="font-weight:600; color:var(--dark-color);">Adres</label>
+                <textarea name="Address"
+                          class="form-control"
+                          style="width:100%; padding:14px; border:1px solid var(--border-color); border-radius:8px; height:120px;"
+                          placeholder="Adres bilgisi" required></textarea>
+            </div>
+
+            <!-- KVKK & Sözleşme -->
+            <div style="margin-bottom:20px;">
+                <label style="display:flex; align-items:center; gap:10px;">
+                    <input type="checkbox" required />
+                    <span>KVKK ve sözleşme şartlarını kabul ediyorum.</span>
+                </label>
+            </div>
+
+            <!-- Buton -->
+            <div style="text-align:center; margin-top:30px;">
+                <button type="submit" class="btn btn-primary"
+                        style="width:100%; max-width:250px;">
+                    Başvuruyu Tamamla
+                </button>
+            </div>
+
+        </form>
+    </div>
+</main>
+
+<script src="~/js/site.js"></script>

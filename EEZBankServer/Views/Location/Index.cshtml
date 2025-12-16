@@ -1,0 +1,32 @@
+﻿<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<h1>Şubelerimiz ve ATM'ler</h1>
+
+<div id="map" style="height:600px; width:100%;"></div>
+
+<script>
+    var map = L.map('map').setView([37.7648, 30.5566], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
+
+    L.marker([37.75903113584111, 30.547866759982814])
+        .addTo(map)
+        .bindPopup("100. yıl şubesi - Isparta Merkez");
+    L.marker([37.8300017719266, 30.524395550128755])
+        .addTo(map)
+        .bindPopup("Batı şubesi - Isparta Merkez");
+    L.marker([37.764786631361005, 30.55094488242021])
+        .addTo(map)
+        .bindPopup("Meydan ATM - Isparta Merkez");
+    L.marker([37.78230763832313, 30.54481166062306])
+        .addTo(map)
+        .bindPopup("IYAŞ ATM - Isparta Merkez");
+    L.marker([37.76460003007086, 30.557356015806686])
+        .addTo(map)
+        .bindPopup("ATATÜRK ATM - Isparta Merkez");
+
+</script>
+

@@ -1,0 +1,136 @@
+﻿@{
+    ViewData["Title"] = "Giriş Yap";
+}
+
+<link rel="stylesheet" href="~/site.css" />
+<script src="~/site.js"></script>
+
+<div class="login-page">
+
+    <div class="login-card">
+        <div class="login-header">
+            <img src="~/images/eez-bank-logo.png" class="login-logo" alt="EEZ Bank" />
+            <h2>EEZ Bank Giriş</h2>
+            <p>Hesabınıza güvenle giriş yapın</p>
+        </div>
+
+        <form asp-action="Login" method="post">
+
+            <div class="input-group">
+                <label for="email">E-Posta</label>
+                <input type="email" id="email" name="Email" required placeholder="email@example.com" />
+            </div>
+
+            <div class="input-group">
+                <label for="password">Şifre</label>
+                <input type="password" id="password" name="Password" required placeholder="••••••••" />
+            </div>
+
+            <div class="input-group">
+                <button type="submit" class="btn btn-primary btn-full">Giriş Yap</button>
+            </div>
+
+            <div class="form-links">
+                <a asp-action="ForgotPassword">Şifremi Unuttum</a>
+                <a asp-action="Register">Hesap Oluştur</a>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+<style>
+    /* ---------------------------------------------------
+           LOGIN PAGE (site.css tasarımına göre uyarlanmış)
+           --------------------------------------------------- */
+
+    .login-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--light-color);
+        padding: 20px;
+    }
+
+    .login-card {
+        background: var(--white);
+        width: 100%;
+        max-width: 420px;
+        padding: 40px 35px;
+        border-radius: 12px;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--border-color);
+        animation: fadeInUp 0.6s ease;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .login-logo {
+        height: 80px;
+        margin-bottom: 10px;
+    }
+
+    .login-header h2 {
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+    .login-header p {
+        color: var(--text-color);
+        opacity: .8;
+        margin-top: 5px;
+    }
+
+    .input-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .input-group label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--dark-color);
+        }
+
+        .input-group input {
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            outline: none;
+            transition: 0.25s;
+        }
+
+            .input-group input:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 4px rgba(30,58,138,0.15);
+            }
+
+    .btn-full {
+        width: 100%;
+    }
+
+    .form-links {
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .form-links a {
+            text-decoration: none;
+            font-size: .9rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+            .form-links a:hover {
+                color: var(--secondary-color);
+            }
+</style>

@@ -12,15 +12,49 @@ namespace EEZBankServer.Controllers
         {
             _logger = logger;
         }
-
         public IActionResult Index()
+        {
+
+            return View();
+        }
+        public IActionResult Hizmetler()
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        public IActionResult Hakkýmýzda()
         {
             return View();
+        }
+        public IActionResult GirisYap()
+        {
+            return View();
+        }
+        public IActionResult MusteriOl()
+        {
+            return View();
+        }
+        public IActionResult BireyselMusteriOl()
+        {
+            return View();
+        }
+        public IActionResult KurumsalMusteriOl()
+        {
+            return View();
+        }
+        public IActionResult TicariMusteriOl()
+        {
+            return View();
+        }
+        public IActionResult Login(UserAccountInfos userAccountInfos)
+        {
+            
+            return View(userAccountInfos);
+        }
+        public IActionResult Privacy()
+        {
+
+            return View();
+            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

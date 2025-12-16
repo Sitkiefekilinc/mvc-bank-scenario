@@ -1,50 +1,104 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EEZBankServer</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/EEZBankServer.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"] - EEZ Bank</title>
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EEZBankServer</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="container">
+            <nav class="nav-content">
+                <div class="nav-brand">
+                    <a href="/" class="logo-link">
+                        <img src="~/images/eez-bank-logo.png" alt="EEZ Bank Logo" class="logo-img" />
+                    </a>
+                </div>
+
+                <button class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item">
+                        <a asp-controller="Location" asp-action="Index" class="nav-link">Şube ve Atm Bul</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="Hizmetler" class="nav-link">Hizmetler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="Hakkımızda" class="nav-link">Hakkımızda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">EEZ'de Ara</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="MusteriOl" class="nav-link">Müşteri Ol</a>
+                    </li>
+                    <li class="nav-item nav-item-btn">
+                        <a asp-controller="Home" asp-action="GirisYap" class="btn btn-primary btn-sm">Giriş Yap</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>EEZ Bank</h4>
+                    <p>Güvenli ve modern bankacılık hizmetleri</p>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Hızlı Linkler</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Hakkımızda</a></li>
+                        <li><a href="#">Hizmetler</a></li>
+                        <li><a href="#">İletişim</a></li>
+                        <li><a href="#">Kariyer</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Ürünler</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Hesaplar</a></li>
+                        <li><a href="#">Kredi Kartları</a></li>
+                        <li><a href="#">Krediler</a></li>
+                        <li><a href="#">Yatırım</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Destek</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">SSS</a></li>
+                        <li><a href="#">Güvenlik</a></li>
+                        <li><a href="#">Gizlilik Politikası</a></li>
+                        <li><a href="#">Kullanım Şartları</a></li>
                     </ul>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - EEZBankServer - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="footer-bottom">
+                <p>&copy; 2024 EEZ Bank. Tüm hakları saklıdır.</p>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/site.js"></script>
 </body>
 </html>
