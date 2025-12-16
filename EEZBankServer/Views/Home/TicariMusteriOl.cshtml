@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Ticari Müşteri Ol";
 }
-
+@using EEZBankServer.Extensions
 <link rel="stylesheet" href="~/site.css" />
 <script src="~/site.js"></script>
 
@@ -32,34 +32,14 @@
                     <!-- Şirket Bilgileri -->
                     <h3 style="margin-bottom:20px; color:var(--primary-color);">Şirket Bilgileri</h3>
 
-                    <div style="margin-bottom:20px;">
-                        <label>Şirket Adı</label>
-                        <input type="text" name="CompanyName" class="form-control"
-                               placeholder="Örn: Kılınç Yazılım A.Ş." required />
-                    </div>
 
-                    <div style="margin-bottom:20px;">
-                        <label>Vergi Numarası</label>
-                        <input type="text" name="TaxNumber" class="form-control"
-                               placeholder="10 haneli vergi numarası" required />
-                    </div>
+                    @Html.EezInputGroup("AuthorizedFullName", "Ad Soyad", "Örn: Sıtkı Efe Kılınç")
 
-                    <div style="margin-bottom:20px;">
-                        <label>Vergi Dairesi</label>
-                        <input type="text" name="TaxOffice" class="form-control"
-                               placeholder="Örn: Isparta Vergi Dairesi" required />
-                    </div>
+                    @Html.EezInputGroup("AuthorizedTC", "TC Kimlik No", "11 haneli kimlik numarası")
 
-                    <div style="margin-bottom:20px;">
-                        <label>Şirket Türü</label>
-                        <select name="CompanyType" class="form-control" required>
-                            <option value="">Seçiniz</option>
-                            <option value="AŞ">Anonim Şirket</option>
-                            <option value="LTD">Limited Şirket</option>
-                            <option value="Şahıs">Şahıs Şirketi</option>
-                            <option value="Kooperatif">Kooperatif</option>
-                        </select>
-                    </div>
+                    @Html.EezInputGroup("Phone", "Telefon", "05xx xxx xx xx")
+
+                    @Html.EezInputGroup("Email", "E-Posta", "example@example.com", "email")
 
                     <hr style="margin:30px 0;">
 
