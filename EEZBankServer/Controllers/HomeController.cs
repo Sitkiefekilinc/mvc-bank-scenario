@@ -45,11 +45,6 @@ namespace EEZBankServer.Controllers
         {
             return View();
         }
-        public IActionResult Login(UserAccountInfos userAccountInfos)
-        {
-            
-            return View(userAccountInfos);
-        }
         public IActionResult Privacy()
         {
 

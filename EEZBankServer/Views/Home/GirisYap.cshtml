@@ -14,7 +14,7 @@
             <p>Hesabınıza güvenle giriş yapın</p>
         </div>
 
-        <form asp-action="Login" method="post">
+        <form asp-controller="Account" asp-action="GirisYapIslem" method="post">
 
             <div class="input-group">
                 <label for="email">E-Posta</label>
@@ -32,7 +32,7 @@
 
             <div class="form-links">
                 <a asp-action="ForgotPassword">Şifremi Unuttum</a>
-                <a asp-action="Register">Hesap Oluştur</a>
+                <a asp-action="MusteriOl">Hesap Oluştur</a>
             </div>
 
         </form>
