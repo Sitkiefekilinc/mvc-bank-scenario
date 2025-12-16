@@ -6,83 +6,28 @@ namespace EEZBankServer.Extensions
 {
     public static class EEZBankHtmlExtensions
     {
-        public static IHtmlContent UsersForm(this IHtmlHelper helper)
+        public static IHtmlContent EezInputGroup(this IHtmlHelper htmlHelper, string name, string label, string placeholder, string inputType = "text")
         {
-            var labelFormAd = new TagBuilder("label");
-            labelFormAd.Attributes.Add("for", "UserName");
-            labelFormAd.InnerHtml.Append("Adınız:");
+            var divBuilder = new TagBuilder("div");
+            divBuilder.MergeAttribute("style", "margin-bottom:20px;");
 
-            var textboxForm = new TagBuilder("input");
-            textboxForm.Attributes.Add("type", "text");
-            textboxForm.Attributes.Add("name", "UserName");
-            textboxForm.Attributes.Add("placeHolder", "Adınızı giriniz");
+            var labelBuilder = new TagBuilder("label");
+            labelBuilder.InnerHtml.Append(label);
 
-            var labelFormSoyad = new TagBuilder("label");
-            labelFormSoyad.Attributes.Add("for", "UserSurname");
-            labelFormSoyad.InnerHtml.Append("Soyadınız:");
+            var inputBuilder = new TagBuilder("input");
+            inputBuilder.Attributes.Add("type", inputType); // Burası dinamikleşti
+            inputBuilder.Attributes.Add("name", name);
+            inputBuilder.AddCssClass("form-control");
+            inputBuilder.Attributes.Add("placeholder", placeholder);
+            inputBuilder.Attributes.Add("required", "required");
 
-            var textboxFormSoyad = new TagBuilder("input");
-            textboxFormSoyad.Attributes.Add("type", "text");
-            textboxFormSoyad.Attributes.Add("name", "UserSurname");
-            textboxFormSoyad.Attributes.Add("placeHolder", "Soyadınızı giriniz");
+            divBuilder.InnerHtml.AppendHtml(labelBuilder);
+            divBuilder.InnerHtml.AppendHtml(inputBuilder);
 
-            var emailForm = new TagBuilder("label");
-            emailForm.Attributes.Add("for", "UserEmail");
-            emailForm.InnerHtml.Append("E-Posta Adresiniz:");
-
-            var emailInputForm = new TagBuilder("input");
-            emailInputForm.Attributes.Add("type", "email");
-            emailInputForm.Attributes.Add("name", "UserEmail");
-            emailInputForm.Attributes.Add("placeHolder", "E-Posta adresinizi giriniz");
-
-            var passwordForm = new TagBuilder("label");
-            passwordForm.Attributes.Add("for", "UserPassword");
-            passwordForm.InnerHtml.Append("Şifreniz:");
-
-            var passwordInputForm = new TagBuilder("input");
-            passwordInputForm.Attributes.Add("type", "password");
-            passwordInputForm.Attributes.Add("name", "UserPassword");
-            passwordInputForm.Attributes.Add("placeHolder", "Şifrenizi giriniz");
-
-            var passwordAgainForm = new TagBuilder("label");
-            passwordAgainForm.Attributes.Add("for", "UserPasswordAgain");
-            passwordAgainForm.InnerHtml.Append("Şifreniz Tekrar:");
-
-            var passwordAgainInputForm = new TagBuilder("input");
-            passwordAgainInputForm.Attributes.Add("type", "password");
-            passwordAgainInputForm.Attributes.Add("name", "UserPasswordAgain");
-            passwordAgainInputForm.Attributes.Add("placeHolder", "Şifrenizi tekrar giriniz");
-
-            var submitButton = new TagBuilder("button");
-            submitButton.Attributes.Add("type", "submit");
-            submitButton.AddCssClass("btn btn-primary");
-            submitButton.InnerHtml.Append("Kayıt ol");
-
-            var span = new TagBuilder("span");
-            span.Attributes.Add("asp-validation-for", "UserName");
-
-
-            var divForm = new TagBuilder("div");
-            divForm.AddCssClass("form-group");
-            divForm.InnerHtml.AppendHtml(labelFormAd);
-            divForm.InnerHtml.AppendHtml(textboxForm);
-            divForm.InnerHtml.AppendHtml("<br>");
-            divForm.InnerHtml.AppendHtml(labelFormSoyad);
-            divForm.InnerHtml.AppendHtml(textboxFormSoyad);
-            divForm.InnerHtml.AppendHtml("<br>");
-            divForm.InnerHtml.AppendHtml(emailForm);
-            divForm.InnerHtml.AppendHtml(emailInputForm);
-            divForm.InnerHtml.AppendHtml("<br>");
-            divForm.InnerHtml.AppendHtml(passwordForm);
-            divForm.InnerHtml.AppendHtml(passwordInputForm);
-            divForm.InnerHtml.AppendHtml("<br>");
-            divForm.InnerHtml.AppendHtml(passwordAgainForm);
-            divForm.InnerHtml.AppendHtml(passwordAgainInputForm);
-            divForm.InnerHtml.AppendHtml("<br>");
-            divForm.InnerHtml.AppendHtml(submitButton);
-
-            return divForm;
+            return divBuilder;
         }
+
+
 
     }
 }
