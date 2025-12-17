@@ -10,5 +10,7 @@ namespace EEZBankServer.EfCore
             
         }
         public DbSet<UserAccountInfos> Users { get; set; }
+        public DbSet<KurumsalKullaniciModel> KurumsalKullaniciBilgileri { get; set; }
+        public DbSet<TicariKullaniciModel> TicariKullaniciBilgileri { get; set; }
     }
 }

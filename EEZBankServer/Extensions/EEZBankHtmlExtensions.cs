@@ -15,7 +15,7 @@ namespace EEZBankServer.Extensions
             labelBuilder.InnerHtml.Append(label);
 
             var inputBuilder = new TagBuilder("input");
-            inputBuilder.Attributes.Add("type", inputType); // Burası dinamikleşti
+            inputBuilder.Attributes.Add("type", inputType);
             inputBuilder.Attributes.Add("name", name);
             inputBuilder.AddCssClass("form-control");
             inputBuilder.Attributes.Add("placeholder", placeholder);

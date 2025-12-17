@@ -1,8 +1,4 @@
-﻿// ============================================
-// EEZ BANK - NAVBAR TOGGLE
-// ============================================
-
-document.addEventListener('DOMContentLoaded', function () {
+﻿document.addEventListener('DOMContentLoaded', function () {
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
 
@@ -25,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Mobilde menü dışına tıklanınca kapat
     document.addEventListener('click', function (event) {
         const isClickInsideNav = navMenu.contains(event.target);
         const isClickOnToggle = navToggle.contains(event.target);
@@ -33,6 +28,61 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!isClickInsideNav && !isClickOnToggle && navMenu.classList.contains('active')) {
             navMenu.classList.remove('active');
             navToggle.classList.remove('active');
+        }
+    });
+});
+
+document.getElementById('btnSeedData').addEventListener('click', function (e) {
+    e.preventDefault();
+
+    Swal.fire({
+        title: 'Örnek Veri Eklensin mi?',
+        text: "Sisteme rastgele Bireysel, Kurumsal ve Ticari kullanıcılar eklenecek.",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#1e3a8a', 
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Evet, Verileri Üret',
+        cancelButtonText: 'Vazgeç'
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            Swal.fire({
+                title: 'İşlem Yapılıyor...',
+                html: 'Bogus kütüphanesi verileri hazırlıyor, lütfen bekleyin.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            });
+
+            fetch('/Admin/FakeVeriUret', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'İşlem Başarılı!',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonColor: '#1e3a8a'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Hata!',
+                            text: 'Veritabanına kayıt sırasında bir sorun oluştu: ' + data.message,
+                            icon: 'error',
+                            confirmButtonColor: '#1e3a8a'
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire('Bağlantı Hatası!', 'Sunucuya ulaşılamadı.', 'error');
+                });
         }
     });
 });

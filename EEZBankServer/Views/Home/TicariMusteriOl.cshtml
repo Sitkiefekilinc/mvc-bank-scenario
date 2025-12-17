@@ -6,9 +6,6 @@
 <script src="~/site.js"></script>
 
 <main>
-    <!-- =============================== -->
-    <!-- HERO BÖLÜMÜ -->
-    <!-- =============================== -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
@@ -29,21 +26,15 @@
 
                 <form asp-controller="Account" asp-action="TicaretSicilKayit" method="post">
 
-                    <!-- Şirket Bilgileri -->
                     <h3 style="margin-bottom:20px; color:var(--primary-color);">Şirket Bilgileri</h3>
 
 
-                    @Html.EezInputGroup("AuthorizedFullName", "Ad Soyad", "Örn: Sıtkı Efe Kılınç")
+                    @Html.EezInputGroup("CompanyName", "Şirket Adı", "Örn: Ornek Bilgi Tek. A.Ş.")
 
-                    @Html.EezInputGroup("AuthorizedTC", "TC Kimlik No", "11 haneli kimlik numarası")
-
-                    @Html.EezInputGroup("Phone", "Telefon", "05xx xxx xx xx")
-
-                    @Html.EezInputGroup("Email", "E-Posta", "example@example.com", "email")
+                    @Html.EezInputGroup("CompanyEmail", "Şirket E-Posta'sı", "example@example.com", "email")
 
                     <hr style="margin:30px 0;">
 
-                    <!-- Yetkili Bilgileri -->
                     <h3 style="margin-bottom:20px; color:var(--primary-color);">Yetkili Kişi Bilgileri</h3>
 
                     <div style="margin-bottom:20px;">
@@ -72,7 +63,6 @@
 
                     <hr style="margin:30px 0;">
 
-                    <!-- Sözleşme -->
                     <div style="margin-bottom:20px;">
                         <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
                             <input type="checkbox" required />

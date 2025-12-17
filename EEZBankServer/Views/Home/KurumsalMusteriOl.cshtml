@@ -6,9 +6,6 @@
 <script src="~/site.js"></script>
 
 <main>
-    <!-- =============================== -->
-    <!-- HERO -->
-    <!-- =============================== -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
@@ -20,9 +17,6 @@
         </div>
     </section>
 
-    <!-- =============================== -->
-    <!-- FORM -->
-    <!-- =============================== -->
     <section class="services-section" style="padding:60px 0;">
         <div class="container">
             <h2 class="section-title">Kurumsal Hesap Başvuru Formu</h2>
@@ -31,7 +25,6 @@
 
                 <form asp-controller="Account" asp-action="KurumsalKayit" method="post">
 
-                    <!-- KURUM BİLGİLERİ -->
                     <h3 style="margin-bottom:20px; color:var(--primary-color);">Kurum Bilgileri</h3>
 
                     <div style="margin-bottom:20px;">
@@ -44,12 +37,10 @@
                         <label>Kurum Türü</label>
                         <select name="InstitutionType" class="form-control" required>
                             <option value="">Seçiniz</option>
-                            <option value="Kamu">Kamu Kurumu</option>
-                            <option value="Belediye">Belediye</option>
-                            <option value="Üniversite">Üniversite</option>
-                            <option value="Dernek">Dernek</option>
-                            <option value="Vakıf">Vakıf</option>
-                            <option value="Holding">Holding / Büyük Kuruluş</option>
+                            <option value="Kamu">Eğitim ve Sağlık Kurumu</option>
+                            <option value="Belediye">Kamu Kurumu</option>
+                            <option value="Üniversite">Vakıf / Dernek</option>
+                            <option value="Dernek">Özel Şirket (LTD/AŞ)</option>
                         </select>
                     </div>
 
@@ -67,7 +58,7 @@
 
                     <hr style="margin:30px 0;" />
 
-                    <!-- YETKİLİ BİLGİLERİ -->
+
                     <h3 style="margin-bottom:20px; color:var(--primary-color);">Yetkili Kişi Bilgileri</h3>
 
                     <div style="margin-bottom:20px;">
