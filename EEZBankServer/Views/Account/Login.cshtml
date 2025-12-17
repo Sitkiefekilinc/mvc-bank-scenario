@@ -2,11 +2,9 @@
     ViewData["Title"] = "Giriş Yap";
 }
 
-<link rel="stylesheet" href="~/site.css" />
-<script src="~/site.js"></script>
+@model EEZBankServer.Models.LoginViewModel
 
 <div class="login-page">
-
     <div class="login-card">
         <div class="login-header">
             <img src="~/images/eez-bank-logo.png" class="login-logo" alt="EEZ Bank" />
@@ -14,16 +12,25 @@
             <p>Hesabınıza güvenle giriş yapın</p>
         </div>
 
-        <form asp-controller="Account" asp-action="GirisYapIslem" method="post">
+        <form asp-controller="Account" asp-action="Login" method="post" novalidate>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" style="font-size: 0.9rem; font-weight: 600;"></div>
 
             <div class="input-group">
-                <label for="email">E-Posta</label>
-                <input type="email" id="email" name="Email" required placeholder="email@example.com" />
+                <label asp-for="Email">E-Posta</label>
+                <input type="email" asp-for="Email" placeholder="email@example.com" />
+                <span asp-validation-for="Email" class="error-text"></span>
             </div>
 
             <div class="input-group">
-                <label for="password">Şifre</label>
-                <input type="password" id="password" name="Password" required placeholder="••••••••" />
+                <label asp-for="Password">Şifre</label>
+                <input type="password" asp-for="Password" placeholder="••••••••" />
+                <span asp-validation-for="Password" class="error-text"></span>
+            </div>
+
+            <div class="remember-me-group">
+                <input type="checkbox" asp-for="RememberMe" id="RememberMe" />
+                <label for="RememberMe">Beni Hatırla</label>
             </div>
 
             <div class="input-group">
@@ -34,16 +41,11 @@
                 <a asp-action="ForgotPassword">Şifremi Unuttum</a>
                 <a asp-action="MusteriOl">Hesap Oluştur</a>
             </div>
-
         </form>
     </div>
-
 </div>
 
 <style>
-    /* ---------------------------------------------------
-           LOGIN PAGE (site.css tasarımına göre uyarlanmış)
-           --------------------------------------------------- */
 
     .login-page {
         min-height: 100vh;
@@ -92,8 +94,7 @@
         display: flex;
         flex-direction: column;
     }
-
-        .input-group label {
+       .input-group label {
             font-weight: 600;
             margin-bottom: 6px;
             color: var(--dark-color);
@@ -130,7 +131,34 @@
             color: var(--primary-color);
         }
 
-            .form-links a:hover {
-                color: var(--secondary-color);
-            }
+    .error-text {
+        color: #dc2626;
+        font-size: 0.85rem;
+        margin-top: 4px;
+        font-weight: 500;
+    }
+
+    .remember-me-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+        .remember-me-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .remember-me-group label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-color);
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+    .input-validation-error {
+        border-color: #dc2626 !important;
+    }
 </style>

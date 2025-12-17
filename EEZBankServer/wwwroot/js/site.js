@@ -6,12 +6,10 @@
         navToggle.addEventListener('click', function () {
             navMenu.classList.toggle('active');
 
-            // Hamburger menü animasyonu
             this.classList.toggle('active');
         });
     }
 
-    // Sayfa scroll olduğunda navbar'a shadow ekle
     window.addEventListener('scroll', function () {
         const navbar = document.querySelector('.navbar');
         if (window.scrollY > 50) {

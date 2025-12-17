@@ -1,5 +1,6 @@
 using EEZBankServer.EfCore;
 using EEZBankServer.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,13 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddScoped<IEEZBankUserService, EEZBankUserService>();
 builder.Services.AddHttpClient<IDovizService, DovizService>(
     client => client.BaseAddress = new Uri("https://api.frankfurter.app/"));
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Home/Login";
+        options.LogoutPath = "/Home/Index";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    });
 
 var app = builder.Build();
 

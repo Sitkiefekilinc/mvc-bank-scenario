@@ -2,6 +2,7 @@
 using EEZBankServer.EfCore;
 using EEZBankServer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EEZBankServer.Controllers
 {
@@ -12,8 +13,10 @@ namespace EEZBankServer.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewBag.KullaniciSayisi = await _context.Users.CountAsync();
+            ViewBag.IslemHacmi = await _context.Users.SumAsync(u => u.UserBalance);
             return View();
         }
         [HttpPost]
@@ -26,7 +29,10 @@ namespace EEZBankServer.Controllers
                     .RuleFor(u => u.UserName, f => f.Name.FirstName())
                     .RuleFor(u => u.UserSurname, f => f.Name.LastName())
                     .RuleFor(u => u.UserEmail, (f, u) => f.Internet.Email(u.UserName, u.UserSurname).ToLower())
-                    .RuleFor(u => u.UserPassword, f => f.Internet.Password(8))
+                    .RuleFor(u => u.UserPassword, f => 
+                    { string rawPassword = f.Internet.Password(8);
+                        return BCrypt.Net.BCrypt.HashPassword(rawPassword);
+                    })
                     .RuleFor(u => u.UserPasswordAgain, (f, u) => u.UserPassword) 
                     .RuleFor(u => u.UserBalance, f => f.Finance.Amount(500, 100000))
                     .RuleFor(u => u.UserIban, f => f.Finance.Iban(false,"TR"))

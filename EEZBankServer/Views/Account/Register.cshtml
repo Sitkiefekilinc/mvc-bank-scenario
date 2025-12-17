@@ -1,0 +1,215 @@
+﻿@model RegisterViewModel
+
+<div class="login-page">
+    <div class="login-card" style="max-width: 800px;">
+        <div class="login-header">
+            <h2>Müşterimiz Olun</h2>
+            <p>Size en uygun hesap tipini seçerek başlayın</p>
+        </div>
+
+        <form id="registerForm" novalidate>
+            <div class="input-group">
+                <label>Hesap Tipi Seçiniz</label>
+                <select asp-for="UserType" id="userTypeSelect" class="form-select-custom">
+                    <option value="0">Bireysel Müşteri</option>
+                    <option value="1">Kurumsal Müşteri</option>
+                    <option value="2">Ticari Müşteri</option>
+                </select>
+            </div>
+
+            <hr />
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label asp-for="UserName"></label>
+                    <input asp-for="UserName" placeholder="Adınız" />
+                </div>
+                <div class="input-group">
+                    <label asp-for="UserSurname"></label>
+                    <input asp-for="UserSurname" placeholder="Soyadınız" />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label asp-for="UserEmail"></label>
+                <input asp-for="UserEmail" type="email" placeholder="example@eezbank.com" />
+            </div>
+
+            <div id="kurumsalSection" class="special-fields" style="display: none;">
+                <h4 class="section-subtitle">Kurum Bilgileri</h4>
+                <div class="input-group">
+                    <label asp-for="CorporateName"></label>
+                    <input asp-for="CorporateName" placeholder="Kurumun Tam Adı" />
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label asp-for="TaxNumber"></label>
+                        <input asp-for="TaxNumber" maxlength="10" placeholder="10 Haneli Vergi No" />
+                    </div>
+                    <div class="input-group">
+                        <label asp-for="CorporateType"></label>
+                        <select asp-for="CorporateType" class="form-select-custom" asp-items="Html.GetEnumSelectList<CorporateTypes>()"></select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label asp-for="CorporateAddress"></label>
+                    <textarea asp-for="CorporateAddress" rows="2"></textarea>
+                </div>
+            </div>
+
+            <div id="ticariSection" class="special-fields" style="display: none;">
+                <h4 class="section-subtitle">Şirket Bilgileri</h4>
+                <div class="input-group">
+                    <label asp-for="CompanyName"></label>
+                    <input asp-for="CompanyName" placeholder="Şahıs Şirketi Ünvanı" />
+                </div>
+                <div class="input-group">
+                    <label asp-for="CompanyEmail"></label>
+                    <input asp-for="CompanyEmail" placeholder="sirket@example.com" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label asp-for="UserPassword"></label>
+                    <input type="password" asp-for="UserPassword" placeholder="••••••••" />
+                </div>
+                <div class="input-group">
+                    <label asp-for="UserPasswordAgain"></label>
+                    <input type="password" asp-for="UserPasswordAgain" placeholder="••••••••" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">Kayıt İşlemini Tamamla</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .login-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--light-color);
+        padding: 40px 20px;
+    }
+
+    /* Kayıt Kartı */
+    .login-card {
+        background: var(--white);
+        width: 100%;
+        padding: 40px;
+        border-radius: 16px; /* Daha yumuşak köşeler */
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--border-color);
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    /* Form Satır Düzeni (İkili Yan Yana Alanlar) */
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    /* Input Grupları */
+    .input-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .input-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .form-select-custom {
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.25s ease;
+            background-color: #fff;
+        }
+
+            /* Focus Durumu */
+            .input-group input:focus,
+            .input-group textarea:focus,
+            .form-select-custom:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
+                background-color: #fff;
+            }
+
+    /* Özel Seçim Kutusu (Dropdown) */
+    .form-select-custom {
+        cursor: pointer;
+        appearance: none; /* Varsayılan ok işaretini kaldır */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231e3a8a' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        padding-right: 40px;
+    }
+
+    /* Dinamik Bölümler (Kurumsal & Ticari Alanları) */
+    .special-fields {
+        background-color: #f0f4ff; /* Çok hafif mavi arka plan */
+        padding: 25px;
+        border-radius: 12px;
+        margin: 25px 0;
+        border: 2px dashed var(--secondary-color);
+        animation: fadeIn 0.4s ease;
+    }
+
+    .section-subtitle {
+        color: var(--primary-color);
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .section-subtitle::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+    hr {
+        border: 0;
+        border-top: 1px solid var(--border-color);
+        margin: 25px 0;
+    }
+
+    .btn-full {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.1rem;
+        margin-top: 10px;
+    }
+
+    .special-fields {
+        overflow: hidden;
+        transition: border-color 0.3s ease;
+    }
+
+    .special-fields:hover {
+        border-color: var(--primary-color); 
+    }
+</style>
+    
+@section Scripts{
+    <script src="~/js/Register.js"></script>
+}
