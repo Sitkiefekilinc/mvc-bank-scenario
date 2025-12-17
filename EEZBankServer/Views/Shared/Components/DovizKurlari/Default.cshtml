@@ -1,0 +1,171 @@
+﻿@model List<DovizKurlariViewModel>
+
+
+<div class="service-card exchange-featured">
+    <div class="market-header">
+        <div class="live-indicator"><span class="dot"></span> CANLI PİYASA</div>
+        <h3>Döviz Kurları</h3>
+    </div>
+
+    <div class="rates-table">
+        <div class="table-header">
+            <span class="col-name">Para Birimi</span>
+            <span class="col-rate text-center">Alış</span>
+            <span class="col-rate text-right">Satış</span>
+        </div>
+
+        @foreach (var item in Model)
+        {
+            <div class="rate-row-modern">
+                <div class="currency-info col-name">
+                    <div class="currency-flag">@GetIcon(item.Code)</div>
+                    <span class="currency-code">@item.Code <small>/TRY</small></span>
+                </div>
+                <div class="price buy col-rate text-center">@item.BuyRate.ToString("N4")</div>
+                <div class="price sell col-rate text-right">@item.SellRate.ToString("N4")</div>
+            </div>
+        }
+    </div>
+
+    <div class="market-footer">
+        <p>Son Güncelleme: @Model.FirstOrDefault()?.UpdateTime.ToString("HH:mm")</p>
+        <a href="#" class="btn-view-all">Tüm Piyasalar →</a>
+    </div>
+</div>
+
+@functions {
+    string GetIcon(string code) => code switch { "USD" => "$", "EUR" => "€", "GBP" => "£", _ => "₺" };
+}
+
+<style>
+    .exchange-featured {
+        background: linear-gradient(145deg, #ffffff, #f0f4ff) !important;
+        border: 2px solid var(--secondary-color) !important;
+        grid-column: span 2; /* Mobilde değilse 2 sütun kaplasın */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    /* Canlı Göstergesi */
+    .live-indicator {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: var(--accent-color);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 5px;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+        background-color: var(--accent-color);
+        border-radius: 50%;
+        display: inline-block;
+        animation: blink 1.5s infinite;
+    }
+
+
+    /* Tablo Yapısı */
+    .rates-table {
+        margin: 20px 0;
+    }
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #6b7280;
+        padding: 0 10px 10px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .rate-row-modern {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 10px;
+        border-bottom: 1px solid #f1f1f1;
+        transition: background 0.2s;
+    }
+
+        .rate-row-modern:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+    .currency-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+    }
+
+    .currency-flag {
+        width: 30px;
+        height: 30px;
+        background: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    .price {
+        font-family: 'Consolas', monospace;
+        font-weight: 700;
+    }
+
+        .price.buy {
+            color: var(--text-color);
+        }
+
+        .price.sell {
+            color: var(--primary-color);
+        }
+
+    .btn-view-all {
+        font-size: 0.9rem;
+        color: var(--secondary-color);
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .table-header, .rate-row-modern {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Sütun Genişlikleri */
+    .col-name {
+        flex: 2;
+    }
+    /* Para birimi ismi daha geniş olsun */
+    .col-rate {
+        flex: 1;
+        font-family: 'Consolas', monospace;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    /* Mobilde bile düzgün durması için minimum genişlik */
+    .price {
+        min-width: 80px;
+    }
+
+    .currency-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+</style>

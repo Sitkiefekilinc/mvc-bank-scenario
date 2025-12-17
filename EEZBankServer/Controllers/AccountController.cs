@@ -8,9 +8,9 @@ namespace EEZBankServer.Controllers
         {
             return View();
         }
-        public IActionResult GirisYapIslem()
+        public void GirisYapIslem()
         {
-            return View();
+
         }
         public IActionResult TicaretSicilKayit()
         {

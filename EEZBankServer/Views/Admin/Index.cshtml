@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Yönetici Paneli - EEZBank";
+}
+
+<link rel="stylesheet" href="~/site.css" />
+<script src="~/site.js"></script>
+
+<main>
+
+    <!-- =============================== -->
+    <!-- ADMIN PANEL HEADER (Sayfa içi) -->
+    <!-- =============================== -->
+    <section class="hero-section" style="padding:60px 0;">
+        <div class="container">
+            <div class="hero-content">
+                <h1>EEZBank Yönetim Paneli</h1>
+                <p class="lead">Sistem kontrolü, kullanıcı yönetimi ve bankacılık operasyonları</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================== -->
+    <!-- DASHBOARD KARTLARI -->
+    <!-- =============================== -->
+    <section class="services-section" style="padding:50px 0;">
+        <div class="container">
+
+            <h2 class="section-title">Genel Durum</h2>
+
+            <div class="services-grid">
+
+                <!-- Kullanıcı Sayısı -->
+                <div class="service-card">
+                    <div class="service-icon">👥</div>
+                    <h3>Toplam Müşteri</h3>
+                    <p>Bankaya kayıtlı toplam müşteri sayısı.</p>
+                    <a href="/Admin/Customers" class="service-link">Görüntüle</a>
+                </div>
+
+                <!-- Bekleyen Başvurular -->
+                <div class="service-card">
+                    <div class="service-icon">📄</div>
+                    <h3>Bekleyen Başvurular</h3>
+                    <p>Onay bekleyen bireysel, ticari ve kurumsal müşteri başvuruları.</p>
+                    <a href="/Admin/Applications" class="service-link">Başvuruları Aç</a>
+                </div>
+
+                <!-- İşlem Kayıtları -->
+                <div class="service-card">
+                    <div class="service-icon">💳</div>
+                    <h3>İşlem Kayıtları</h3>
+                    <p>Son yapılan banka işlemleri, hareketler ve kayıtlar.</p>
+                    <a href="/Admin/Transactions" class="service-link">Kayıtları Gör</a>
+                </div>
+
+                <!-- Sistem Logları -->
+                <div class="service-card">
+                    <div class="service-icon">🛠</div>
+                    <h3>Sistem Logları</h3>
+                    <p>Güvenlik, hata ve operasyon logları.</p>
+                    <a href="/Admin/Logs" class="service-link">Loglara Git</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =============================== -->
+    <!-- ALT KONTROL ALANI -->
+    <!-- =============================== -->
+    <section class="features-section" style="padding:70px 0;">
+        <div class="container">
+
+            <h2 class="section-title">Yönetim Araçları</h2>
+
+            <div class="features-grid">
+
+                <div class="feature-item">
+                    <div class="feature-icon">➕</div>
+                    <h4>Yeni Müşteri Ekle</h4>
+                    <p>Yönetici tarafından manuel müşteri oluşturma ekranı.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🏦</div>
+                    <h4>Hesap Aç / Kapat</h4>
+                    <p>Müşterilere yeni hesap tanımlama veya hesap kapatma işlemleri.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🔐</div>
+                    <h4>Rol & Yetki Yönetimi</h4>
+                    <p>Admin, personel, müşteri temsilcisi rollerini düzenleme.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">⚙</div>
+                    <h4>Sistem Ayarları</h4>
+                    <p>Genel banka ayarları, API bağlantıları ve bakım modları.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main>

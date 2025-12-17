@@ -9,6 +9,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<UserDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddScoped<IEEZBankUserService, EEZBankUserService>();
+builder.Services.AddHttpClient<IDovizService, DovizService>(
+    client => client.BaseAddress = new Uri("https://api.frankfurter.app/"));
 
 var app = builder.Build();
 
