@@ -1,11 +1,13 @@
 ﻿using Bogus;
 using EEZBankServer.EfCore;
 using EEZBankServer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EEZBankServer.Controllers
 {
+    [Authorize(Policy = "AdminOnly")]
     public class AdminController : Controller
     {
         private readonly UserDbContext _context;
@@ -16,11 +18,11 @@ namespace EEZBankServer.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.KullaniciSayisi = await _context.Users.CountAsync();
-            ViewBag.IslemHacmi = await _context.Users.SumAsync(u => u.UserBalance);
+            ViewBag.BakiyelerToplami = await _context.Users.SumAsync(u => u.UserBalance);
             return View();
         }
         [HttpPost]
-        public JsonResult FakeVeriUret()
+        public async Task<JsonResult> FakeVeriUret()
         {
             try
             {
@@ -41,14 +43,13 @@ namespace EEZBankServer.Controllers
                     .RuleFor(u => u.UserBirthDate, f => f.Date.Past(40, DateTime.Now.AddYears(-18)))
                     .RuleFor(u => u.Adress, f => f.Address.FullAddress())
                     .RuleFor(u => u.HasTheAgreementBeenAccepted, true)
-                    .RuleFor(u => u.UserType, f => f.PickRandom<UserTypes>());
+                    .RuleFor(u => u.UserType, f => f.PickRandom(UserTypes.Bireysel, UserTypes.Kurumsal, UserTypes.Ticari ));
 
                 var fakeUsers = userFaker.Generate(100);
 
                 foreach (var user in fakeUsers)
                 {
-                    _context.Users.Add(user);
-
+                    await _context.Users.AddAsync(user);
                     if (user.UserType == UserTypes.Kurumsal)
                     {
                         var kurumsalFaker = new Faker<KurumsalKullaniciModel>("tr")
@@ -58,8 +59,8 @@ namespace EEZBankServer.Controllers
                             .RuleFor(k => k.TaxNumber, f => f.Random.ReplaceNumbers("##########"))
                             .RuleFor(k => k.CorporateAddress, f => f.Address.FullAddress())
                             .RuleFor(k => k.AuthorizedPersonsTask, f => f.Name.JobTitle());
-
-                        _context.KurumsalKullaniciBilgileri.Add(kurumsalFaker.Generate());
+                        
+                      await _context.KurumsalKullaniciBilgileri.AddAsync(kurumsalFaker.Generate());
                     }
                     else if (user.UserType == UserTypes.Ticari)
                     {
@@ -68,7 +69,7 @@ namespace EEZBankServer.Controllers
                             .RuleFor(t => t.CompanyName, f => f.Name.FullName() + " Ltd. Şti.")
                             .RuleFor(t => t.CompanyEmail, f => f.Internet.Email());
 
-                        _context.TicariKullaniciBilgileri.Add(ticariFaker.Generate());
+                        await _context.TicariKullaniciBilgileri.AddAsync(ticariFaker.Generate());
                     }
                 }
 

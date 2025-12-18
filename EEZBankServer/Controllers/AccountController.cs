@@ -1,6 +1,8 @@
 ﻿using EEZBankServer.EfCore;
 using EEZBankServer.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -40,13 +42,14 @@ namespace EEZBankServer.Controllers
                     new Claim(ClaimTypes.Surname, user.UserSurname),
                     new Claim(ClaimTypes.Email, user.UserEmail),
                     new Claim("UserType", user.UserType.ToString()),
-                    new Claim("FullName", user.UserName + user.UserSurname)
+                    new Claim("FullName", user.UserName +" " + user.UserSurname)
                 };
 
-                var claimsIdentity = new ClaimsIdentity(claims);
+                var claimsIdentity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
                 var authProperties = new AuthenticationProperties { IsPersistent = model.RememberMe };
 
                 await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties
                 );
@@ -66,15 +69,41 @@ namespace EEZBankServer.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            model.UserIban = "TR" + Guid.NewGuid().ToString("N").Substring(0, 24).ToUpper();
+            ModelState.Remove(nameof(model.UserIban));
+            if (model.UserType == UserTypes.Bireysel)
+            {
+                ModelState.Remove(nameof(model.CorporateName));
+                ModelState.Remove(nameof(model.CorporateAddress));
+                ModelState.Remove(nameof(model.TaxNumber));
+                ModelState.Remove(nameof(model.CompanyName));
+                ModelState.Remove(nameof(model.CompanyEmail));
+                ModelState.Remove(nameof(model.AuthorizedPersonsTask));
+            }
+            else if (model.UserType == UserTypes.Kurumsal)
+            {
+                ModelState.Remove(nameof(model.CompanyName));
+                ModelState.Remove(nameof(model.CompanyEmail));
+            }
+            else if (model.UserType == UserTypes.Ticari)
+            {
+                ModelState.Remove(nameof(model.CorporateName));
+                ModelState.Remove(nameof(model.CorporateAddress));
+                ModelState.Remove(nameof(model.TaxNumber));
+                ModelState.Remove(nameof(model.AuthorizedPersonsTask));
+            }
+
             if (!ModelState.IsValid)
             {
                 return Json(new { success = false, message = "Lütfen formdaki eksikleri giderin." });
             }
+
             if (_context.Users.Any(u => u.UserEmail == model.UserEmail))
             {
                 return Json(new { success = false, message = "Bu e-posta adresi zaten kayıtlı!" });
             }
 
+            using var dbTransaction = await _context.Database.BeginTransactionAsync();
             try
             {
                 var user = new UserAccountInfos
@@ -84,16 +113,18 @@ namespace EEZBankServer.Controllers
                     UserEmail = model.UserEmail,
                     UserPassword = BCrypt.Net.BCrypt.HashPassword(model.UserPassword),
                     UserBalance = 0,
-                    UserIban = "TR" + Guid.NewGuid().ToString().Substring(0, 24).ToUpper(),
+                    UserIban = model.UserIban,
                     UserPhoneNumber = model.UserPhoneNumber,
                     TcKimlikNo = model.TcKimlikNo,
                     UserBirthDate = model.UserBirthDate,
                     Adress = model.Adress,
                     UserType = model.UserType,
                     IsActive = true,
-                    HasTheAgreementBeenAccepted = true
+                    HasTheAgreementBeenAccepted = model.HasTheAgreementBeenAccepted
                 };
-                _context.Users.Add(user);
+
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync();
 
                 if (model.UserType == UserTypes.Kurumsal)
                 {
@@ -106,7 +137,7 @@ namespace EEZBankServer.Controllers
                         CorporateAddress = model.CorporateAddress,
                         AuthorizedPersonsTask = model.AuthorizedPersonsTask
                     };
-                    _context.KurumsalKullaniciBilgileri.Add(kurumsal);
+                    await _context.KurumsalKullaniciBilgileri.AddAsync(kurumsal);
                 }
                 else if (model.UserType == UserTypes.Ticari)
                 {
@@ -116,17 +147,41 @@ namespace EEZBankServer.Controllers
                         CompanyName = model.CompanyName,
                         CompanyEmail = model.CompanyEmail
                     };
-                    _context.TicariKullaniciBilgileri.Add(ticari);
+                    await _context.TicariKullaniciBilgileri.AddAsync(ticari);
                 }
+
                 await _context.SaveChangesAsync();
+                await dbTransaction.CommitAsync();
+
                 return Json(new { success = true, message = "EEZ Bank'a hoş geldiniz! Kaydınız başarıyla tamamlandı." });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return Json(new { success = false, message = "Kayıt sırasında teknik bir hata oluştu." });
+                await dbTransaction.RollbackAsync();
+                return Json(new { success = false, message = "Teknik bir hata oluştu: " + ex.Message });
             }
+        }
 
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
 
+        [Authorize]
+        public async Task<IActionResult> Profile()
+        {
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdString == null) return RedirectToAction("Login");
+
+            var userId = Guid.Parse(userIdString);
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.UserId == userId);
+
+            if (user == null) return NotFound();
+
+            return View(user); 
         }
 
     }

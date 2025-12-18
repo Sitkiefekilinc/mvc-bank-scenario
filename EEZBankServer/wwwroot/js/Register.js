@@ -1,53 +1,52 @@
-﻿$('#registerForm').on('submit', function (e) {
-    e.preventDefault();
+﻿$(document).ready(function () {
+    console.log("EEZ Bank Kayıt Sistemi Hazır.");
 
-  
-    Swal.fire({
-        title: 'Lütfen Bekleyin...',
-        text: 'Bilgileriniz EEZ Bank güvenliğine kaydediliyor.',
-        allowOutsideClick: false,
-        didOpen: () => { Swal.showLoading(); }
-    });
+    $('#registerForm').on('submit', function (e) {
+        e.preventDefault();
 
-    var formData = $(this).serialize();
+        Swal.fire({
+            title: 'Lütfen Bekleyin...',
+            text: 'Bilgileriniz EEZ Bank güvenliğine kaydediliyor.',
+            allowOutsideClick: false,
+            didOpen: () => { Swal.showLoading(); }
+        });
 
-    $.ajax({
-        url: '/Account/Register',
-        type: 'POST',
-        data: formData,
-        success: function (response) {
-            if (response.success) {
-                Swal.fire({
-                    title: 'Başarılı!',
-                    text: response.message,
-                    icon: 'success',
-                    confirmButtonColor: '#1e3a8a'
-                }).then(() => {
-                    window.location.href = '/Account/Login';
-                });
-            } else {
-                Swal.fire('Hata!', response.message, 'error');
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: '/Account/Register',
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        title: 'Başarılı!',
+                        text: response.message,
+                        icon: 'success',
+                        confirmButtonColor: '#1e3a8a'
+                    }).then(() => {
+                        window.location.href = '/Account/Login';
+                    });
+                } else {
+                    Swal.fire('Hata!', response.message, 'error');
+                }
+            },
+            error: function () {
+                Swal.fire('Sistem Hatası', 'Şu an işleminizi gerçekleştirilemiyoruz.', 'error');
             }
-        },
-        error: function () {
-            Swal.fire('Sistem Hatası', 'Şu an işleminizi gerçekleştiremiyoruz.', 'error');
-        }
+        });
     });
-});
 
-$(document).ready(function () {
-   
     toggleUserSections($('#userTypeSelect').val());
 
     $('#userTypeSelect').change(function () {
-        var selectedValue = $(this).val();
-        toggleUserSections(selectedValue);
+        toggleUserSections($(this).val());
     });
 
     function toggleUserSections(value) {
         $('#kurumsalSection, #ticariSection').slideUp(300);
 
-        if (value == "1") {
+        if (value == "1") { 
             $('#kurumsalSection').delay(300).slideDown(400);
             disableInputs('#ticariSection');
             enableInputs('#kurumsalSection');
@@ -66,6 +65,7 @@ $(document).ready(function () {
     function disableInputs(sectionId) {
         $(sectionId).find('input, select, textarea').prop('disabled', true);
     }
+
     function enableInputs(sectionId) {
         $(sectionId).find('input, select, textarea').prop('disabled', false);
     }

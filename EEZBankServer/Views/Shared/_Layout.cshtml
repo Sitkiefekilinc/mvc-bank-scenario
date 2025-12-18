@@ -32,26 +32,39 @@
                     <li class="nav-item">
                         <a asp-controller="Home" asp-action="Hakkımızda" class="nav-link">Hakkımızda</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">EEZ'de Ara</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-controller="Account" asp-action="Register" class="nav-link">Müşteri Ol</a>
-                    </li>
-                    <li class="nav-item nav-item-btn">
-                        <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-sm">Giriş Yap</a>
-                    </li>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @* GİRİŞ YAPMIŞ KULLANICI MENÜSÜ *@
+                        <li class="nav-item user-profile-item">
+                            <a asp-controller="Account" asp-action="Profile" class="nav-link user-welcome">
+                                <i class="fas fa-user-circle"></i> Hoş Geldin,
+                                <strong>@User.FindFirst("FullName")?.Value</strong>
+                            </a>
+                        </li>
+                        <li class="nav-item nav-item-btn">
+                            <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger btn-sm">Çıkış Yap</a>
+                        </li>
+                    }
+                    else
+                    {
+                        @* GİRİŞ YAPMAMIŞ KULLANICI MENÜSÜ *@
+                        <li class="nav-item">
+                            <a asp-controller="Account" asp-action="Register" class="nav-link">Müşteri Ol</a>
+                        </li>
+                        <li class="nav-item nav-item-btn">
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-sm">Giriş Yap</a>
+                        </li>
+                    }
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main>
         @RenderBody()
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -97,9 +110,38 @@
         </div>
     </footer>
 
+    <style>
+        .user-welcome {
+            color: var(--dark-color);
+            font-size: 0.9rem;
+        }
+
+            .user-welcome strong {
+                color: var(--primary-color);
+                margin-left: 5px;
+            }
+
+        .btn-outline-danger {
+            border: 1px solid #dc2626;
+            color: #dc2626;
+            background: transparent;
+            padding: 5px 15px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+            .btn-outline-danger:hover {
+                background: #dc2626;
+                color: white;
+            }
+    </style>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="~/js/site.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+    
 </body>
 </html>

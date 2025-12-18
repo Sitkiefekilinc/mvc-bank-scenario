@@ -2,115 +2,351 @@
     ViewData["Title"] = "Ana Sayfa";
 }
 
-<section class="hero-section">
-    <div class="container">
-        <div class="hero-content">
-            <h1>EEZ Bank'a Hoş Geldiniz</h1>
-            <p class="lead">Güvenli, hızlı ve modern bankacılık hizmetleri</p>
-            <div class="hero-buttons">
-                <a href="#" class="btn btn-primary">Hesap Aç</a>
-                <a href="#" class="btn btn-outline">Daha Fazla Bilgi</a>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+
+
+<div class="home-wrapper">
+    <div class="container pb-5">
+
+        <div class="row section-gap">
+            <div class="col-12">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <div class="hero-card shadow-lg">
+                        <div class="hero-overlay"></div>
+                        <div class="hero-content">
+                            <span class="badge bg-accent mb-3">Güvenli Liman</span>
+                            <h1 class="display-5 fw-bold text-white">Bankacılığın <br /> En Dijital Hali</h1>
+                            <p class="lead text-white-50">Sıra beklemeden, şubeye gitmeden tüm işlemleriniz cebinizde.</p>
+                            <div class="d-flex gap-3 mt-4">
+                                <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg px-5 shadow-sm">Müşteri Ol</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="welcome-header d-flex justify-content-between align-items-end">
+                        <div>
+                            <h2 class="fw-bold mb-1">Tekrar Hoş Geldin, @User.FindFirst("FullName")?.Value</h2>
+                            <p class="text-secondary mb-0">Hızlı menü üzerinden işlemlerine devam edebilirsin.</p>
+                        </div>
+                        <div class="date-chip shadow-sm">
+                            <i class="far fa-calendar-check me-2"></i> @DateTime.Now.ToString("dd MMM yyyy")
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-    </div>
-</section>
 
-<section class="services-section">
-    <div class="container">
-        <h2 class="section-title">Hizmetlerimiz ve Piyasalar</h2>
-        <div class="services-grid">
-
-            @await Component.InvokeAsync("DovizKurlari")
-
-            <div class="service-card">
-                <div class="service-icon"><i class="icon-account"></i></div>
-                <h3>Hesap İşlemleri</h3>
-                <p>Vadesiz hesap, mevduat hesabı ve daha fazlası</p>
-                <a href="#" class="service-link">Detaylar</a>
+        <div class="row section-gap g-5">
+            <div class="col-lg-8">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="nav-action-card shadow-sm h-100">
+                            <div class="icon-box bg-soft-blue"><i class="fas fa-paper-plane"></i></div>
+                            <div class="card-text">
+                                <h5>Hızlı Transfer</h5>
+                                <p>7/24 kesintisiz FAST gönderimi yapın.</p>
+                            </div>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="nav-action-card shadow-sm h-100">
+                            <div class="icon-box bg-soft-purple"><i class="fas fa-wallet"></i></div>
+                            <div class="card-text">
+                                <h5>Fatura Ödeme</h5>
+                                <p>Anlaşmalı tüm kurumlara ödeme yapın.</p>
+                            </div>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="service-card">
-                <div class="service-icon"><i class="icon-transfer"></i></div>
-                <h3>Para Transferi</h3>
-                <p>Hızlı ve güvenli para transferi işlemleri</p>
-                <a href="#" class="service-link">Detaylar</a>
-            </div>
-
-
-            <div class="service-card">
-                <div class="service-icon"><i class="icon-credit-card"></i></div>
-                <h3>Kredi Kartları</h3>
-                <p>İhtiyacınıza uygun kredi kartı seçenekleri</p>
-                <a href="#" class="service-link">Detaylar</a>
-            </div>
-
-            <div class="service-card">
-                <div class="service-icon"><i class="icon-loan"></i></div>
-                <h3>Krediler</h3>
-                <p>Avantajlı kredi imkanları</p>
-                <a href="#" class="service-link">Detaylar</a>
+            <div class="col-lg-4">
+                <div class="widget-card shadow-sm">
+                    <div class="widget-header">
+                        <span class="fw-bold">Piyasalar</span>
+                        <span class="dot-online"></span>
+                    </div>
+                    <div class="widget-body p-0">
+                        @await Component.InvokeAsync("DovizKurlari")
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
 
-<section class="features-section">
-    <div class="container">
-        <h2 class="section-title">Neden EEZ Bank?</h2>
-        <div class="features-grid">
-            <div class="feature-item">
-                <div class="feature-icon"><i class="icon-security"></i></div>
-                <h4>Güvenli</h4>
-                <p>256-bit SSL şifreleme ile güvenli işlemler</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon"><i class="icon-fast"></i></div>
-                <h4>Hızlı</h4>
-                <p>7/24 anlık işlem yapabilme imkanı</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon"><i class="icon-support"></i></div>
-                <h4>Destek</h4>
-                <p>Kesintisiz müşteri hizmetleri desteği</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon"><i class="icon-mobile"></i></div>
-                <h4>Mobil</h4>
-                <p>Mobil uygulama ile her yerden erişim</p>
+        <div class="row section-gap">
+            <div class="col-12">
+                <div class="section-title-area d-flex align-items-center mb-4">
+                    <h3 class="fw-bold m-0">Öne Çıkan Fırsatlar</h3>
+                    <div class="line-decorator ms-3"></div>
+                </div>
+
+                <div class="campaign-detail-area shadow-sm">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-md-4 promo-image-box">
+                            <img src="~/images/campaign-promo.jpg" alt="Kampanya" class="img-fluid" />
+                            <div class="promo-tag">Fırsat</div>
+                        </div>
+                        <div class="col-md-8 p-5">
+                            <h4 class="fw-bold text-dark mb-3">EEZ Bank ile İlk Kredinize %0 Faiz!</h4>
+                            <p class="text-secondary mb-4">Yeni müşterilerimize özel, 20.000 TL'ye kadar 6 ay vadeli ihtiyaç kredisinde faizleri sıfırladık. Üstelik dosya masrafsız!</p>
+
+                            <div class="benefits-row d-flex gap-4 mb-4">
+                                <div class="benefit"><i class="fas fa-check-circle text-success"></i> %0 Faiz</div>
+                                <div class="benefit"><i class="fas fa-check-circle text-success"></i> Masrafsız</div>
+                                <div class="benefit"><i class="fas fa-check-circle text-success"></i> Anında Onay</div>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-3">
+                                <button class="btn btn-primary btn-lg rounded-pill px-5">Hemen Başvur</button>
+                                <span class="text-muted small">*Kampanya 31 Aralık'a kadar geçerlidir.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
 
-<section class="stats-section">
-    <div class="container">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h3 class="stat-number">1M+</h3>
-                <p class="stat-label">Aktif Müşteri</p>
-            </div>
-            <div class="stat-item">
-                <h3 class="stat-number">500+</h3>
-                <p class="stat-label">Şube</p>
-            </div>
-            <div class="stat-item">
-                <h3 class="stat-number">24/7</h3>
-                <p class="stat-label">Müşteri Desteği</p>
-            </div>
-            <div class="stat-item">
-                <h3 class="stat-number">15+</h3>
-                <p class="stat-label">Yıllık Tecrübe</p>
-            </div>
-        </div>
     </div>
-</section>
 
-<section class="cta-section">
-    <div class="container">
-        <div class="cta-content">
-            <h2>Hemen Başlayın</h2>
-            <p>Birkaç dakika içinde hesap açın ve bankacılık hizmetlerimizden yararlanmaya başlayın</p>
-            <a href="#" class="btn btn-light">Hesap Aç</a>
-        </div>
-    </div>
-</section>
+<style>
+    :root {
+        --primary-blue: #1e3a8a;
+        --accent-gold: #f59e0b;
+        --soft-blue: #eff6ff;
+        --border-color: #e2e8f0;
+    }
+
+    body {
+        background-color: #f8fafc;
+    }
+
+    /* Hero Bölümü */
+    .hero-card {
+        background: url('/images/bank-hero-bg.jpg') center/cover;
+        border-radius: 24px;
+        position: relative;
+        padding: 80px 50px;
+        overflow: hidden;
+        color: white;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(30,58,138,0.95) 0%, rgba(30,58,138,0.4) 100%);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .btn-glass {
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+
+        .btn-glass:hover {
+            background: rgba(255,255,255,0.25);
+            color: white;
+        }
+
+    /* Aksiyon Kartları */
+    .nav-action-card {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border-color);
+    }
+
+        .nav-action-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+        }
+
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .bg-soft-blue {
+        background: #e0f2fe;
+        color: #0369a1;
+    }
+
+    .bg-soft-purple {
+        background: #f3e8ff;
+        color: #7e22ce;
+    }
+
+    .bg-soft-green {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    .bg-soft-orange {
+        background: #ffedd5;
+        color: #c2410c;
+    }
+
+    /* Widgetlar */
+    .widget-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+    }
+
+    .widget-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .sidebar-sticky {
+        position: sticky;
+        top: 100px;
+    }
+
+    /* Tarih Chip */
+    .date-chip {
+        background: white;
+        padding: 8px 16px;
+        border-radius: 100px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--primary-blue);
+        border: 1px solid var(--border-color);
+    }
+
+    /* Kampanya Kartı */
+    .campaign-card-mini {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        border: 1px solid var(--border-color);
+    }
+
+    .promo-badge {
+        background: #ef4444;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 8px;
+        font-weight: 800;
+        font-size: 0.7rem;
+    }
+
+        .home-wrapper {
+            padding-top: 40px; /* Layout navbar'ından sonra gelen ilk boşluk */
+            background-color: #fcfdfe;
+        }
+
+        .section-gap {
+            margin-bottom: 70px; /* Bölümler arası dikey boşluk artırıldı */
+        }
+
+        /* 2. Hero Düzenleme */
+        .hero-card {
+            background: url('/images/eez-bank-abstract.jpg') center/cover;
+            border-radius: 30px;
+            position: relative;
+            padding: 90px 60px;
+            overflow: hidden;
+        }
+
+        /* 3. İncele (Kampanya Detay) Alanı Tasarımı */
+        .campaign-detail-area {
+            background: #ffffff;
+            border-radius: 25px;
+            overflow: hidden;
+            border: 1px solid #edf2f7;
+            transition: all 0.4s ease;
+        }
+
+        .promo-image-box {
+            position: relative;
+            height: 100%;
+            min-height: 250px;
+            background: #1e3a8a; /* Görsel yüklenmezse diye */
+        }
+
+            .promo-image-box img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+
+        .promo-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #f59e0b;
+            color: white;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .benefit {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .line-decorator {
+            height: 2px;
+            background: #e2e8f0;
+            flex-grow: 1;
+        }
+
+        /* 4. Piyasa Dot Online */
+        .dot-online {
+            width: 10px;
+            height: 10px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @@keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+</style>

@@ -15,11 +15,17 @@ builder.Services.AddHttpClient<IDovizService, DovizService>(
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Home/Login";
+        options.LoginPath = "/Account/Login";
         options.LogoutPath = "/Home/Index";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
     });
-
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("BireyselOnly", policy => policy.RequireClaim("UserType", "Bireysel"));
+    options.AddPolicy("KurumsalOnly", policy => policy.RequireClaim("UserType", "Kurumsal"));
+    options.AddPolicy("TicariOnly", policy => policy.RequireClaim("UserType", "Ticari"));
+    options.AddPolicy("AdminOnly", policy => policy.RequireClaim("UserType", "Admin"));
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,4 +1,8 @@
-﻿@model RegisterViewModel
+﻿@{
+	ViewData["Title"] = "Müşteri Ol";
+}
+
+@model RegisterViewModel
 
 <div class="login-page">
     <div class="login-card" style="max-width: 800px;">
@@ -8,6 +12,8 @@
         </div>
 
         <form id="registerForm" novalidate>
+            <div asp-validation-summary="ModelOnly" class="error-text"></div>
+
             <div class="input-group">
                 <label>Hesap Tipi Seçiniz</label>
                 <select asp-for="UserType" id="userTypeSelect" class="form-select-custom">
@@ -15,6 +21,7 @@
                     <option value="1">Kurumsal Müşteri</option>
                     <option value="2">Ticari Müşteri</option>
                 </select>
+                <span asp-validation-for="UserType" class="error-text"></span>
             </div>
 
             <hr />
@@ -23,37 +30,79 @@
                 <div class="input-group">
                     <label asp-for="UserName">Adınız:</label>
                     <input asp-for="UserName" placeholder="Adınız" />
+                    <span asp-validation-for="UserName" class="error-text"></span>
                 </div>
                 <div class="input-group">
                     <label asp-for="UserSurname">Soyadınız:</label>
                     <input asp-for="UserSurname" placeholder="Soyadınız" />
+                    <span asp-validation-for="UserSurname" class="error-text"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label asp-for="TcKimlikNo">T.C. Kimlik Numarası:</label>
+                    <input asp-for="TcKimlikNo" maxlength="11" placeholder="11 Haneli T.C. No" />
+                    <span asp-validation-for="TcKimlikNo" class="error-text"></span>
+                </div>
+                <div class="input-group">
+                    <label asp-for="UserBirthDate">Doğum Tarihi:</label>
+                    <input asp-for="UserBirthDate" type="date" />
+                    <span asp-validation-for="UserBirthDate" class="error-text"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label asp-for="UserEmail">E-Posta Adresi:</label>
+                    <input asp-for="UserEmail" type="email" placeholder="example@eezbank.com" />
+                    <span asp-validation-for="UserEmail" class="error-text"></span>
+                </div>
+                <div class="input-group">
+                    <label asp-for="UserPhoneNumber">Telefon Numarası:</label>
+                    <input asp-for="UserPhoneNumber" type="tel" placeholder="05XX XXX XX XX" />
+                    <span asp-validation-for="UserPhoneNumber" class="error-text"></span>
                 </div>
             </div>
 
             <div class="input-group">
-                <label asp-for="UserEmail"></label>
-                <input asp-for="UserEmail" type="email" placeholder="example@eezbank.com" />
+                <label asp-for="Adress">İkamet Adresi:</label>
+                <textarea asp-for="Adress" rows="3" placeholder="Mahalle, Sokak, No, Daire..."></textarea>
+                <span asp-validation-for="Adress" class="error-text"></span>
             </div>
 
             <div id="kurumsalSection" class="special-fields" style="display: none;">
                 <h4 class="section-subtitle">Kurum Bilgileri</h4>
+
                 <div class="input-group">
-                    <label asp-for="CorporateName"></label>
+                    <label asp-for="CorporateName">Kurumun Tam Adı</label>
                     <input asp-for="CorporateName" placeholder="Kurumun Tam Adı" />
+                    <span asp-validation-for="CorporateName" class="error-text"></span>
                 </div>
+
+                <div class="input-group">
+                    <label asp-for="AuthorizedPersonsTask">Yetkili Kişi Görevi</label>
+                    <input asp-for="AuthorizedPersonsTask" placeholder="Örn: Şirket Müdürü, İmza Yetkilisi" />
+                    <span asp-validation-for="AuthorizedPersonsTask" class="error-text"></span>
+                </div>
+
                 <div class="form-row">
                     <div class="input-group">
-                        <label asp-for="TaxNumber"></label>
+                        <label asp-for="TaxNumber">Vergi Numarası</label>
                         <input asp-for="TaxNumber" maxlength="10" placeholder="10 Haneli Vergi No" />
+                        <span asp-validation-for="TaxNumber" class="error-text"></span>
                     </div>
                     <div class="input-group">
-                        <label asp-for="CorporateType"></label>
+                        <label asp-for="CorporateType">Kurum Türü</label>
                         <select asp-for="CorporateType" class="form-select-custom" asp-items="Html.GetEnumSelectList<CorporateTypes>()"></select>
+                        <span asp-validation-for="CorporateType" class="error-text"></span>
                     </div>
                 </div>
+
                 <div class="input-group">
-                    <label asp-for="CorporateAddress"></label>
-                    <textarea asp-for="CorporateAddress" rows="2"></textarea>
+                    <label asp-for="CorporateAddress">Kurumsal Adres</label>
+                    <textarea asp-for="CorporateAddress" rows="2" placeholder="Şirket resmi adresi..."></textarea>
+                    <span asp-validation-for="CorporateAddress" class="error-text"></span>
                 </div>
             </div>
 
@@ -61,11 +110,13 @@
                 <h4 class="section-subtitle">Şirket Bilgileri</h4>
                 <div class="input-group">
                     <label asp-for="CompanyName"></label>
-                    <input asp-for="CompanyName" placeholder="Şahıs Şirketi Ünvanı" />
+                    <input asp-for="CompanyName" placeholder="Şirket Ünvanı" />
+                    <span asp-validation-for="CompanyName" class="error-text"></span>
                 </div>
                 <div class="input-group">
                     <label asp-for="CompanyEmail"></label>
                     <input asp-for="CompanyEmail" placeholder="sirket@example.com" />
+                    <span asp-validation-for="CompanyEmail" class="error-text"></span>
                 </div>
             </div>
 
@@ -73,11 +124,22 @@
                 <div class="input-group">
                     <label asp-for="UserPassword"></label>
                     <input type="password" asp-for="UserPassword" placeholder="••••••••" />
+                    <span asp-validation-for="UserPassword" class="error-text"></span>
                 </div>
                 <div class="input-group">
                     <label asp-for="UserPasswordAgain"></label>
                     <input type="password" asp-for="UserPasswordAgain" placeholder="••••••••" />
+                    <span asp-validation-for="UserPasswordAgain" class="error-text"></span>
                 </div>
+            </div>
+            <div class="agreement-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" asp-for="HasTheAgreementBeenAccepted" id="agreementCheck" />
+                    <label for="agreementCheck">
+						Kullanım Sözleşmesi'ni ve KVKK Aydınlatma Metni'ni okudum, onaylıyorum.
+                    </label>
+                </div>
+                <span asp-validation-for="HasTheAgreementBeenAccepted" class="error-text"></span>
             </div>
 
             <button type="submit" class="btn btn-primary btn-full">Kayıt İşlemini Tamamla</button>
@@ -86,6 +148,20 @@
 </div>
 
 <style>
+
+    .error-text {
+        color: #e11d48;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        font-weight: 500;
+        display: block;
+    }
+
+    .input-validation-error {
+        border-color: #e11d48 !important;
+        background-color: #fff1f2 !important;
+    }
+
     .login-page {
         min-height: 100vh;
         display: flex;
@@ -95,25 +171,26 @@
         padding: 40px 20px;
     }
 
-    /* Kayıt Kartı */
     .login-card {
         background: var(--white);
         width: 100%;
         padding: 40px;
-        border-radius: 16px; /* Daha yumuşak köşeler */
+        border-radius: 16px;
         box-shadow: var(--shadow-lg);
         border: 1px solid var(--border-color);
         animation: fadeInUp 0.6s ease-out;
     }
 
-    /* Form Satır Düzeni (İkili Yan Yana Alanlar) */
+
+
     .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 20px;
     }
 
-    /* Input Grupları */
+
+
     .input-group {
         margin-bottom: 20px;
         display: flex;
@@ -127,6 +204,7 @@
             font-size: 0.95rem;
         }
 
+
         .input-group input,
         .input-group textarea,
         .form-select-custom {
@@ -138,8 +216,6 @@
             transition: all 0.25s ease;
             background-color: #fff;
         }
-
-            /* Focus Durumu */
             .input-group input:focus,
             .input-group textarea:focus,
             .form-select-custom:focus {
@@ -148,19 +224,17 @@
                 background-color: #fff;
             }
 
-    /* Özel Seçim Kutusu (Dropdown) */
     .form-select-custom {
         cursor: pointer;
-        appearance: none; /* Varsayılan ok işaretini kaldır */
+        appearance: none;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231e3a8a' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: right 15px center;
         padding-right: 40px;
     }
 
-    /* Dinamik Bölümler (Kurumsal & Ticari Alanları) */
     .special-fields {
-        background-color: #f0f4ff; /* Çok hafif mavi arka plan */
+        background-color: #f0f4ff;
         padding: 25px;
         border-radius: 12px;
         margin: 25px 0;
@@ -172,44 +246,12 @@
         color: var(--primary-color);
         font-size: 1.2rem;
         font-weight: 700;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
 
-        .section-subtitle::before {
-            content: "";
-            display: inline-block;
-            width: 4px;
-            height: 20px;
-            background: var(--accent-color);
-            border-radius: 2px;
-        }
-
-    hr {
-        border: 0;
-        border-top: 1px solid var(--border-color);
-        margin: 25px 0;
-    }
-
-    .btn-full {
-        width: 100%;
-        padding: 15px;
-        font-size: 1.1rem;
-        margin-top: 10px;
-    }
-
-    .special-fields {
-        overflow: hidden;
-        transition: border-color 0.3s ease;
-    }
-
-    .special-fields:hover {
-        border-color: var(--primary-color); 
-    }
 </style>
-    
-@section Scripts{
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/js/Register.js"></script>
 }

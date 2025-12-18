@@ -1,0 +1,307 @@
+﻿@model UserAccountInfos
+@{
+    ViewData["Title"] = "Hesap Paneli";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+<div class="fintech-profile-root">
+    <div class="container">
+
+        <div class="profile-header-area">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-4 fw-black text-dark-eez m-0">Profilim.</h1>
+                    <p class="text-secondary mt-2">Hesap bilgilerinizi ve finansal özetinizi buradan yönetin.</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="status-badge shadow-sm">
+                        <span class="status-dot pulse"></span>
+                        <span class="status-label">Güvenli Oturum</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-custom-5">
+            <div class="col-lg-5">
+
+                <div class="digital-bank-card shadow-2xl">
+                    <div class="card-inner">
+                        <div class="d-flex justify-content-between mb-5">
+                            <img src="~/images/eez-bank-logo-white.png" height="35" alt="EEZ" />
+                        </div>
+                        <div class="iban-display mt-auto">
+                            <small class="d-block opacity-50 mb-1">HESAP IBAN</small>
+                            <span class="iban-number">@Model.UserIban.Substring(0, 4) •••• •••• •••• @Model.UserIban.Substring(Model.UserIban.Length - 4)</span>
+                        </div>
+                        <div class="card-holder mt-4">
+                            <small class="d-block opacity-50">KART SAHİBİ</small>
+                            <span class="fw-bold">@Model.UserName.ToUpper() @Model.UserSurname.ToUpper()</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="balance-card-modern shadow-lg mt-5">
+                    <div class="balance-content">
+                        <label class="text-muted fw-bold small text-uppercase mb-3 d-block">Kullanılabilir Bakiye</label>
+                        <div class="d-flex align-items-baseline gap-2">
+                            <h2 class="display-5 fw-black text-dark-eez m-0">@Model.UserBalance.ToString("N2")</h2>
+                            <span class="currency-tag">TL</span>
+                        </div>
+                    </div>
+                    <div class="balance-actions border-top">
+                        <button class="b-action-btn border-end" onclick="copyIban()">
+                            <i class="far fa-copy me-2"></i> Kopyala
+                        </button>
+                        <button class="b-action-btn">
+                            <i class="fas fa-history me-2"></i> Geçmiş
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="info-section-wrapper p-4 bg-white shadow-sm">
+                    <h4 class="fw-bold mb-5 text-dark-eez border-bottom pb-3">Kişisel Bilgiler</h4>
+
+                    <div class="row g-5">
+                        <div class="col-md-6">
+                            <div class="fintech-info-item">
+                                <label>T.C. KİMLİK</label>
+                                <p>@Model.TcKimlikNo.Substring(0, 3)********</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="fintech-info-item">
+                                <label>DOĞUM TARİHİ</label>
+                                <p>@Model.UserBirthDate.ToString("dd.MM.yyyy")</p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="fintech-info-item">
+                                <label>E-POSTA ADRESİ</label>
+                                <p>@Model.UserEmail</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="fintech-info-item">
+                                <label>TELEFON NUMARASI</label>
+                                <p>@Model.UserPhoneNumber</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="fintech-info-item">
+                                <label>HESAP TİPİ</label>
+                                <p>@Model.UserType Müşterisi</p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="fintech-info-item border-0">
+                                <label>KAYITLI ADRES</label>
+                                <p class="lh-base">@Model.Adress</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-4 d-flex gap-3">
+                        <button class="btn btn-eez-dark">Ayarları Düzenle</button>
+                        <button class="btn btn-eez-light">Güvenlik Merkezi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 1. GENEL AYARLAR */
+    :root {
+        --eez-dark: #0f172a;
+        --eez-blue: #1e3a8a;
+        --eez-accent: #3b82f6;
+        --eez-bg: #f8fafc;
+        --eez-border: #e2e8f0;
+    }
+
+    .fintech-profile-root {
+        background-color: var(--eez-bg);
+        font-family: 'Inter', sans-serif;
+        padding-top: 60px;
+        padding-bottom: 100px;
+    }
+
+    .fw-black {
+        font-weight: 900;
+    }
+
+    .text-dark-eez {
+        color: var(--eez-dark);
+    }
+
+    .g-custom-5 {
+        --bs-gutter-y: 5rem;
+        --bs-gutter-x: 3rem;
+    }
+    /* Bölümler arası geniş boşluk */
+
+    /* 2. HEADER */
+    .profile-header-area {
+        margin-bottom: 70px;
+    }
+
+    .status-badge {
+        background: white;
+        padding: 10px 20px;
+        border-radius: 50px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid var(--eez-border);
+    }
+
+    .status-dot {
+        width: 10px;
+        height: 10px;
+        background: #10b981;
+        border-radius: 50%;
+    }
+
+    /* 3. DİJİTAL KART */
+    .digital-bank-card {
+        height: 280px;
+        border-radius: 30px;
+        padding: 40px;
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        color: white;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .iban-number {
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+    }
+
+    /* 4. BAKİYE KARTI (Clipping Çözümü) */
+    .balance-card-modern {
+        background: white;
+        border-radius: 30px;
+        border: 1px solid var(--eez-border);
+        overflow: hidden;
+    }
+
+    .balance-content {
+        padding: 60px 10px 5px 20px !important; 
+    }
+
+    .currency-tag {
+        font-weight: 800;
+        color: var(--eez-accent);
+        font-size: 1.5rem;
+        margin-left: 10px;
+    }
+
+    .balance-actions {
+        display: flex;
+        background: #fcfdfe;
+    }
+
+    .b-action-btn {
+        flex: 1;
+        padding: 20px;
+        border: none;
+        background: transparent;
+        font-weight: 700;
+        color: var(--eez-dark);
+        transition: 0.2s;
+    }
+
+        .b-action-btn:hover {
+            background: #f1f5f9;
+            color: var(--eez-accent);
+        }
+
+    /* 5. BİLGİ ALANLARI */
+    .info-section-wrapper {
+        border-radius: 30px;
+        border: 1px solid var(--eez-border);
+    }
+
+    .fintech-info-item {
+        border-bottom: 1px solid #f1f5f9;
+        padding-bottom: 15px;
+    }
+
+        .fintech-info-item label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .fintech-info-item p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--eez-dark);
+            margin: 0;
+        }
+
+    /* 6. BUTONLAR */
+    .btn-eez-dark {
+        background: var(--eez-dark);
+        color: white;
+        padding: 15px 30px;
+        border-radius: 18px;
+        border: none;
+        font-weight: 600;
+    }
+
+    .btn-eez-light {
+        background: white;
+        color: var(--eez-dark);
+        padding: 15px 30px;
+        border-radius: 18px;
+        border: 2px solid var(--eez-dark);
+        font-weight: 600;
+    }
+
+    /* Animasyon */
+    .pulse {
+        animation: pulse-green 2s infinite;
+    }
+
+    @@keyframes pulse-green {
+        0% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+        }
+
+        70% {
+            box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        }
+    }
+</style>
+
+@section Scripts {
+    <script>
+        function copyIban() {
+            navigator.clipboard.writeText("@Model.UserIban");
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: 'IBAN Kopyalandı',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+    </script>
+}
