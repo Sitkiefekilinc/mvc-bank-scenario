@@ -37,8 +37,10 @@ namespace EEZBankServer.Controllers
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Surname, user.UserSurname),
                     new Claim(ClaimTypes.Email, user.UserEmail),
-                    new Claim("UserType", user.UserType.ToString())
+                    new Claim("UserType", user.UserType.ToString()),
+                    new Claim("FullName", user.UserName + user.UserSurname)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims);

@@ -9,7 +9,8 @@ namespace EEZBankServer.Models
         [Display(Name = "Kullanıcı Numarası: ")]
         [Required(ErrorMessage = "Bu alan boş bırakılamaz")]
         public Guid UserId { get; set; } = Guid.NewGuid();
-        [Display(Name = "Kullanıcı Sistem Numarası: ")]
+        [Display(Name = "Kullanıcı Adı: ")]
+        [Required(ErrorMessage = "Bu alan boş bırakılamaz")]
         public string UserName { get; set; }
         [Display(Name = "Kullanıcı Soyadı: ")]
         [Required(ErrorMessage = "Bu alan boş bırakılamaz")]
