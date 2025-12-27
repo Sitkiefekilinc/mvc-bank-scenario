@@ -20,8 +20,12 @@ namespace EEZBankServer.Models
         [Required(ErrorMessage = "Bu alan boş bırakılamaz")]
         [EmailAddress]
         public string UserEmail { get; set; }
+        
         [Display(Name = "Kullanıcı Şifresi: ")]
-        [Required(ErrorMessage = "Bu alan boş bırakılamaz")]
+        [StringLength(20, MinimumLength = 8, ErrorMessage = "Şifreniz en az 8 karakter olmalı")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$",
+    ErrorMessage = "Şifreniz en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter (.,@,$,!,%,*,?,&) içermelidir.")]
+
         public string UserPassword { get; set; }
         [Display(Name = "Kullanıcı Şifresi Tekrar: ")]
         [Required(ErrorMessage ="Bu alan boş bırakılamaz")]
@@ -40,6 +44,7 @@ namespace EEZBankServer.Models
         [Display(Name = "Telefon Numarası:")]
         [Required(ErrorMessage = "Telefon numarası zorunludur")]
         [Phone(ErrorMessage = "Geçerli bir telefon numarası giriniz")]
+        [StringLength(11, MinimumLength = 11, ErrorMessage = "Geçerli bir telefon numarası giriniz.")]
         public string UserPhoneNumber { get; set; }
 
         [Display(Name = "Tc Kimlik Numarası")]
