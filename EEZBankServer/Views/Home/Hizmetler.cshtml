@@ -2,60 +2,61 @@
     ViewData["Title"] = "Hizmetler";
 }
 
-<link rel="stylesheet" href="~/site.css" />
-<script src="~/site.js"></script>
+<link rel="stylesheet" href="~/css/Home/hizmetler.css" />
 
 <main>
     <section class="services-section">
         <div class="container">
 
-            <h2 class="section-title">Hizmetlerimiz</h2>
+            <div class="section-header">
+                <h2 class="section-title">Ayrıcalıklı Hizmetler</h2>
+                <p class="section-subtitle">Finansal özgürlüğünüz için tasarlanmış modern bankacılık çözümleri.</p>
+            </div>
 
             <div class="services-grid">
 
                 <div class="service-card">
-                    <service-icon symbol="credit-card"></service-icon>
-
-                    <h3>Kredi Hizmetleri</h3>
+                    <div class="icon-wrapper">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3>Vadesiz Hesap</h3>
                     <p>
-                        Bireysel ve ticari müşterilerimiz için hızlı onaylı kredi çözümleri sunuyoruz.
-                    </p>
-                    <a href="#" class="service-link">Detaylı Bilgi</a>
-                </div>
-
-                <div class="service-card">
-                    <service-icon symbol="university"></service-icon>
-
-                    <h3>Vadeli & Vadesiz Hesap</h3>
-                    <p>
-                        Birikimlerinizi güvenli şekilde değerlendirmeniz için modern hesap hizmetleri.
+                        Günlük harcamalarınızı yönetebileceğiniz, aidat ödemeyen ve anında kullanıma hazır vadesiz hesap ayrıcalığı.
                     </p>
                     <a href="#" class="service-link">Hesap Aç</a>
                 </div>
 
                 <div class="service-card">
-                    <service-icon symbol="money-check-alt"></service-icon>
-
+                    <div class="icon-wrapper">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
                     <h3>Para Transferleri</h3>
                     <p>
-                        EFT, FAST, Havale gibi tüm finansal transfer işlemleri kolaylaştırıldı.
+                        FAST teknolojisi ile 7/24 anında para transferi. EFT ve Havale işlemlerinde hız sınırlarını kaldırdık.
                     </p>
                     <a href="#" class="service-link">Transfer Yap</a>
                 </div>
 
                 <div class="service-card">
-                    <service-icon symbol="mobile-alt"></service-icon>
-
+                    <div class="icon-wrapper">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
                     <h3>Dijital Bankacılık</h3>
                     <p>
-                        Modern mobil bankacılık deneyimi ile tüm işlemlerinizi 7/24 kolayca yapın.
+                        Şubeye gitmeden tüm bankacılık işlemlerinizi mobil uygulamamız üzerinden güvenle gerçekleştirin.
                     </p>
-                    <a href="#" class="service-link">Giriş Yap</a>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="service-link">Giriş Yap</a>
+                    }
+					else
+					{
+						<a asp-controller="Account" asp-action="Profile" class="service-link">Hesabım</a>
+					}
+                    
                 </div>
 
             </div>
         </div>
     </section>
 </main>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>

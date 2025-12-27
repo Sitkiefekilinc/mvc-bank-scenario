@@ -1,26 +1,21 @@
-﻿
-@{
-	ViewData["Title"] = "Admin Dashboard";
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
 }
-
 @using System.Globalization
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-}
-
+<link rel="stylesheet" href="~/css/Admin/index.css/" />
 
 <div class="admin-wrapper">
     <aside class="admin-sidebar" id="navMenu">
-        <div class="nav-brand" style="padding: 20px;">
-            <a href="/" class="logo" style="color: var(--white);">EEZ <span style="color: var(--secondary-color);">ADMIN</span></a>
+        <div class="nav-brand">
+            <a href="/" class="logo">EEZ <span style="color: var(--eez-secondary);">ADMIN</span></a>
         </div>
         <ul class="admin-nav">
-            <li><a href="#" class="admin-nav-link active"><i class="icon-dashboard"></i> Dashboard</a></li>
-            <li><a href="#" class="admin-nav-link"><i class="icon-users"></i> Müşteri Yönetimi</a></li>
-            <li><a href="#" class="admin-nav-link"><i class="icon-transfer"></i> Para Transferleri</a></li>
-            <li><a href="#" class="admin-nav-link"><i class="icon-rates"></i> Kur Ayarları</a></li>
-            <li><a href="#" class="admin-nav-link"><i class="icon-security"></i> Güvenlik Logları</a></li>
+            <li><a href="#" class="admin-nav-link active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="#" class="admin-nav-link"><i class="fas fa-users"></i> Müşteri Yönetimi</a></li>
+            <li><a href="#" class="admin-nav-link"><i class="fas fa-exchange-alt"></i> Para Transferleri</a></li>
+            <li><a href="#" class="admin-nav-link"><i class="fas fa-chart-pie"></i> Kur Ayarları</a></li>
+            <li><a href="#" class="admin-nav-link"><i class="fas fa-shield-alt"></i> Güvenlik Logları</a></li>
         </ul>
     </aside>
 
@@ -33,40 +28,46 @@
             </div>
 
             <div class="user-actions">
-                <button id="btnSeedData" class="btn btn-sm btn-primary" style="margin-right: 10px;">
-                    <i class="icon-plus"></i> Örnek Verileri Ekle
+                <button id="btnSeedData" class="btn btn-primary btn-sm me-3">
+                    <i class="fas fa-database me-2"></i> Örnek Verileri Ekle
                 </button>
 
                 <div class="user-profile">
                     <span>Hoş geldin, <strong>Admin</strong></span>
-                    <a href="/Account/Logout" class="btn btn-sm btn-outline" style="margin-left:15px;">Çıkış Yap</a>
+                    <a href="/Account/Logout" class="btn btn-outline-danger btn-sm">Çıkış Yap</a>
                 </div>
             </div>
         </header>
 
-        <div class="container" style="padding: 30px 0;">
-            <h2 class="section-title" style="text-align: left; margin-bottom: 2rem;">Yönetim Paneli</h2>
+        <div class="container-fluid" style="padding: 30px;">
+            <h2 class="section-title">Yönetim Paneli</h2>
 
             <div class="services-grid">
-                <div class="service-card" style="padding: 1.5rem;">
-                    <div class="service-icon" style="width: 50px; height: 50px; font-size: 1.2rem;">👥</div>
+                <div class="service-card">
+                    <div class="service-icon" style="color: var(--eez-primary);">
+                        <i class="fas fa-users"></i>
+                    </div>
                     <h4>Toplam Müşteri</h4>
-                    <h2 style="color: var(--primary-color);">@ViewBag.KullaniciSayisi</h2>
+                    <h2 style="color: var(--eez-primary);">@ViewBag.KullaniciSayisi</h2>
                 </div>
-                <div class="service-card" style="padding: 1.5rem;">
-                    <div class="service-icon" style="width: 50px; height: 50px; font-size: 1.2rem; background: var(--accent-color);">💰</div>
-                    <h4>Kullanıcıların Bakiyeleri Toplamı</h4>
-                    <h2 style="color: var(--accent-color);">@ViewBag.BakiyelerToplami.ToString("C", new CultureInfo("tr-TR"))</h2>
+                <div class="service-card">
+                    <div class="service-icon" style="color: var(--eez-accent);">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h4>Toplam Mevduat</h4>
+                    <h2 style="color: var(--eez-accent);">@ViewBag.BakiyelerToplami.ToString("C", new CultureInfo("tr-TR"))</h2>
                 </div>
-                <div class="service-card" style="padding: 1.5rem;">
-                    <div class="service-icon" style="width: 50px; height: 50px; font-size: 1.2rem;">⚠️</div>
+                <div class="service-card">
+                    <div class="service-icon" style="color: var(--eez-danger);">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
                     <h4>Bekleyen Onaylar</h4>
-                    <h2 style="color: #f59e0b;">48</h2>
+                    <h2 style="color: var(--eez-danger);">48</h2>
                 </div>
             </div>
 
-            <div class="service-card" style="margin-top: 30px; text-align: left;">
-                <h3>Son İşlemler</h3>
+            <div class="service-card" style="margin-top: 30px;">
+                <h3 class="section-title" style="font-size: 1.2rem; margin-bottom: 20px;">Son İşlemler</h3>
                 <div class="rates-table">
                     <div class="table-header">
                         <span>Müşteri</span>
@@ -76,9 +77,9 @@
                     </div>
                     <div class="rate-row-modern">
                         <div class="col-name">Ahmet Yılmaz</div>
-                        <div class="col-rate text-center">EFT/Havale</div>
-                        <div class="col-rate text-center">₺5,000</div>
-                        <div class="col-rate text-right"><span class="badge success">Tamamlandı</span></div>
+                        <div class="col-rate">EFT/Havale</div>
+                        <div class="col-rate">₺5,000</div>
+                        <div class="col-rate text-end"><span class="badge success">Tamamlandı</span></div>
                     </div>
                 </div>
             </div>
@@ -86,92 +87,8 @@
     </main>
 </div>
 
-<style>
- 
-    .admin-wrapper {
-        display: flex;
-        min-height: 100vh;
-        overflow-x: hidden; /* Taşmaları önle */
-    }
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    .admin-sidebar {
-        width: 260px;
-        background-color: var(--dark-color);
-        color: var(--white);
-        position: sticky; /* Sayfayı kaydırınca sidebar sabit kalsın */
-        top: 0;
-        height: 100vh;
-        z-index: 1100; /* Sidebar her şeyin üstünde olmalı */
-        transition: all 0.3s ease;
-    }
-
-    .admin-main {
-        flex: 1;
-        background-color: var(--light-color);
-        min-width: 0; /* Flexbox taşma sorununu önler */
-        position: relative;
-        z-index: 1000;
-    }
-
-    .admin-header {
-        background: var(--white);
-        padding: 0.8rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: var(--shadow);
-        position: sticky; /* Header da kayarken üstte kalsın */
-        top: 0;
-        z-index: 1050; /* Sidebar'dan düşük, içerikten yüksek */
-    }
-
-    .admin-nav {
-        list-style: none;
-        padding: 0;
-    }
-
-    .admin-nav-link {
-        display: block;
-        padding: 15px 25px;
-        color: rgba(255,255,255,0.7);
-        text-decoration: none;
-        transition: 0.3s;
-        border-left: 4px solid transparent;
-    }
-
-        .admin-nav-link:hover, .admin-nav-link.active {
-            background: rgba(255,255,255,0.05);
-            color: var(--white);
-            border-left-color: var(--secondary-color);
-        }
-
-    .badge {
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 700;
-    }
-
-    .badge.success {
-        background: #d1fae5;
-        color: var(--accent-color);
-    }
-
-    .user-actions {
-        display: flex;
-        align-items: center;
-    }
-
-    .user-profile {
-        display: flex;
-        align-items: center;
-        border-left: 1px solid var(--border-color);
-        padding-left: 20px;
-    }
-
-    /* İçerik Konteynırı İçin Padding */
-    .admin-content-body {
-        padding: 2rem;
-    }
-
-</style>
+    <script src="~/js/admin.js"></script>
+}

@@ -1,0 +1,132 @@
+﻿/* Sayfa Arka Planı */
+.services-section {
+    padding: 80px 0;
+    background: linear-gradient(180deg, #f8fafc 0%, #eff6ff 100%);
+    min-height: 80vh;
+}
+
+/* Başlık Alanı */
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1e3a8a; /* Deep Blue */
+    margin-bottom: 15px;
+    letter-spacing: -1px;
+}
+
+.section-subtitle {
+    color: #64748b;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Grid Yapısı (3'lü Simetrik) */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 0 20px;
+}
+
+/* Premium Kart Tasarımı */
+.service-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 40px 30px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Yaylanma efekti */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+}
+
+    /* Kartın Üstündeki Renkli Çizgi */
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+    }
+
+    /* Hover Efektleri */
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px -10px rgba(30, 58, 138, 0.15);
+        border-color: rgba(59, 130, 246, 0.3);
+    }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+/* İkon Alanı */
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background: #eff6ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    transition: 0.3s ease;
+    color: #1e3a8a;
+    font-size: 2rem;
+}
+
+.service-card:hover .icon-wrapper {
+    background: #1e3a8a;
+    color: #ffffff;
+    transform: rotateY(180deg);
+}
+
+/* Metinler */
+.service-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 15px;
+}
+
+.service-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    flex-grow: 1;
+}
+
+/* Buton */
+.service-link {
+    padding: 12px 30px;
+    border-radius: 50px;
+    background-color: transparent;
+    color: #1e3a8a;
+    font-weight: 600;
+    text-decoration: none;
+    border: 2px solid #eff6ff;
+    transition: 0.3s;
+}
+
+.service-card:hover .service-link {
+    background-color: #1e3a8a;
+    color: #ffffff;
+    border-color: #1e3a8a;
+}

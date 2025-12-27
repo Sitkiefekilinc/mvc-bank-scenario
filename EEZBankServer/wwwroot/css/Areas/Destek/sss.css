@@ -1,0 +1,118 @@
+﻿/* SSS (FAQ) Sayfası Stilleri */
+
+.faq-wrapper {
+    padding: 60px 0;
+    background-color: #f8fafc;
+    min-height: 80vh;
+}
+
+/* Header */
+.faq-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.faq-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 15px;
+}
+
+.faq-subtitle {
+    color: #64748b;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Accordion Yapısı */
+.accordion-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: #ffffff;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+    .faq-item:hover {
+        box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.1);
+        transform: translateY(-2px);
+        border-color: #cbd5e1;
+    }
+
+/* Soru Kısmı (Tıklanabilir) */
+.faq-question {
+    padding: 25px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 1.1rem;
+    user-select: none;
+}
+
+    .faq-question:hover {
+        color: #1e3a8a;
+    }
+
+/* Ok İkonu */
+.icon-toggle {
+    width: 30px;
+    height: 30px;
+    background: #eff6ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1e3a8a;
+    font-size: 0.9rem;
+    transition: transform 0.3s ease, background 0.3s;
+}
+
+.faq-item.active .icon-toggle {
+    transform: rotate(180deg);
+    background: #1e3a8a;
+    color: white;
+}
+
+.faq-item.active .faq-question {
+    color: #1e3a8a;
+    background-color: #f8fafc;
+}
+
+/* Cevap Kısmı */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #fff;
+}
+
+    .faq-answer p {
+        padding: 0 25px 25px 25px;
+        margin: 0;
+        color: #475569;
+        line-height: 1.6;
+    }
+
+/* Kategori Başlıkları (Opsiyonel) */
+.category-badge {
+    display: inline-block;
+    background: #e0f2fe;
+    color: #0284c7;
+    padding: 6px 15px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}

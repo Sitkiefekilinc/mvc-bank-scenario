@@ -1,8 +1,10 @@
 ﻿@{
-	ViewData["Title"] = "Müşteri Ol";
+    ViewData["Title"] = "Müşteri Ol";
 }
 
 @model RegisterViewModel
+
+<link rel="stylesheet" href="~/css/Account/register.css" />
 
 <div class="login-page">
     <div class="login-card" style="max-width: 800px;">
@@ -136,7 +138,7 @@
                 <div class="checkbox-wrapper">
                     <input type="checkbox" asp-for="HasTheAgreementBeenAccepted" id="agreementCheck" />
                     <label for="agreementCheck">
-						Kullanım Sözleşmesi'ni ve KVKK Aydınlatma Metni'ni okudum, onaylıyorum.
+                        Kullanım Sözleşmesi'ni ve KVKK Aydınlatma Metni'ni okudum, onaylıyorum.
                     </label>
                 </div>
                 <span asp-validation-for="HasTheAgreementBeenAccepted" class="error-text"></span>
@@ -146,108 +148,6 @@
         </form>
     </div>
 </div>
-
-<style>
-
-    .error-text {
-        color: #e11d48;
-        font-size: 0.85rem;
-        margin-top: 5px;
-        font-weight: 500;
-        display: block;
-    }
-
-    .input-validation-error {
-        border-color: #e11d48 !important;
-        background-color: #fff1f2 !important;
-    }
-
-    .login-page {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--light-color);
-        padding: 40px 20px;
-    }
-
-    .login-card {
-        background: var(--white);
-        width: 100%;
-        padding: 40px;
-        border-radius: 16px;
-        box-shadow: var(--shadow-lg);
-        border: 1px solid var(--border-color);
-        animation: fadeInUp 0.6s ease-out;
-    }
-
-
-
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
-
-
-
-    .input-group {
-        margin-bottom: 20px;
-        display: flex;
-        flex-direction: column;
-    }
-
-        .input-group label {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--dark-color);
-            font-size: 0.95rem;
-        }
-
-
-        .input-group input,
-        .input-group textarea,
-        .form-select-custom {
-            padding: 12px 15px;
-            font-size: 1rem;
-            border: 1.5px solid var(--border-color);
-            border-radius: 8px;
-            outline: none;
-            transition: all 0.25s ease;
-            background-color: #fff;
-        }
-            .input-group input:focus,
-            .input-group textarea:focus,
-            .form-select-custom:focus {
-                border-color: var(--primary-color);
-                box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
-                background-color: #fff;
-            }
-
-    .form-select-custom {
-        cursor: pointer;
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231e3a8a' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 15px center;
-        padding-right: 40px;
-    }
-
-    .special-fields {
-        background-color: #f0f4ff;
-        padding: 25px;
-        border-radius: 12px;
-        margin: 25px 0;
-        border: 2px dashed var(--secondary-color);
-        animation: fadeIn 0.4s ease;
-    }
-
-    .section-subtitle {
-        color: var(--primary-color);
-        font-size: 1.2rem;
-        font-weight: 700;
-
-</style>
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

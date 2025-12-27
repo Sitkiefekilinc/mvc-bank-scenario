@@ -2,82 +2,101 @@
     ViewData["Title"] = "Hakkımızda";
 }
 
-<main class="container" style="padding: 60px 0;">
+<link rel="stylesheet" href="~/css/Home/hakkimizda.css" />
 
-    <section class="hero-section" style="border-radius: 12px; margin-bottom: 60px;">
+<main class="container">
+
+    <section class="hero-section">
         <div class="hero-content">
             <h1>EEZ Bank Hakkında</h1>
             <p class="lead">
-                Güvenli, hızlı ve yenilikçi bankacılık deneyimini müşterilerimize sunmak için çalışıyoruz.
+                Geleceğin bankacılık deneyimini, güven ve yenilikle bugünden inşa ediyoruz.
             </p>
         </div>
     </section>
 
-    <section class="services-section" style="background: var(--white); padding: 40px 0;">
-        <h2 class="section-title">Misyonumuz & Vizyonumuz</h2>
+    <section class="services-section">
+        <h2 class="section-title">Kurumsal Değerlerimiz</h2>
 
         <div class="services-grid">
 
             <div class="service-card">
-                <div class="service-icon">💼</div>
+                <div class="icon-box-corp">
+                    <i class="fas fa-bullseye"></i>
+                </div>
                 <h3>Misyonumuz</h3>
                 <p>
-                    EEZ Bank olarak amacımız, müşterilerimize en güvenli dijital bankacılık deneyimini sunmak,
-                    finansal işlemleri daha hızlı ve daha erişilebilir hale getirmektir.
+                    Müşterilerimize en güvenli ve erişilebilir dijital bankacılık deneyimini sunmak, finansal süreçleri teknoloji ile basitleştirmektir.
                 </p>
             </div>
 
             <div class="service-card">
-                <div class="service-icon">🚀</div>
+                <div class="icon-box-corp">
+                    <i class="fas fa-chart-line"></i>
+                </div>
                 <h3>Vizyonumuz</h3>
                 <p>
-                    Türkiye’nin en yenilikçi dijital bankası olmak, yapay zekâ destekli çözümlerle
-                    bankacılığı yeniden tanımlamak vizyonumuzdur.
+                    Türkiye’nin en yenilikçi dijital bankası olmak ve yapay zekâ destekli finansal çözümlerle sektöre öncülük etmektir.
                 </p>
             </div>
 
             <div class="service-card">
-                <div class="service-icon">🔒</div>
+                <div class="icon-box-corp">
+                    <i class="fas fa-gem"></i>
+                </div>
                 <h3>Değerlerimiz</h3>
                 <p>
-                    Güven, şeffaflık ve müşteri odaklı hizmet anlayışımız ile dijitalleşen dünyada
-                    finansal çözümler sunuyoruz.
+                    Şeffaflık, dürüstlük ve müşteri odaklılık ilkelerimizden ödün vermeden, sürdürülebilir finansal çözümler üretiriz.
                 </p>
             </div>
 
         </div>
     </section>
 
-    <section class="features-section" style="padding: 60px 0;">
+    <section class="features-section">
         <h2 class="section-title">Neden EEZ Bank?</h2>
 
         <div class="features-grid">
             <div class="feature-item">
-                <div class="feature-icon">⚡</div>
-                <h4>Hızlı İşlemler</h4>
-                <p>Modern altyapımız sayesinde tüm işlemleriniz saniyeler içinde gerçekleşir.</p>
+                <div class="feature-icon-small">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>Işık Hızında İşlem</h4>
+                    <p>Modern altyapımız ile para transferleri ve ödemeleriniz milisaniyeler içinde gerçekleşir.</p>
+                </div>
             </div>
 
             <div class="feature-item">
-                <div class="feature-icon">📱</div>
-                <h4>Tam Dijital Banka</h4>
-                <p>Tüm bankacılık işlemlerinizi mobil veya webden güvenle tamamlayın.</p>
+                <div class="feature-icon-small">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>%100 Dijital Deneyim</h4>
+                    <p>Şubeye gitme zorunluluğu yok. Hesap açılışından kredi başvurusuna kadar her şey cebinizde.</p>
+                </div>
             </div>
 
             <div class="feature-item">
-                <div class="feature-icon">🛡</div>
-                <h4>Üst Seviye Güvenlik</h4>
-                <p>Verileriniz gelişmiş şifreleme altyapısıyla korunur.</p>
+                <div class="feature-icon-small">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>Uçtan Uca Güvenlik</h4>
+                    <p>Verileriniz ve varlıklarınız, uluslararası standartlarda şifreleme teknolojileri ile korunur.</p>
+                </div>
             </div>
 
             <div class="feature-item">
-                <div class="feature-icon">🤝</div>
-                <h4>Müşteri Desteği</h4>
-                <p>7/24 canlı destek ile her zaman yanınızdayız.</p>
+                <div class="feature-icon-small">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>7/24 Kesintisiz Destek</h4>
+                    <p>Yapay zeka asistanımız ve uzman müşteri temsilcilerimiz günün her saati yanınızda.</p>
+                </div>
             </div>
         </div>
     </section>
 
 </main>
-
-<script src="~/js/site.js"></script>

@@ -1,32 +1,34 @@
-﻿<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+﻿@{
+    ViewData["Title"] = "Şubelerimiz";
+}
 
-<h1>Şubelerimiz ve ATM'ler</h1>
+<link rel="stylesheet" href="~/css/Location/index.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-<div id="map" style="height:600px; width:100%;"></div>
+<div class="location-wrapper">
+    <div class="container">
+        <h1 class="page-title">Şubelerimiz ve ATM'ler</h1>
 
-<script>
-    var map = L.map('map').setView([37.7648, 30.5566], 13);
+        <div id="map"></div>
+    </div>
+</div>
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-    }).addTo(map);
+@section Scripts {
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    L.marker([37.75903113584111, 30.547866759982814])
-        .addTo(map)
-        .bindPopup("100. yıl şubesi - Isparta Merkez");
-    L.marker([37.8300017719266, 30.524395550128755])
-        .addTo(map)
-        .bindPopup("Batı şubesi - Isparta Merkez");
-    L.marker([37.764786631361005, 30.55094488242021])
-        .addTo(map)
-        .bindPopup("Meydan ATM - Isparta Merkez");
-    L.marker([37.78230763832313, 30.54481166062306])
-        .addTo(map)
-        .bindPopup("IYAŞ ATM - Isparta Merkez");
-    L.marker([37.76460003007086, 30.557356015806686])
-        .addTo(map)
-        .bindPopup("ATATÜRK ATM - Isparta Merkez");
+    <script>
+        var map = L.map('map').setView([37.7648, 30.5566], 13);
 
-</script>
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
+        // Marker Tanımlamaları
+        L.marker([37.75903113584111, 30.547866759982814]).addTo(map).bindPopup("100. Yıl Şubesi<br><small>Isparta Merkez</small>");
+        L.marker([37.8300017719266, 30.524395550128755]).addTo(map).bindPopup("Batı Şubesi<br><small>Isparta Merkez</small>");
+        L.marker([37.764786631361005, 30.55094488242021]).addTo(map).bindPopup("Meydan ATM<br><small>7/24 Açık</small>");
+        L.marker([37.78230763832313, 30.54481166062306]).addTo(map).bindPopup("IYAŞ ATM<br><small>AVM Girişi</small>");
+        L.marker([37.76460003007086, 30.557356015806686]).addTo(map).bindPopup("ATATÜRK ATM<br><small>Park Yanı</small>");
+    </script>
+}

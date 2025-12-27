@@ -1,0 +1,191 @@
+﻿/* --- GENEL SAYFA YAPISI --- */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Hafif mavi-gri kurumsal arka plan */
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* --- LOGO KARTI --- */
+.login-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 440px; /* Biraz daha geniş ve ferah */
+    padding: 50px 40px;
+    border-radius: 24px;
+    /* Derinlik hissi veren gölge */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Kartın üstüne kurumsal çizgi */
+    .login-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    }
+
+/* --- HEADER --- */
+.login-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.login-logo {
+    height: 60px; /* Logo boyutu ideal */
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-header h2 {
+    color: #0f172a;
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+.login-header p {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* --- FORM ELEMANLARI --- */
+.input-group {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+    .input-group label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #334155;
+        font-size: 0.9rem;
+    }
+
+    .input-group input {
+        padding: 14px 16px;
+        font-size: 1rem;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 12px;
+        background-color: #f8fafc;
+        color: #0f172a;
+        outline: none;
+        transition: all 0.25s ease;
+    }
+
+        .input-group input::placeholder {
+            color: #cbd5e1;
+        }
+
+        /* Input Focus Efekti */
+        .input-group input:focus {
+            border-color: #3b82f6;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+/* Hata Mesajları */
+.error-text {
+    color: #e11d48;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+/* Beni Hatırla */
+.remember-me-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    cursor: pointer;
+}
+
+    .remember-me-group input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: #1e3a8a; /* Checkbox rengi */
+    }
+
+    .remember-me-group label {
+        font-size: 0.9rem;
+        color: #475569;
+        font-weight: 500;
+        cursor: pointer;
+        margin-bottom: 0;
+        user-select: none;
+    }
+
+/* --- BUTON --- */
+.btn-full {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #1e3a8a;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.2);
+}
+
+    .btn-full:hover {
+        background-color: #172a63;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.3);
+    }
+
+/* --- LİNKLER (Şifremi Unuttum / Kayıt Ol) --- */
+.form-links {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+    .form-links a {
+        text-decoration: none;
+        font-weight: 600;
+        color: #64748b;
+        transition: 0.2s;
+        position: relative;
+    }
+
+        .form-links a:hover {
+            color: #1e3a8a;
+        }
+
+        /* Linklerin altına hoverda çizgi gelsin */
+        .form-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #1e3a8a;
+            transition: width 0.3s;
+        }
+
+        .form-links a:hover::after {
+            width: 100%;
+        }

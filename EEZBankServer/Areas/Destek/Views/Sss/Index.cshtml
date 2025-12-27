@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Sıkça Sorulan Sorular";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Ana Layout'u kullanması için
+}
+
+<link rel="stylesheet" href="~/css/Areas/Destek/sss.css" />
+
+<div class="faq-wrapper">
+    <div class="container">
+
+        <div class="faq-header">
+            <span class="category-badge">Yardım Merkezi</span>
+            <h1 class="faq-title">Sıkça Sorulan Sorular</h1>
+            <p class="faq-subtitle">
+                Bankacılık işlemleri, hesap güvenliği ve mobil uygulama hakkında merak ettiğiniz tüm soruların cevapları burada.
+            </p>
+        </div>
+
+        <div class="accordion-container">
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    EEZ Bank mobilden nasıl müşteri olabilirim?
+                    <div class="icon-toggle"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Uygulamamızı indirdikten sonra "Müşteri Ol" butonuna tıklayarak kimlik tarama ve yüz tanıma adımlarını tamamlayıp, görüntülü görüşme ile dakikalar içinde müşterimiz olabilirsiniz.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    FAST limiti ne kadar?
+                    <div class="icon-toggle"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        FAST (Fonların Anlık ve Sürekli Transferi) sistemi ile 7/24 anlık para transferi yapabilirsiniz. Güncel işlem limitimiz tek seferde 50.000 TL'dir.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Şifremi unuttum, ne yapmalıyım?
+                    <div class="icon-toggle"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Giriş ekranında bulunan "Şifremi Unuttum" bağlantısına tıklayarak, kart bilgileriniz veya T.C. Kimlik numaranız ile yeni şifrenizi güvenle oluşturabilirsiniz.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Hesap işletim ücreti alıyor musunuz?
+                    <div class="icon-toggle"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Hayır. EEZ Bank'ta vadesiz hesaplarınızdan hesap işletim ücreti, EFT veya Havale ücreti alınmamaktadır.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Yurt dışı kullanımına kartımı nasıl açarım?
+                    <div class="icon-toggle"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Mobil uygulama üzerinden "Kart Ayarları" menüsüne girerek kartınızı saniyeler içinde yurt dışı alışverişlerine açıp kapatabilirsiniz.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Sss.js"></script>
+}

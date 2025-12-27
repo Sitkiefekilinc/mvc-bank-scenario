@@ -1,7 +1,74 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
-
+    ViewData["Title"] = "Gizlilik Politikası";
 }
 
+<link rel="stylesheet" href="~/css/Home/privacy.css" />
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="privacy-wrapper">
+    <div class="container">
+
+        <div class="privacy-header">
+            <h1>Gizlilik Politikası ve KVKK</h1>
+            <p class="last-updated">Son Güncelleme: @DateTime.Now.ToString("dd MMMM yyyy")</p>
+        </div>
+
+        <div class="privacy-content-card">
+
+            <div class="policy-section">
+                <h2 class="policy-title">1. Veri Sorumlusu</h2>
+                <p class="policy-text">
+                    EEZ Bank A.Ş. olarak, kişisel verilerinizin güvenliği hususuna azami hassasiyet göstermekteyiz.
+                    Bu bilinçle, ürün ve hizmetlerimizden faydalanan kişiler dahil olmak üzere, Bankamız ile ilişkili
+                    tüm şahıslara ait her türlü kişisel verinin 6698 sayılı Kişisel Verilerin Korunması Kanunu
+                    ("KVK Kanunu")'na uygun olarak işlenerek, muhafaza edilmesine büyük önem atfetmekteyiz.
+                </p>
+            </div>
+
+            <div class="policy-section">
+                <h2 class="policy-title">2. Kişisel Verilerin Toplanması</h2>
+                <p class="policy-text">
+                    Bankamız tarafından sağlanan hizmet ve ticari faaliyetlere bağlı olarak değişkenlik gösterebilmekle birlikte;
+                    otomatik ya da otomatik olmayan yöntemlerle, şubelerimiz, genel müdürlük birimlerimiz, internet şubesi,
+                    çağrı merkezi, mobil uygulamalar ve benzeri vasıtalarla sözlü, yazılı ya da elektronik olarak toplanmaktadır.
+                </p>
+                <ul class="policy-list">
+                    <li>Kimlik Bilgileri (Ad, Soyad, T.C. Kimlik No)</li>
+                    <li>İletişim Bilgileri (Adres, Telefon, E-posta)</li>
+                    <li>Finansal Bilgiler (Hesap Bakiyesi, Kredi Notu)</li>
+                    <li>İşlem Güvenliği Bilgileri (IP Adresi, Giriş Logları)</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2 class="policy-title">3. Verilerin İşlenme Amacı</h2>
+                <p class="policy-text">
+                    Toplanan kişisel verileriniz, Bankamız tarafından sunulan ürün ve hizmetlerden sizleri faydalandırmak
+                    için gerekli çalışmaların iş birimlerimiz tarafından yapılması, Bankamızın ve Bankamızla iş ilişkisi
+                    içerisinde olan kişilerin hukuki ve ticari güvenliğinin temini amacıyla işlenmektedir.
+                </p>
+            </div>
+
+            <div class="policy-section">
+                <h2 class="policy-title">4. Çerez (Cookie) Politikası</h2>
+                <p class="policy-text">
+                    EEZ Bank web sitesi ve mobil uygulamasında, kullanıcı deneyimini iyileştirmek ve hizmet kalitesini
+                    artırmak amacıyla çerezler kullanılmaktadır. Tarayıcı ayarlarınızdan çerez tercihlerinizi dilediğiniz
+                    zaman değiştirebilirsiniz.
+                </p>
+            </div>
+
+            <div class="policy-section">
+                <h2 class="policy-title">5. İletişim</h2>
+                <p class="policy-text">
+                    Kişisel verilerinizle ilgili haklarınızı kullanmak veya gizlilik politikamız hakkında soru sormak için
+                    bizimle iletişime geçebilirsiniz.
+                </p>
+                <div class="contact-box">
+                    <p><i class="fas fa-envelope me-2"></i> E-Posta: <a href="mailto:kvkk@eezbank.com">kvkk@eezbank.com</a></p>
+                    <p class="mt-2"><i class="fas fa-phone me-2"></i> Çağrı Merkezi: 444 0 339</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

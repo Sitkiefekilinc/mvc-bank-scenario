@@ -1,0 +1,228 @@
+﻿/* Premium Register Sayfası */
+
+/* --- GENEL SAYFA YAPISI --- */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Login sayfasıyla aynı kurumsal arka plan */
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    padding: 40px 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* --- ANA KART --- */
+.login-card {
+    background: #ffffff;
+    width: 100%;
+    /* max-width inline style olarak View'dan geliyor (800px), CSS ile override etmeye gerek yok */
+    padding: 50px 45px;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Kartın üstüne kurumsal çizgi */
+    .login-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    }
+
+/* --- HEADER --- */
+.login-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+    .login-header h2 {
+        color: #0f172a;
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .login-header p {
+        color: #64748b;
+        font-size: 1rem;
+        margin: 0;
+    }
+
+/* --- FORM ELEMANLARI --- */
+.input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+    .input-group label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #334155;
+        font-size: 0.9rem;
+    }
+
+    .input-group input,
+    .input-group textarea,
+    .form-select-custom {
+        padding: 14px 16px;
+        font-size: 1rem;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 12px;
+        background-color: #f8fafc;
+        color: #0f172a;
+        outline: none;
+        transition: all 0.25s ease;
+        width: 100%; /* Taşmaları engeller */
+    }
+
+/* Placeholder Rengi */
+::placeholder {
+    color: #cbd5e1;
+}
+
+/* Focus Efekti */
+.input-group input:focus,
+.input-group textarea:focus,
+.form-select-custom:focus {
+    border-color: #3b82f6;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* --- YAN YANA INPUTLAR (GRID) --- */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* Mobilde tek sütuna düşsün */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .login-card {
+        padding: 30px 20px;
+    }
+}
+
+/* --- SELECT BOX (Özel Tasarım) --- */
+.form-select-custom {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231e3a8a' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+}
+
+/* --- ÖZEL ALANLAR (Kurumsal/Ticari) --- */
+.special-fields {
+    background-color: #f0f9ff; /* Çok açık mavi */
+    padding: 30px;
+    border-radius: 16px;
+    margin: 30px 0;
+    border: 1px dashed #3b82f6; /* Kesikli mavi çizgi ile ayrışma */
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-subtitle {
+    color: #1e3a8a;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(30, 58, 138, 0.1);
+    padding-bottom: 10px;
+}
+
+/* --- SÖZLEŞME ONAY KUTUSU --- */
+.agreement-group {
+    margin-bottom: 30px;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+    .checkbox-wrapper input[type="checkbox"] {
+        margin-top: 4px; /* Metinle hizalamak için */
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        accent-color: #1e3a8a;
+    }
+
+    .checkbox-wrapper label {
+        font-size: 0.95rem;
+        color: #475569;
+        cursor: pointer;
+        line-height: 1.5;
+    }
+
+/* --- BUTON --- */
+.btn-full {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #1e3a8a;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.2);
+}
+
+    .btn-full:hover {
+        background-color: #172a63;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.3);
+    }
+
+/* --- HATA MESAJLARI --- */
+.error-text {
+    color: #e11d48;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    font-weight: 500;
+    display: block;
+}
+
+.input-validation-error {
+    border-color: #e11d48 !important;
+    background-color: #fff1f2 !important;
+}
+
+/* Ayırıcı Çizgi */
+hr {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 30px 0;
+}

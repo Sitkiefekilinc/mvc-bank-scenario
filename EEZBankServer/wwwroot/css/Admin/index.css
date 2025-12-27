@@ -1,0 +1,175 @@
+﻿/* ADMIN PANELİ STİLLERİ */
+
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--light-color);
+}
+
+/* --- SIDEBAR --- */
+.admin-sidebar {
+    width: 260px;
+    background-color: var(--eez-dark);
+    color: #fff;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.nav-brand {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+    .nav-brand .logo {
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+.admin-nav {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.admin-nav-link {
+    display: block;
+    padding: 15px 25px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: 0.3s;
+    border-left: 4px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .admin-nav-link:hover, .admin-nav-link.active {
+        background: rgba(255,255,255,0.05);
+        color: #fff;
+        border-left-color: var(--eez-secondary);
+    }
+
+/* --- MAIN AREA --- */
+.admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Taşmaları engellemek için */
+}
+
+.admin-header {
+    background: #fff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--eez-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Toggle Button */
+.nav-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+    .nav-toggle span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: var(--eez-dark);
+        margin-bottom: 5px;
+    }
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* --- DASHBOARD CARDS --- */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.service-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--eez-border);
+    transition: transform 0.2s;
+}
+
+    .service-card:hover {
+        transform: translateY(-5px);
+    }
+
+.service-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background-color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--eez-dark);
+    margin-bottom: 1.5rem;
+}
+
+/* --- TABLE --- */
+.rates-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 8px 8px 0 0;
+    font-weight: 700;
+    color: var(--eez-text-muted);
+    font-size: 0.85rem;
+}
+
+.rate-row-modern {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    padding: 15px;
+    border-bottom: 1px solid var(--eez-border);
+    align-items: center;
+}
+
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+    .badge.success {
+        background: #d1fae5;
+        color: #047857;
+    }

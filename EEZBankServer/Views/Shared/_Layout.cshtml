@@ -4,56 +4,66 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EEZ Bank</title>
-    <link rel="stylesheet" href="~/css/site.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="~/css/layout.css" />
+    
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter..." rel="stylesheet">
+
+    @await RenderSectionAsync("Styles", required: false)
 </head>
-<body>
-    <header class="navbar">
+<body class="eez-body">
+    <header class="eez-navbar">
         <div class="container">
-            <nav class="nav-content">
-                <div class="nav-brand">
-                    <a href="/" class="logo-link">
-                        <img src="~/images/eez-bank-logo.png" alt="EEZ Bank Logo" class="logo-img" />
+            <nav class="eez-nav-content">
+                <div class="eez-nav-brand">
+                    <a href="/" class="eez-logo-link">
+                        <img src="~/images/eez-bank-logo.png" alt="EEZ Bank Logo" class="eez-logo-img" />
                     </a>
                 </div>
 
-                <button class="nav-toggle" id="navToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <button class="eez-nav-toggle" id="navToggle">
+                    <span></span><span></span><span></span>
                 </button>
 
-                <ul class="nav-menu" id="navMenu">
-                    <li class="nav-item">
-                        <a asp-controller="Location" asp-action="Index" class="nav-link">Şube ve Atm Bul</a>
+                <ul class="eez-nav-menu" id="navMenu">
+                    <li class="eez-nav-item">
+                        <a asp-controller="Location" asp-action="Index" class="eez-nav-link">Şube ve Atm Bul</a>
                     </li>
-                    <li class="nav-item">
-                        <a asp-controller="Home" asp-action="Hizmetler" class="nav-link">Hizmetler</a>
+                    <li class="eez-nav-item">
+                        <a asp-controller="Home" asp-action="Hizmetler" class="eez-nav-link">Hizmetler</a>
                     </li>
-                    <li class="nav-item">
-                        <a asp-controller="Home" asp-action="Hakkımızda" class="nav-link">Hakkımızda</a>
+                    <li class="eez-nav-item">
+                        <a asp-controller="Home" asp-action="Hakkımızda" class="eez-nav-link">Hakkımızda</a>
                     </li>
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        @* GİRİŞ YAPMIŞ KULLANICI MENÜSÜ *@
-                        <li class="nav-item user-profile-item">
-                            <a asp-controller="Account" asp-action="Profile" class="nav-link user-welcome">
-                                <i class="fas fa-user-circle"></i> Hoş Geldin,
-                                <strong>@User.FindFirst("FullName")?.Value</strong>
+                        @* GİRİŞ YAPMIŞ KULLANICI PANELLERİ *@
+                        <li class="eez-nav-item">
+                            <a asp-controller="Account" asp-action="Profile" class="eez-user-btn">
+                                <i class="fas fa-user-circle"></i> @User.FindFirst("FullName")?.Value
                             </a>
                         </li>
-                        <li class="nav-item nav-item-btn">
-                            <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger btn-sm">Çıkış Yap</a>
+                        <li class="eez-nav-item">
+                            <a asp-controller="Account" asp-action="Logout" class="eez-btn eez-btn-danger eez-btn-sm">Çıkış Yap</a>
                         </li>
                     }
                     else
                     {
-                        @* GİRİŞ YAPMAMIŞ KULLANICI MENÜSÜ *@
-                        <li class="nav-item">
-                            <a asp-controller="Account" asp-action="Register" class="nav-link">Müşteri Ol</a>
+                        @* MİSAFİR KULLANICI PANELLERİ *@
+                        <li class="eez-nav-item">
+                            <a asp-controller="Account" asp-action="Register" class="eez-nav-link">Müşteri Ol</a>
                         </li>
-                        <li class="nav-item nav-item-btn">
-                            <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-sm">Giriş Yap</a>
+                        <li class="eez-nav-item">
+                            <a asp-controller="Account" asp-action="Login" class="eez-btn eez-btn-primary eez-btn-sm">Giriş Yap</a>
                         </li>
                     }
                 </ul>
@@ -61,87 +71,54 @@
         </div>
     </header>
 
-    <main>
+    <main role="main" class="ee-main-content">
         @RenderBody()
     </main>
 
-    <footer class="footer">
+    <footer class="eez-footer">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-column">
+            <div class="eez-footer-grid">
+                <div class="eez-footer-column">
                     <h4>EEZ Bank</h4>
                     <p>Güvenli ve modern bankacılık hizmetleri</p>
                 </div>
 
-                <div class="footer-column">
+                <div class="eez-footer-column">
                     <h4>Hızlı Linkler</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Hakkımızda</a></li>
-                        <li><a href="#">Hizmetler</a></li>
-                        <li><a href="#">İletişim</a></li>
-                        <li><a href="#">Kariyer</a></li>
+                    <ul class="eez-footer-links">
+                        <li><a href="/Home/Hakkımızda">Hakkımızda</a></li>
+                        <li><a href="/Home/Hizmetler">Hizmetler</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-column">
+                <div class="eez-footer-column">
                     <h4>Ürünler</h4>
-                    <ul class="footer-links">
+                    <ul class="eez-footer-links">
                         <li><a href="#">Hesaplar</a></li>
-                        <li><a href="#">Kredi Kartları</a></li>
-                        <li><a href="#">Krediler</a></li>
-                        <li><a href="#">Yatırım</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-column">
+                <div class="eez-footer-column">
                     <h4>Destek</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">SSS</a></li>
-                        <li><a href="#">Güvenlik</a></li>
-                        <li><a href="#">Gizlilik Politikası</a></li>
-                        <li><a href="#">Kullanım Şartları</a></li>
+                    <ul class="eez-footer-links">
+                        <li><a asp-area="Destek" asp-controller="Sss" asp-action="Index" >SSS</a></li>
+                        <li><a asp-controller="home" asp-action="privacy" >Gizlilik Politikası</a></li>
                     </ul>
                 </div>
             </div>
 
-            <div class="footer-bottom">
-                <p>&copy; 2024 EEZ Bank. Tüm hakları saklıdır.</p>
+            <div class="eez-footer-bottom text-center">
+                <p>&copy; @DateTime.Now.Year EEZ Bank. Tüm hakları saklıdır.</p>
             </div>
         </div>
     </footer>
 
-    <style>
-        .user-welcome {
-            color: var(--dark-color);
-            font-size: 0.9rem;
-        }
-
-            .user-welcome strong {
-                color: var(--primary-color);
-                margin-left: 5px;
-            }
-
-        .btn-outline-danger {
-            border: 1px solid #dc2626;
-            color: #dc2626;
-            background: transparent;
-            padding: 5px 15px;
-            border-radius: 6px;
-            transition: 0.3s;
-        }
-
-            .btn-outline-danger:hover {
-                background: #dc2626;
-                color: white;
-            }
-    </style>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script src="~/js/site.js"></script>
+    <script src="~/js/eez-core.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
-    
 </body>
 </html>
