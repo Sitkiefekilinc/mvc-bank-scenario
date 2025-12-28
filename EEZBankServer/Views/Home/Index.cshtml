@@ -11,64 +11,113 @@
             <div class="col-12">
                 @if (!User.Identity.IsAuthenticated)
                 {
-                    <div class="hero-card shadow-lg">
-                        <div class="hero-overlay"></div>
-                        <div class="hero-content">
-                            <span class="badge bg-accent mb-3">Güvenli Liman</span>
-                            <h1 class="display-5 fw-bold text-white">Bankacılığın <br /> En Dijital Hali</h1>
-                            <p class="lead text-white-50">Sıra beklemeden, şubeye gitmeden tüm işlemleriniz cebinizde.</p>
-                            <div class="d-flex gap-3 mt-4">
-                                <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg px-5 shadow-sm">Müşteri Ol</a>
+
+                    <div class="hero-premium">
+                        <div class="hero-premium-content">
+                            <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill fw-bold">
+                                <i class="fas fa-star me-1"></i> Yılın Parlayan Dijital Bankası
+                            </span>
+                            <h1 class="hero-title">Geleceğin Bankacılığı <br /> Bugün Cebinizde.</h1>
+                            <p class="hero-desc">
+                                EEZ Bank ile finansal özgürlüğün tadını çıkarın. Şube yok, sıra yok, masraf yok.
+                                Sadece hız ve güven var.
+                            </p>
+
+                            <div class="d-flex gap-3 flex-wrap">
+                                <a asp-controller="Account" asp-action="Register" class="btn btn-light text-primary btn-lg px-5 shadow-sm fw-bold">
+                                    Hemen Müşteri Ol <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                                <a asp-controller="Home" asp-action="Hizmetler" class="btn btn-outline-light btn-lg px-4">
+                                    Keşfet
+                                </a>
+                            </div>
+
+                            <div class="trust-badges">
+                                <div class="badge-item"><i class="fas fa-shield-alt"></i> Uçtan Uca Güvenlik</div>
+                                <div class="badge-item"><i class="fas fa-user-clock"></i> 7/24 Canlı Destek</div>
+                                <div class="badge-item"><i class="fas fa-globe"></i> Global İşlemler</div>
                             </div>
                         </div>
+
                     </div>
                 }
                 else
                 {
-                    <div class="welcome-header d-flex justify-content-between align-items-end">
-                        <div>
-                            <h2 class="fw-bold mb-1">Tekrar Hoş Geldin, @User.FindFirst("FullName")?.Value</h2>
-                            <p class="text-secondary mb-0">Hızlı menü üzerinden işlemlerine devam edebilirsin.</p>
+                    <div class="dashboard-hero">
+                        <div class="user-welcome">
+                            <h2>Merhaba, @User.FindFirst("FullName")?.Value</h2>
+                            <p>Nasıl bir işlem yapmak istersin?</p>
+
+                            <div class="mt-3">
+                                <span class="text-muted small"><i class="far fa-clock me-1"></i> Son giriş: @DateTime.Now.ToString("dd.MM.yyyy HH:mm")</span>
+                            </div>
                         </div>
-                        <div class="date-chip shadow-sm">
-                            <i class="far fa-calendar-check me-2"></i> @DateTime.Now.ToString("dd MMM yyyy")
+
+                        <div class="account-summary-card">
+                            <span class="balance-label">Toplam Varlıklarım</span>
+                            <div class="balance-amount">
+                                <span id="totalBalance" data-visible="true" data-value="₺ 42.500,00">₺ 42.500,00</span>
+
+                                <button class="btn btn-sm btn-link text-white p-0 ms-2" onclick="toggleBalance(this)" title="Gizle/Göster">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+
+                            <div class="account-iban" onclick="copyIban('TR12 0000 0000 0000 0000 0000 00')">
+                                <span>TR12 0000 ... 0000</span>
+                                <i class="far fa-copy ms-auto"></i>
+                            </div>
                         </div>
                     </div>
                 }
             </div>
         </div>
 
-        <div class="row section-gap g-5">
+        <div class="row section-gap g-4">
+
             <div class="col-lg-8">
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <div class="nav-action-card shadow-sm h-100">
+                <div class="row g-4 h-100">
+                    <div class="col-md-4">
+                        <div class="nav-action-card">
                             <div class="icon-box bg-soft-blue"><i class="fas fa-paper-plane"></i></div>
-                            <div class="card-text">
-                                <h5>Hızlı Transfer</h5>
-                                <p>7/24 kesintisiz FAST gönderimi yapın.</p>
-                            </div>
+                            <h5>Hızlı Transfer</h5>
+                            <p>IBAN'a veya Kolas Adres'e 7/24 anında para gönderin.</p>
                             <a href="#" class="stretched-link"></a>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="nav-action-card shadow-sm h-100">
-                            <div class="icon-box bg-soft-purple"><i class="fas fa-wallet"></i></div>
-                            <div class="card-text">
-                                <h5>Fatura Ödeme</h5>
-                                <p>Anlaşmalı tüm kurumlara ödeme yapın.</p>
-                            </div>
-                            <a href="#" class="stretched-link"></a>
+
+                    <div class="col-md-4">
+                        <div class="nav-action-card">
+                            <div class="icon-box bg-soft-purple"><i class="fas fa-mobile-alt"></i></div>
+                            <h5>Dijital Bankacılık</h5>
+                            <p>Fatura ödemeden yatırım işlemlerine kadar her şey cebinizde.</p>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <a asp-controller="Account" asp-action="Register" class="stretched-link"></a>
+                            }
+							else
+							{
+								<a asp-controller="Account" asp-action="Profile" class="stretched-link"></a>
+							}
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="nav-action-card">
+                            <div class="icon-box bg-soft-orange"><i class="fas fa-user-plus"></i></div>
+                            <h5>Hesap Aç</h5>
+                            <p>Şubeye gitmeden, birkaç tıkla anında EEZ'li olun.</p>
+                            <a asp-controller="Account" asp-action="HesapOlustur" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            
-                    <div class="sticky-widget">
-                        @await Component.InvokeAsync("DovizKurlari")
-                    </div>
-                
+            <div class="col-lg-4">
+                <div class="sticky-widget">
+                    @await Component.InvokeAsync("DovizKurlari")
+                </div>
+            </div>
         </div>
 
         <div class="row section-gap">
@@ -87,13 +136,11 @@
                         <div class="col-md-8 p-5">
                             <h4 class="fw-bold text-dark mb-3">EEZ Bank ile İlk Kredinize %0 Faiz!</h4>
                             <p class="text-secondary mb-4">Yeni müşterilerimize özel, 20.000 TL'ye kadar 6 ay vadeli ihtiyaç kredisinde faizleri sıfırladık. Üstelik dosya masrafsız!</p>
-
                             <div class="benefits-row d-flex gap-4 mb-4">
                                 <div class="benefit"><i class="fas fa-check-circle text-success"></i> %0 Faiz</div>
                                 <div class="benefit"><i class="fas fa-check-circle text-success"></i> Masrafsız</div>
                                 <div class="benefit"><i class="fas fa-check-circle text-success"></i> Anında Onay</div>
                             </div>
-
                             <div class="d-flex align-items-center gap-3">
                                 <button class="btn btn-primary btn-lg rounded-pill px-5">Hemen Başvur</button>
                                 <span class="text-muted small">*Kampanya 31 Aralık'a kadar geçerlidir.</span>

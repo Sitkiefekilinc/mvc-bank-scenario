@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EEZBankServer.Models
 {
@@ -6,6 +7,7 @@ namespace EEZBankServer.Models
     {
         [Key]
         public  Guid TicariId { get; set; } = Guid.NewGuid();
+        [ForeignKey("Users")]
         public Guid UserId { get; set; }
         public UserAccountInfos User { get; set; }
 

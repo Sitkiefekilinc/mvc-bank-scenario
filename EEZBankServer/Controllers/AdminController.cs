@@ -18,7 +18,7 @@ namespace EEZBankServer.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.KullaniciSayisi = await _context.Users.CountAsync();
-            ViewBag.BakiyelerToplami = await _context.Users.SumAsync(u => u.UserBalance);
+            //ViewBag.BakiyelerToplami = await _context.Users.SumAsync(u => u.UserBalance);
             return View();
         }
         [HttpPost]
@@ -36,8 +36,6 @@ namespace EEZBankServer.Controllers
                         return BCrypt.Net.BCrypt.HashPassword(rawPassword);
                     })
                     .RuleFor(u => u.UserPasswordAgain, (f, u) => u.UserPassword) 
-                    .RuleFor(u => u.UserBalance, f => f.Finance.Amount(500, 100000))
-                    .RuleFor(u => u.UserIban, f => f.Finance.Iban(false,"TR"))
                     .RuleFor(u => u.UserPhoneNumber, f => f.Phone.PhoneNumber("0532#######"))
                     .RuleFor(u => u.TcKimlikNo, f => f.Random.ReplaceNumbers("###########"))
                     .RuleFor(u => u.UserBirthDate, f => f.Date.Past(40, DateTime.Now.AddYears(-18)))
@@ -50,6 +48,15 @@ namespace EEZBankServer.Controllers
                 foreach (var user in fakeUsers)
                 {
                     await _context.Users.AddAsync(user);
+
+                    var hesapFaker = new Faker<BankAccounts>("tr")
+                        .RuleFor(h => h.Id, f => Guid.NewGuid())
+                        .RuleFor(h => h.UserId, user.UserId)
+                        .RuleFor(h => h.AccountNumbers, f => f.Random.ReplaceNumbers("##########"))
+                        .RuleFor(h => h.Iban, f => "TR" + f.Random.ReplaceNumbers("########################"))
+                        .RuleFor(h => h.Balance, f => Math.Round(f.Finance.Amount(1000, 100000), 2))
+                        .RuleFor(h => h.CurrencyCode, "TRY")
+                        .RuleFor(h => h.CreatedDate, f => f.Date.Past(2));
                     if (user.UserType == UserTypes.Kurumsal)
                     {
                         var kurumsalFaker = new Faker<KurumsalKullaniciModel>("tr")

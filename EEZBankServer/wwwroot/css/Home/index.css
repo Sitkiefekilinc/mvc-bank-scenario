@@ -1,81 +1,233 @@
-﻿/* Home (Index) Sayfası Stilleri */
+﻿/* Home (Index) Sayfası - Final Revize */
 
 .home-wrapper {
-    padding-top: 40px; /* Layout navbar'ından sonra gelen ilk boşluk */
+    padding-top: 40px;
     background-color: #fcfdfe;
 }
 
 .section-gap {
-    margin-bottom: 70px; /* Bölümler arası dikey boşluk */
-}
-
-/* --- HERO BÖLÜMÜ --- */
-.hero-card {
-    background: url('/images/eez-bank-abstract.jpg') center/cover;
-    border-radius: 30px;
-    position: relative;
-    padding: 90px 60px;
-    overflow: hidden;
-    color: white;
-}
-
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, rgba(30,58,138,0.95) 0%, rgba(30,58,138,0.4) 100%);
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-}
-
-.btn-glass {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(10px);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.3);
-}
-
-    .btn-glass:hover {
-        background: rgba(255,255,255,0.25);
-        color: white;
-    }
-
-/* --- AKSİYON KARTLARI --- */
-.nav-action-card {
-    background: white;
-    border-radius: 20px;
-    padding: 25px;
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    transition: all 0.3s ease;
-    border: 1px solid var(--border-color, #e2e8f0);
-    /* ÖNEMLİ: stretched-link'in sınırlarını burası belirler */
+    margin-bottom: 80px;
     position: relative;
     z-index: 1;
 }
 
+/* --- PREMIUM HERO (MİSAFİR) --- */
+.hero-premium {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1e40af 100%);
+    border-radius: 30px;
+    padding: 80px 60px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+    .hero-premium::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+.hero-premium-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.hero-desc {
+    font-size: 1.15rem;
+    color: #cbd5e1;
+    margin-bottom: 35px;
+    line-height: 1.6;
+}
+
+/* Güven Rozetleri */
+.trust-badges {
+    display: flex;
+    gap: 20px;
+    margin-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+}
+
+.badge-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+    .badge-item i {
+        color: #38bdf8;
+    }
+
+/* --- DASHBOARD HERO (GİRİŞ YAPMIŞ) --- */
+.dashboard-hero {
+    background: white;
+    border-radius: 24px;
+    padding: 30px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-welcome {
+    flex: 1;
+    min-width: 250px;
+}
+
+    .user-welcome h2 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 5px;
+    }
+
+    .user-welcome p {
+        color: #64748b;
+        font-size: 0.95rem;
+    }
+
+/* Hesap Özeti Kartı */
+.account-summary-card {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 16px;
+    min-width: 320px;
+    box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+    .account-summary-card::after {
+        content: '';
+        position: absolute;
+        right: -20px;
+        bottom: -20px;
+        width: 100px;
+        height: 100px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+    }
+
+.balance-label {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.balance-amount {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.account-iban {
+    margin-top: 15px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.9rem;
+    background: rgba(0,0,0,0.2);
+    padding: 5px 10px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .account-iban:hover {
+        background: rgba(0,0,0,0.3);
+    }
+
+/* --- AKSİYON KARTLARI (TAM ORTALI VERSİYON) --- */
+.nav-action-card {
+    background: white;
+    border-radius: 24px;
+    /* İkon üstte, yazı altta, hepsi ortalı */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 25px;
+    height: 100%;
+    min-height: 280px; /* Döviz Widget'ı ile boyu eşitlemek için */
+
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
     .nav-action-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--primary-blue, #1e3a8a);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Hafif gölge efekti */
+        transform: translateY(-10px);
+        border-color: #3b82f6;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     }
 
 .icon-box {
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
+    width: 80px; /* İkon boyutu büyütüldü (Eskisi 70px idi) */
+    height: 80px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
+    margin-bottom: 25px;
+    transition: transform 0.3s ease;
 }
 
+.nav-action-card:hover .icon-box {
+    transform: scale(1.1);
+}
+
+/* Kart Metinleri */
+.nav-action-card h5 {
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 12px;
+    font-size: 1.25rem;
+}
+
+.nav-action-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #64748b;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+/* Renkler */
 .bg-soft-blue {
     background: #e0f2fe;
     color: #0369a1;
@@ -86,30 +238,16 @@
     color: #7e22ce;
 }
 
-/* --- WIDGETLAR --- */
-.widget-card {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    border: 1px solid var(--border-color, #e2e8f0);
+.bg-soft-orange {
+    background: #ffedd5;
+    color: #c2410c;
 }
 
-.widget-header {
-    padding: 15px 20px;
-    border-bottom: 1px solid var(--border-color, #e2e8f0);
-    display: flex;
-    justify-content: space-between;
-}
-
-/* --- TARIH CHIP --- */
-.date-chip {
-    background: white;
-    padding: 8px 16px;
-    border-radius: 100px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--primary-blue, #1e3a8a);
-    border: 1px solid var(--border-color, #e2e8f0);
+/* --- WIDGET --- */
+.sticky-widget {
+    position: sticky;
+    top: 100px;
+    z-index: 90;
 }
 
 /* --- KAMPANYA ALANI --- */
@@ -118,14 +256,13 @@
     border-radius: 25px;
     overflow: hidden;
     border: 1px solid #edf2f7;
-    transition: all 0.4s ease;
 }
 
 .promo-image-box {
     position: relative;
     height: 100%;
-    min-height: 250px;
-    background: #1e3a8a; /* Görsel yüklenmezse diye */
+    min-height: 300px;
+    background: #1e3a8a;
 }
 
     .promo-image-box img {
@@ -143,52 +280,73 @@
     padding: 6px 18px;
     border-radius: 50px;
     font-weight: 800;
-    text-transform: uppercase;
     font-size: 0.75rem;
-    letter-spacing: 1px;
 }
 
 .benefit {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: #4a5568;
 }
 
 .line-decorator {
-    height: 2px;
+    height: 3px;
     background: #e2e8f0;
     flex-grow: 1;
+    border-radius: 10px;
 }
 
-/* --- DOT ONLINE ANİMASYONU --- */
-.dot-online {
-    width: 10px;
-    height: 10px;
-    background-color: #10b981;
-    border-radius: 50%;
-    display: inline-block;
-    animation: pulse 2s infinite;
+/* --- MOBİL UYUMLULUK (RESPONSIVE) --- */
+@media (max-width: 992px) {
+    /* Mobil ve Tablette boşluğu biraz azaltalım */
+    .section-gap {
+        margin-bottom: 60px;
+    }
+
+    .hero-premium {
+        padding: 50px 30px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .trust-badges {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .dashboard-hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .account-summary-card {
+        width: 100%;
+        text-align: left;
+    }
+
+    /* Mobilde Widget Yapışmasın */
+    .sticky-widget {
+        position: static;
+        margin-top: 30px;
+    }
 }
 
-@keyframes pulse {
-    0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+@media (max-width: 576px) {
+    .promo-image-box {
+        min-height: 200px;
     }
 
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    .col-md-8.p-5 {
+        padding: 1.5rem !important;
     }
 
-    100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    .benefits-row {
+        flex-direction: column;
+        gap: 10px !important;
     }
-}
-
-.sticky-widget {
-    position: sticky;
-    top: 100px; 
-    z-index: 90;
 }

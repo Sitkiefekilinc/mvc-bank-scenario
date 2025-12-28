@@ -69,8 +69,6 @@ namespace EEZBankServer.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            model.UserIban = "TR" + Guid.NewGuid().ToString("N").Substring(0, 24).ToUpper();
-            ModelState.Remove(nameof(model.UserIban));
             if (model.UserType == UserTypes.Bireysel)
             {
                 ModelState.Remove(nameof(model.CorporateName));
@@ -112,8 +110,6 @@ namespace EEZBankServer.Controllers
                     UserSurname = model.UserSurname,
                     UserEmail = model.UserEmail,
                     UserPassword = BCrypt.Net.BCrypt.HashPassword(model.UserPassword),
-                    UserBalance = 0,
-                    UserIban = model.UserIban,
                     UserPhoneNumber = model.UserPhoneNumber,
                     TcKimlikNo = model.TcKimlikNo,
                     UserBirthDate = model.UserBirthDate,
@@ -176,12 +172,56 @@ namespace EEZBankServer.Controllers
 
             var userId = Guid.Parse(userIdString);
 
-            var user = await _context.Users
+            var model = new ProfileViewModel();
+            model.UserAccountInfos = await _context.Users
                 .FirstOrDefaultAsync(u => u.UserId == userId);
 
-            if (user == null) return NotFound();
+            if (model.UserAccountInfos == null) return NotFound();
+            model.Hesaplar = await _context.Hesaplar
+                .Where(a => a.UserId == userId)
+                .ToListAsync();
 
-            return View(user); 
+            return View(model); 
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult HesapOlustur()
+        {
+            return View();
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> HesapOlustur(HesapOluşturViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new { success = false, message = "Lütfen tüm alanları eksiksiz doldurunuz." });
+            }
+            try
+            {
+               var yeniHesap = new BankAccounts
+                {
+                   UserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value),
+                   AccountNumbers = Random.Shared.NextInt64(1000000000, 10000000000).ToString(),
+                   Iban = "TR" + Guid.NewGuid().ToString().Substring(0, 24),
+                   AccountName = model.AccountName,
+                   CurrencyCode = model.CurrencyCode,
+                   Balance = 0.0m,
+                };
+
+                await _context.Hesaplar.AddAsync(yeniHesap);
+                await _context.SaveChangesAsync();
+
+                return Json(new { success = true , message = "Vadesiz hesap başarıyla oluşturulmuştur."});
+
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = "Teknik bir hata oluştu: " + ex.Message });
+            }
+
         }
 
     }

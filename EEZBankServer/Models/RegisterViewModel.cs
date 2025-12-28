@@ -34,13 +34,6 @@ namespace EEZBankServer.Models
         [NotMapped]
         public string UserPasswordAgain { get; set; }
 
-        [Display(Name = "Hesap Bakiyesi:")]
-        [DataType(DataType.Currency)]
-        public decimal UserBalance { get; set; }
-
-        [Display(Name = "IBAN Numarası:")]
-        [StringLength(26, ErrorMessage = "IBAN 26 karakter olmalıdır")]
-        public string UserIban { get; set; }
 
         [Display(Name = "Telefon Numarası:")]
         [Required(ErrorMessage = "Telefon numarası zorunludur")]

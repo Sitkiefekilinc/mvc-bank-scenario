@@ -22,24 +22,13 @@ namespace EEZBankServer.Models
         public string UserEmail { get; set; }
         
         [Display(Name = "Kullanıcı Şifresi: ")]
-        [StringLength(20, MinimumLength = 8, ErrorMessage = "Şifreniz en az 8 karakter olmalı")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$",
-    ErrorMessage = "Şifreniz en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter (.,@,$,!,%,*,?,&) içermelidir.")]
-
+        [Required]
         public string UserPassword { get; set; }
         [Display(Name = "Kullanıcı Şifresi Tekrar: ")]
         [Required(ErrorMessage ="Bu alan boş bırakılamaz")]
         [Compare("UserPassword",ErrorMessage = "Şifreler uyuşmuyor")]
         [NotMapped]
         public string UserPasswordAgain { get; set; }
-
-        [Display(Name = "Hesap Bakiyesi:")]
-        [DataType(DataType.Currency)]
-        public decimal UserBalance { get; set; }
-
-        [Display(Name = "IBAN Numarası:")]
-        [StringLength(26, ErrorMessage = "IBAN 26 karakter olmalıdır")]
-        public string UserIban { get; set; }
 
         [Display(Name = "Telefon Numarası:")]
         [Required(ErrorMessage = "Telefon numarası zorunludur")]

@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Yeni Hesap Aç";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model EEZBankServer.Models.HesapOluşturViewModel 
+
+<link rel="stylesheet" href="~/css/Account/register.css" />
+
+<div class="login-page">
+    <div class="login-card" style="max-width: 500px;">
+        <div class="login-header">
+            <div class="icon-header mb-3">
+                <i class="fas fa-wallet fa-3x" style="color: #1e3a8a;"></i>
+            </div>
+            <h2>Yeni Hesap Oluştur</h2>
+            <p>Birikimlerinizi yönetmek için ek hesap açın.</p>
+        </div>
+
+        <form asp-action="HesapOlustur" id="createAccountForm" method="post">
+
+            <div class="input-group mb-4">
+                <label class="mb-3 d-block fw-bold">Para Birimi Seçiniz</label>
+
+                <div class="currency-selector">
+                    <input type="radio" asp-for="CurrencyCode" value="TRY" id="curr_try" checked hidden />
+                    <label for="curr_try" class="currency-card">
+                        <span class="flag">₺</span>
+                        <span class="name">Türk Lirası</span>
+                        <i class="fas fa-check-circle check-icon"></i>
+                    </label>
+
+                    <input type="radio" asp-for="CurrencyCode" value="USD" id="curr_usd" hidden />
+                    <label for="curr_usd" class="currency-card">
+                        <span class="flag">$</span>
+                        <span class="name">Dolar</span>
+                        <i class="fas fa-check-circle check-icon"></i>
+                    </label>
+
+                    <input type="radio" asp-for="CurrencyCode" value="EUR" id="curr_eur" hidden />
+                    <label for="curr_eur" class="currency-card">
+                        <span class="flag">€</span>
+                        <span class="name">Euro</span>
+                        <i class="fas fa-check-circle check-icon"></i>
+                    </label>
+                </div>
+                <span asp-validation-for="CurrencyCode" class="error-text"></span>
+            </div>
+
+            <div class="input-group">
+                <label asp-for="AccountName">Hesap Adı (İsteğe Bağlı)</label>
+                <input asp-for="AccountName" placeholder="Örn: Tatil Birikimim" />
+                <span class="text-muted small mt-1">Hesabınıza kolay hatırlanabilir bir isim verebilirsiniz.</span>
+            </div>
+
+            <div class="info-box bg-light p-3 rounded mb-4 border">
+                <ul class="mb-0 small text-secondary ps-3">
+                    <li>Bu işlemden <strong>ücret alınmamaktadır.</strong></li>
+                    <li>Hesap açılışı anında gerçekleşir.</li>
+                </ul>
+            </div>
+
+            <div class="agreement-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" asp-for="AcceptAgreements" id="agreeCheck" />
+                    <label for="agreeCheck">
+                        Vadesiz Hesap Sözleşmesi'ni okudum, onaylıyorum.
+                    </label>
+                </div>
+                <span asp-validation-for="AcceptAgreements" class="error-text"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">Hesabı Oluştur</button>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-link text-center w-100 mt-2 text-decoration-none">Vazgeç</a>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/js/HesapOlustur.js"></script>
+}
