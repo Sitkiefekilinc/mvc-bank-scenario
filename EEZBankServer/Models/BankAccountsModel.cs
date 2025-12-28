@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EEZBankServer.Models
 {
-    public class BankAccounts
+    public class BankAccountsModel
     {
         [Key]
-        public Guid Id { get; set; } = new Guid();
+        public Guid HesapId { get; set; } = new Guid();
 
         [Required]
         [Display(Name = "Hesap Numarası")]

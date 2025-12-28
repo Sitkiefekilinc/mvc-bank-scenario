@@ -49,8 +49,7 @@ namespace EEZBankServer.Controllers
                 {
                     await _context.Users.AddAsync(user);
 
-                    var hesapFaker = new Faker<BankAccounts>("tr")
-                        .RuleFor(h => h.Id, f => Guid.NewGuid())
+                    var hesapFaker = new Faker<BankAccountsModel>("tr")
                         .RuleFor(h => h.UserId, user.UserId)
                         .RuleFor(h => h.AccountNumbers, f => f.Random.ReplaceNumbers("##########"))
                         .RuleFor(h => h.Iban, f => "TR" + f.Random.ReplaceNumbers("########################"))

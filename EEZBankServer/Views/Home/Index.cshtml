@@ -2,6 +2,8 @@
     ViewData["Title"] = "Ana Sayfa";
 }
 
+@model EEZBankServer.Models.HesapOzetiViewModel
+
 <link rel="stylesheet" href="~/css/Home/index.css" />
 
 <div class="home-wrapper">
@@ -11,7 +13,7 @@
             <div class="col-12">
                 @if (!User.Identity.IsAuthenticated)
                 {
-
+                    /* --- DURUM 1: MİSAFİR KULLANICI --- */
                     <div class="hero-premium">
                         <div class="hero-premium-content">
                             <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill fw-bold">
@@ -38,43 +40,118 @@
                                 <div class="badge-item"><i class="fas fa-globe"></i> Global İşlemler</div>
                             </div>
                         </div>
-
                     </div>
                 }
                 else
                 {
-                    <div class="dashboard-hero">
-                        <div class="user-welcome">
-                            <h2>Merhaba, @User.FindFirst("FullName")?.Value</h2>
-                            <p>Nasıl bir işlem yapmak istersin?</p>
+                    @if (Model.Hesaplar == null || Model.Hesaplar.Count == 0)
+                    {
+                        <div class="hero-premium">
+                            <div class="hero-premium-content">
+                                <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill fw-bold">
+                                    <i class="fas fa-bolt me-1"></i> 3 Dakikada Hesabın Hazır
+                                </span>
 
-                            <div class="mt-3">
-                                <span class="text-muted small"><i class="far fa-clock me-1"></i> Son giriş: @DateTime.Now.ToString("dd.MM.yyyy HH:mm")</span>
+                                <h1 class="hero-title">
+                                    Sıfır Masraf, <br />
+                                    Sınırsız Özgürlük.
+                                </h1>
+
+                                <p class="hero-desc">
+                                    EFT/Havale ücretlerine ve hesap işletim masraflarına veda edin.
+                                    EEZ Bank ile paranızı 7/24 ücretsiz yönetin.
+                                </p>
+
+                                <div class="d-flex gap-3 flex-wrap">
+                                    <a asp-controller="Account" asp-action="HesapOlustur" class="btn btn-light text-primary btn-lg px-5 shadow-sm fw-bold">
+                                        Ücretsiz Hesap Aç <i class="fas fa-arrow-right ms-2"></i>
+                                    </a>
+                                </div>
+
+                                <div class="trust-badges">
+                                    <div class="badge-item"><i class="fas fa-check-circle"></i> Ömür Boyu Aidatsız</div>
+                                    <div class="badge-item"><i class="fas fa-shield-alt"></i> %100 Güvenli Altyapı</div>
+                                    <div class="badge-item"><i class="fas fa-mobile-alt"></i> Tamamen Dijital</div>
+                                </div>
                             </div>
                         </div>
+                    }
+                    else
+                    {
+                        var anaHesap = Model.Hesaplar.FirstOrDefault();
+                        var toplamBakiye = Model.ToplamBakiye;
+                        var kullaniciAdi = User.Identity.Name;
 
-                        <div class="account-summary-card">
-                            <span class="balance-label">Toplam Varlıklarım</span>
-                            <div class="balance-amount">
-                                <span id="totalBalance" data-visible="true" data-value="₺ 42.500,00">₺ 42.500,00</span>
+                        <div class="dashboard-hero">
+                            <div class="user-welcome d-flex flex-column justify-content-between">
+                                <div>
+                                    <h2>Merhaba, @kullaniciAdi</h2>
+                                    <p class="mb-1">Finansal durumun harika görünüyor!</p>
+                                    <span class="text-muted small">
+                                        <i class="far fa-clock me-1"></i> Son giriş: @DateTime.Now.ToString("dd.MM.yyyy HH:mm")
+                                    </span>
+                                </div>
 
-                                <button class="btn btn-sm btn-link text-white p-0 ms-2" onclick="toggleBalance(this)" title="Gizle/Göster">
-                                    <i class="fas fa-eye"></i>
-                                </button>
+                                <div class="mini-transactions mt-4">
+                                    <label class="text-muted fw-bold small mb-2" style="font-size: 0.75rem; letter-spacing: 0.5px;">SON İŞLEMLER</label>
+
+                                    @if (Model.Islemler != null && Model.Islemler.Any())
+                                    {
+                                        <div class="d-flex flex-column gap-2">
+                                            @foreach (var islem in Model.Islemler.Take(4)) 
+                                            {
+                                                <div class="d-flex align-items-center justify-content-between bg-light rounded px-3 py-2 border border-light">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <div class="icon-circle small bg-white shadow-sm text-center rounded-circle" style="width: 24px; height: 24px; line-height: 24px;">
+                                                            <i class="fas fa-exchange-alt text-primary" style="font-size: 0.7rem;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <span class="fw-bold small">@islem.Tutar.ToString("N2") ₺</span>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-light py-2 small text-muted border border-light">
+                                            <i class="fas fa-info-circle me-1"></i> Henüz işlem geçmişiniz yok.
+                                        </div>
+                                    }
+                                </div>
                             </div>
 
-                            <div class="account-iban" onclick="copyIban('TR12 0000 0000 0000 0000 0000 00')">
-                                <span>TR12 0000 ... 0000</span>
-                                <i class="far fa-copy ms-auto"></i>
+                            <div class="account-summary-card">
+                                <span class="balance-label">Toplam Varlıklarım</span>
+
+                                <div class="balance-amount">
+                                    <span id="totalBalance"
+                                          data-visible="true"
+                                          data-value="₺ @toplamBakiye.ToString("N2")">
+                                        ₺ @toplamBakiye.ToString("N2")
+                                    </span>
+
+                                    <span class="balance-label">@anaHesap.AccountName</span>
+                                    
+                                    <button class="btn btn-sm btn-link text-white p-0 ms-2" onclick="toggleBalance(this)" title="Gizle/Göster">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+
+                                @if (anaHesap != null)
+                                {
+                                    <div class="account-iban mt-3" onclick="copyIban('@anaHesap.Iban')">
+                                        <span>@anaHesap.Iban</span>
+                                        <i class="far fa-copy ms-auto"></i>
+                                    </div>
+                                }
                             </div>
                         </div>
-                    </div>
+                    }
                 }
             </div>
         </div>
 
         <div class="row section-gap g-4">
-
             <div class="col-lg-8">
                 <div class="row g-4 h-100">
                     <div class="col-md-4">
@@ -95,10 +172,10 @@
                             {
                                 <a asp-controller="Account" asp-action="Register" class="stretched-link"></a>
                             }
-							else
-							{
-								<a asp-controller="Account" asp-action="Profile" class="stretched-link"></a>
-							}
+                            else
+                            {
+                                <a asp-controller="Account" asp-action="Profile" class="stretched-link"></a>
+                            }
                         </div>
                     </div>
 
@@ -116,37 +193,6 @@
             <div class="col-lg-4">
                 <div class="sticky-widget">
                     @await Component.InvokeAsync("DovizKurlari")
-                </div>
-            </div>
-        </div>
-
-        <div class="row section-gap">
-            <div class="col-12">
-                <div class="section-title-area d-flex align-items-center mb-4">
-                    <h3 class="fw-bold m-0">Öne Çıkan Fırsatlar</h3>
-                    <div class="line-decorator ms-3"></div>
-                </div>
-
-                <div class="campaign-detail-area shadow-sm">
-                    <div class="row g-0 align-items-center">
-                        <div class="col-md-4 promo-image-box">
-                            <img src="~/images/campaign-promo.jpg" alt="Kampanya" class="img-fluid" />
-                            <div class="promo-tag">Fırsat</div>
-                        </div>
-                        <div class="col-md-8 p-5">
-                            <h4 class="fw-bold text-dark mb-3">EEZ Bank ile İlk Kredinize %0 Faiz!</h4>
-                            <p class="text-secondary mb-4">Yeni müşterilerimize özel, 20.000 TL'ye kadar 6 ay vadeli ihtiyaç kredisinde faizleri sıfırladık. Üstelik dosya masrafsız!</p>
-                            <div class="benefits-row d-flex gap-4 mb-4">
-                                <div class="benefit"><i class="fas fa-check-circle text-success"></i> %0 Faiz</div>
-                                <div class="benefit"><i class="fas fa-check-circle text-success"></i> Masrafsız</div>
-                                <div class="benefit"><i class="fas fa-check-circle text-success"></i> Anında Onay</div>
-                            </div>
-                            <div class="d-flex align-items-center gap-3">
-                                <button class="btn btn-primary btn-lg rounded-pill px-5">Hemen Başvur</button>
-                                <span class="text-muted small">*Kampanya 31 Aralık'a kadar geçerlidir.</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

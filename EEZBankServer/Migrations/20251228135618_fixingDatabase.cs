@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EEZBankServer.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class fixingDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,9 +20,7 @@ namespace EEZBankServer.Migrations
                     UserSurname = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserBalance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    UserIban = table.Column<string>(type: "nvarchar(26)", maxLength: 26, nullable: false),
-                    UserPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserPhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     TcKimlikNo = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     UserBirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Adress = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -34,6 +32,30 @@ namespace EEZBankServer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Hesaplar",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AccountNumbers = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Iban = table.Column<string>(type: "char(26)", maxLength: 26, nullable: false),
+                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CurrencyCode = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    AccountName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hesaplar", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Hesaplar_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,6 +101,51 @@ namespace EEZBankServer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Islemler",
+                columns: table => new
+                {
+                    IslemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GonderenHesapId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GonderenBankaHesabiId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AliciHesapId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AliciBankaHesabiId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IslemMiktari = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Aciklama = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Tur = table.Column<int>(type: "int", nullable: false),
+                    IslemTarihi = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Islemler", x => x.IslemId);
+                    table.ForeignKey(
+                        name: "FK_Islemler_Hesaplar_AliciBankaHesabiId",
+                        column: x => x.AliciBankaHesabiId,
+                        principalTable: "Hesaplar",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Islemler_Hesaplar_GonderenBankaHesabiId",
+                        column: x => x.GonderenBankaHesabiId,
+                        principalTable: "Hesaplar",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Hesaplar_UserId",
+                table: "Hesaplar",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Islemler_AliciBankaHesabiId",
+                table: "Islemler",
+                column: "AliciBankaHesabiId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Islemler_GonderenBankaHesabiId",
+                table: "Islemler",
+                column: "GonderenBankaHesabiId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_KurumsalKullaniciBilgileri_UserId",
                 table: "KurumsalKullaniciBilgileri",
@@ -94,10 +161,16 @@ namespace EEZBankServer.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Islemler");
+
+            migrationBuilder.DropTable(
                 name: "KurumsalKullaniciBilgileri");
 
             migrationBuilder.DropTable(
                 name: "TicariKullaniciBilgileri");
+
+            migrationBuilder.DropTable(
+                name: "Hesaplar");
 
             migrationBuilder.DropTable(
                 name: "Users");

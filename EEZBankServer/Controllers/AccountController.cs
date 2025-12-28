@@ -201,7 +201,7 @@ namespace EEZBankServer.Controllers
             }
             try
             {
-               var yeniHesap = new BankAccounts
+               var yeniHesap = new BankAccountsModel
                 {
                    UserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value),
                    AccountNumbers = Random.Shared.NextInt64(1000000000, 10000000000).ToString(),
@@ -218,6 +218,33 @@ namespace EEZBankServer.Controllers
 
             }
             catch(Exception ex)
+            {
+                return Json(new { success = false, message = "Teknik bir hata oluştu: " + ex.Message });
+            }
+
+        }
+
+        [HttpPost]
+        [Authorize]
+
+        public async Task<IActionResult> HesapGuncelle(ProfileViewModel user)
+        {
+            var existingUser = await _context.Users.FindAsync(user.UserAccountInfos.UserId);
+            if (existingUser == null)
+            {
+                return Json(new { success = false, message = "Kullanıcı bulunamadı." });
+            }
+
+            existingUser.UserEmail = user.UserAccountInfos.UserEmail;
+            existingUser.UserPhoneNumber = user.UserAccountInfos.UserPhoneNumber;
+            existingUser.Adress = user.UserAccountInfos.Adress;
+            try
+            {
+                _context.Users.Update(existingUser);
+                await _context.SaveChangesAsync();
+                return Json(new { success = true, message = "Profil bilgileriniz başarıyla güncellendi." });
+            }
+            catch (Exception ex)
             {
                 return Json(new { success = false, message = "Teknik bir hata oluştu: " + ex.Message });
             }

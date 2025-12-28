@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EEZBankServer.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20251217201903_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251228135618_fixingDatabase")]
+    partial class fixingDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,86 @@ namespace EEZBankServer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("EEZBankServer.Models.BankAccountsModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccountName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("AccountNumbers")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("Iban")
+                        .IsRequired()
+                        .HasMaxLength(26)
+                        .HasColumnType("char(26)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Hesaplar");
+                });
+
+            modelBuilder.Entity("EEZBankServer.Models.IslemlerModel", b =>
+                {
+                    b.Property<Guid>("IslemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Aciklama")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("AliciBankaHesabiId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AliciHesapId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GonderenBankaHesabiId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GonderenHesapId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("IslemMiktari")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<DateTime>("IslemTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Tur")
+                        .HasColumnType("int");
+
+                    b.HasKey("IslemId");
+
+                    b.HasIndex("AliciBankaHesabiId");
+
+                    b.HasIndex("GonderenBankaHesabiId");
+
+                    b.ToTable("Islemler");
+                });
 
             modelBuilder.Entity("EEZBankServer.Models.KurumsalKullaniciModel", b =>
                 {
@@ -106,9 +186,6 @@ namespace EEZBankServer.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
-                    b.Property<decimal>("UserBalance")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<DateTime>("UserBirthDate")
                         .HasColumnType("datetime2");
 
@@ -118,11 +195,6 @@ namespace EEZBankServer.Migrations
                     b.Property<string>("UserEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserIban")
-                        .IsRequired()
-                        .HasMaxLength(26)
-                        .HasColumnType("nvarchar(26)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -134,7 +206,8 @@ namespace EEZBankServer.Migrations
 
                     b.Property<string>("UserPhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("UserSurname")
                         .IsRequired()
@@ -147,6 +220,34 @@ namespace EEZBankServer.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("EEZBankServer.Models.BankAccountsModel", b =>
+                {
+                    b.HasOne("EEZBankServer.Models.UserAccountInfos", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EEZBankServer.Models.IslemlerModel", b =>
+                {
+                    b.HasOne("EEZBankServer.Models.BankAccountsModel", "AliciBankaHesabi")
+                        .WithMany()
+                        .HasForeignKey("AliciBankaHesabiId");
+
+                    b.HasOne("EEZBankServer.Models.BankAccountsModel", "GonderenBankaHesabi")
+                        .WithMany()
+                        .HasForeignKey("GonderenBankaHesabiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AliciBankaHesabi");
+
+                    b.Navigation("GonderenBankaHesabi");
                 });
 
             modelBuilder.Entity("EEZBankServer.Models.KurumsalKullaniciModel", b =>

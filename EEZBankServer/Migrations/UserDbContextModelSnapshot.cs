@@ -22,9 +22,9 @@ namespace EEZBankServer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EEZBankServer.Models.BankAccounts", b =>
+            modelBuilder.Entity("EEZBankServer.Models.BankAccountsModel", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("HesapId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -56,11 +56,50 @@ namespace EEZBankServer.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("HesapId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Hesaplar");
+                });
+
+            modelBuilder.Entity("EEZBankServer.Models.IslemlerModel", b =>
+                {
+                    b.Property<Guid>("IslemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Aciklama")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("AliciBankaHesabiHesapId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AliciHesapId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GonderenBankaHesabiHesapId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GonderenHesapId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("IslemMiktari")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<DateTime>("IslemTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Tur")
+                        .HasColumnType("int");
+
+                    b.HasKey("IslemId");
+
+                    b.HasIndex("AliciBankaHesabiHesapId");
+
+                    b.HasIndex("GonderenBankaHesabiHesapId");
+
+                    b.ToTable("Islemler");
                 });
 
             modelBuilder.Entity("EEZBankServer.Models.KurumsalKullaniciModel", b =>
@@ -180,7 +219,7 @@ namespace EEZBankServer.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EEZBankServer.Models.BankAccounts", b =>
+            modelBuilder.Entity("EEZBankServer.Models.BankAccountsModel", b =>
                 {
                     b.HasOne("EEZBankServer.Models.UserAccountInfos", "User")
                         .WithMany()
@@ -189,6 +228,23 @@ namespace EEZBankServer.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EEZBankServer.Models.IslemlerModel", b =>
+                {
+                    b.HasOne("EEZBankServer.Models.BankAccountsModel", "AliciBankaHesabi")
+                        .WithMany()
+                        .HasForeignKey("AliciBankaHesabiHesapId");
+
+                    b.HasOne("EEZBankServer.Models.BankAccountsModel", "GonderenBankaHesabi")
+                        .WithMany()
+                        .HasForeignKey("GonderenBankaHesabiHesapId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AliciBankaHesabi");
+
+                    b.Navigation("GonderenBankaHesabi");
                 });
 
             modelBuilder.Entity("EEZBankServer.Models.KurumsalKullaniciModel", b =>
