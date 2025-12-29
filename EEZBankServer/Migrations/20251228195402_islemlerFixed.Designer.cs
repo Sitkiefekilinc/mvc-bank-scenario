@@ -4,6 +4,7 @@ using EEZBankServer.EfCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EEZBankServer.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251228195402_islemlerFixed")]
+    partial class islemlerFixed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,7 +75,13 @@ namespace EEZBankServer.Migrations
                     b.Property<string>("Aciklama")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("AliciBankaHesabiHesapId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("AliciHesapId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GonderenBankaHesabiHesapId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("GonderenHesapId")
@@ -89,9 +98,9 @@ namespace EEZBankServer.Migrations
 
                     b.HasKey("IslemId");
 
-                    b.HasIndex("AliciHesapId");
+                    b.HasIndex("AliciBankaHesabiHesapId");
 
-                    b.HasIndex("GonderenHesapId");
+                    b.HasIndex("GonderenBankaHesabiHesapId");
 
                     b.ToTable("Islemler");
                 });
@@ -228,11 +237,11 @@ namespace EEZBankServer.Migrations
                 {
                     b.HasOne("EEZBankServer.Models.BankAccountsModel", "AliciBankaHesabi")
                         .WithMany()
-                        .HasForeignKey("AliciHesapId");
+                        .HasForeignKey("AliciBankaHesabiHesapId");
 
                     b.HasOne("EEZBankServer.Models.BankAccountsModel", "GonderenBankaHesabi")
                         .WithMany()
-                        .HasForeignKey("GonderenHesapId")
+                        .HasForeignKey("GonderenBankaHesabiHesapId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

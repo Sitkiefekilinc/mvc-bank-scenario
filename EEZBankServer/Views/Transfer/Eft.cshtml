@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Para Transferi";
+}
+
+@model TransferEftViewModel
+
+<link href="~/css/Transfer/Eft.css"></link>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+
+            <div class="text-center mb-4">
+                <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+                <h2 class="fw-bold text-dark-eez">Para Gönder</h2>
+                <p class="text-muted">7/24 FAST ile anında transfer yapın.</p>
+            </div>
+
+            <div class="transfer-card">
+                <form id="eftForm" asp-controller="Transfer" asp-action="Eft" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-4">
+                        <label class="form-label">Gönderen Hesap</label>
+                        <select asp-for="GonderenHesapId" class="form-select" id="accountSelector">
+                            <option value="">Hesap Seçiniz</option>
+                            @if (Model.KullaniciHesaplari != null)
+                            {
+                                foreach (var hesap in Model.KullaniciHesaplari)
+                                {
+                                    <option value="@hesap.HesapId" data-balance="@hesap.Balance">
+                                        @hesap.AccountName - @hesap.CurrencyCode (Bakiye: @hesap.Balance.ToString("N2"))
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <div class="mt-2 text-end d-none" id="currentBalanceDiv">
+                            <span class="text-muted small">Kullanılabilir Bakiye:</span>
+                            <span class="fw-bold text-primary" id="currentBalanceText">0,00</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Alıcı IBAN</label>
+                        <div class="input-group">
+                            <input asp-for="AliciIban" type="text" class="form-control" placeholder="TR00 0000 ..." maxlength="32" id="ibanInput">
+                            <button class="btn btn-outline-secondary" type="button" onclick="pasteIban()">
+                                <i class="far fa-clipboard"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Alıcı Ad Soyad</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="far fa-user"></i></span>
+                            <input asp-for="AliciAdSoyad" type="text" class="form-control" placeholder="Örn: Ahmet Yılmaz">
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Tutar</label>
+                            <div class="input-group">
+                                <input asp-for="Tutar" type="number" step="0.01" class="form-control fw-bold" placeholder="0.00" id="amountInput">
+                                <span class="input-group-text bg-white fw-bold">TL</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Açıklama (Opsiyonel)</label>
+                            <input asp-for="Aciklama" type="text" class="form-control" placeholder="Örn: Kira">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold shadow-sm rounded-pill">
+                        Transferi Tamamla <i class="fas fa-chevron-right ms-2"></i>
+                    </button>
+
+                    <div class="text-center mt-3">
+                        <a asp-controller="Transfer" asp-action="Index" class="text-decoration-none text-muted small">Vazgeç ve Geri Dön</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+	<script src="~/js/eft.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+}

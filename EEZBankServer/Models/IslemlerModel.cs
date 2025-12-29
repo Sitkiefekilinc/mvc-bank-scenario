@@ -10,13 +10,14 @@ namespace EEZBankServer.Models
         public Guid IslemId { get; set; } = Guid.NewGuid();
 
         [Required]
-        [ForeignKey("HesapId")]
+        
         public Guid GonderenHesapId { get; set; }
+        [ForeignKey("GonderenHesapId")]
         public virtual BankAccountsModel GonderenBankaHesabi { get; set; }
 
-        [Required]
-        [ForeignKey("HesapId")]
+        
         public Guid? AliciHesapId { get; set; }
+        [ForeignKey("AliciHesapId")]
         public virtual BankAccountsModel? AliciBankaHesabi { get; set; }
 
         [Required]

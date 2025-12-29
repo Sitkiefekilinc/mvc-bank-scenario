@@ -65,3 +65,9 @@ $(document).ready(function () {
         }
     });
 });
+
+function pasteIban() {
+    navigator.clipboard.readText().then(text => {
+        $('#ibanInput').val(text);
+    });
+}

@@ -1,0 +1,88 @@
+﻿.transfer-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #eef2f6;
+}
+
+.account-select-option {
+    display: flex;
+    justify-content: space-between;
+}
+
+.balance-badge {
+    font-size: 0.85rem;
+    background: #e0f2fe;
+    color: #0284c7;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #334155;
+    font-size: 0.9rem;
+}
+
+.form-control, .form-select {
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+}
+
+    .form-control:focus, .form-select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+.input-group-text {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    border-radius: 10px 0 0 10px;
+}
+.transfer-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #eef2f6;
+}
+
+.account-select-option {
+    display: flex;
+    justify-content: space-between;
+}
+
+.balance-badge {
+    font-size: 0.85rem;
+    background: #e0f2fe;
+    color: #0284c7;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #334155;
+    font-size: 0.9rem;
+}
+
+.form-control, .form-select {
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+}
+
+    .form-control:focus, .form-select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+.input-group-text {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    border-radius: 10px 0 0 10px;
+}

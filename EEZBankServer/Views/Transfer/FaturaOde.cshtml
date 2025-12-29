@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Fatura Ödeme";
+}
+
+@model TransferFaturaOdeViewModel
+
+<link href="~/css/Transfer/FaturaOde.css"></link>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+
+            <div class="text-center mb-4">
+                <div class="d-inline-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger rounded-circle mb-3" style="width: 70px; height: 70px; font-size: 1.8rem;">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                </div>
+                <h2 class="fw-bold text-dark-eez">Fatura Ödeme</h2>
+                <p class="text-muted">Kurum faturalarınızı anında ödeyin.</p>
+            </div>
+
+            <div class="bill-card">
+                <form id="billForm" asp-controller="Transfer" asp-action="FaturaOde" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-4">
+                        <label class="form-label">Ödeme Yapılacak Hesap</label>
+                        <select asp-for="GonderenHesapId" class="form-select border-danger border-opacity-25" id="accountSelector">
+                            <option value="">Hesap Seçiniz</option>
+                            @if (Model.KullaniciHesaplari != null)
+                            {
+                                foreach (var hesap in Model.KullaniciHesaplari)
+                                {
+                                    <option value="@hesap.HesapId" data-balance="@hesap.Balance">
+                                        @hesap.AccountName - @hesap.CurrencyCode (Bakiye: @hesap.Balance.ToString("N2"))
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <div class="mt-2 text-end d-none" id="currentBalanceDiv">
+                            <span class="text-muted small">Kullanılabilir:</span>
+                            <span class="fw-bold text-danger" id="currentBalanceText">0,00</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Kurum Seçimi</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fas fa-building text-secondary"></i></span>
+                            <select asp-for="KurumAdi" class="form-select">
+                                <option value="">Seçiniz...</option>
+                                <option value="Elektrik Dağıtım A.Ş.">Elektrik</option>
+                                <option value="Su ve Kanalizasyon İdaresi">Su</option>
+                                <option value="Doğalgaz Dağıtım">Doğalgaz</option>
+                                <option value="Türk Telekom / İnternet">İnternet</option>
+                                <option value="GSM Operatörü">Cep Telefonu</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Abone / Tesisat No</label>
+                        <div class="input-group">
+                            <input asp-for="AboneNo" type="text" class="form-control" placeholder="Fatura üzerindeki numara">
+                            <button class="btn btn-outline-secondary" type="button" title="Sorgula" onclick="simulateQuery()">
+                                <i class="fas fa-search"></i> Sorgula
+                            </button>
+                        </div>
+                        <div class="form-text small">Abone numaranızı girip 'Sorgula' butonuna basarak tutarı öğrenebilirsiniz. (Simülasyon)</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Ödenecek Tutar</label>
+                        <div class="input-group">
+                            <input asp-for="Tutar" type="number" step="0.01" class="form-control fw-bold text-danger" placeholder="0.00" id="billAmount">
+                            <span class="input-group-text fw-bold">TL</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-danger w-100 py-3 fw-bold shadow-sm rounded-pill" style="background: #be123c; border:none;">
+                        Ödemeyi Onayla <i class="fas fa-check-circle ms-2"></i>
+                    </button>
+
+                    <div class="text-center mt-3">
+                        <a asp-controller="Transfer" asp-action="Index" class="text-decoration-none text-muted small">Vazgeç</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/js/faturaOde.js"></script>
+}

@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "Transfer ve Ödemeler";
+}
+
+@model TransferIndexViewModel
+
+<link rel="stylesheet" href="~/css/Transfer/index.css" />
+
+<div class="transfer-page-root">
+
+    <div class="transfer-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="fw-black text-dark-eez mb-2">Transfer Merkezi</h2>
+                    <p class="text-secondary m-0">Para transferlerini ve fatura ödemelerini buradan yönetebilirsin.</p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <div class="d-inline-flex align-items-center bg-light px-4 py-2 rounded-pill border">
+                        <span class="text-muted small me-2">Toplam Bakiye:</span>
+                        <span class="fw-bold text-dark fs-5">
+                            ₺ @Model.Hesaplar.Sum(x => x.Balance).ToString("N2")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row g-4 mb-5">
+            <div class="col-md-6">
+                <a asp-controller="Transfer" asp-action="Eft" class="action-card theme-eft">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                    <h3 class="card-title">Para Gönder (EFT/Havale)</h3>
+                    <p class="card-desc">
+                        Başka bir EEZ Bank hesabına veya diğer bankalara 7/24 FAST ile anında para gönderin.
+                        IBAN veya Kolas (Telefon No) kullanabilirsiniz.
+                    </p>
+                    <span class="btn btn-primary action-btn">Transfer Başlat <i class="fas fa-arrow-right ms-2"></i></span>
+                </a>
+            </div>
+
+            <div class="col-md-6">
+                <a asp-controller="Transfer" asp-action="FaturaOde" class="action-card theme-bill">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h3 class="card-title">Fatura Ödeme</h3>
+                    <p class="card-desc">
+                        Elektrik, Su, Doğalgaz, İnternet ve diğer kurum faturalarınızı tek tıkla, masrafsız ödeyin.
+                        Otomatik ödeme talimatı verebilirsiniz.
+                    </p>
+                    <span class="btn btn-danger action-btn">Ödeme Yap <i class="fas fa-arrow-right ms-2"></i></span>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h4 class="fw-bold text-dark-eez m-0">Son İşlemler</h4>
+                    <a href="#" class="btn btn-sm btn-link text-decoration-none">Tümünü Gör</a>
+                </div>
+
+                <div class="recent-table-card border">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light text-muted small text-uppercase">
+                                <tr>
+                                    <th class="py-3 ps-4">İşlem Türü</th>
+                                    <th class="py-3">Açıklama / Alıcı</th>
+                                    <th class="py-3">Tarih</th>
+                                    <th class="py-3 text-end pe-4">Tutar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.SonIslemler != null && Model.SonIslemler.Any())
+                                {
+                                    @foreach (var islem in Model.SonIslemler)
+                                    {
+                                        <tr>
+                                            <td class="ps-4">
+                                                @if (islem.Tur == EEZBankServer.Models.IslemTuru.EFT || islem.Tur == EEZBankServer.Models.IslemTuru.Havale)
+                                                {
+                                                    <span class="status-badge badge-eft"><i class="fas fa-exchange-alt me-1"></i> Transfer</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="status-badge badge-bill"><i class="fas fa-file-invoice me-1"></i> Fatura</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column">
+                                                    <span class="fw-bold text-dark">
+                                                        @(islem.AliciBankaHesabi?.AccountName ?? islem.Aciklama ?? "Bilinmeyen İşlem")
+                                                    </span>
+                                                    <span class="small text-muted">@islem.Aciklama</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-muted small">
+                                                @islem.IslemTarihi.ToString("dd.MM.yyyy HH:mm")
+                                            </td>
+                                            <td class="text-end pe-4">
+                                                <span class="fw-bold text-danger">
+                                                    - @islem.IslemMiktari.ToString("N2") ₺
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4" class="text-center py-5 text-muted">
+                                            <i class="fas fa-inbox fa-2x mb-3 d-block opacity-25"></i>
+                                            Henüz bir transfer veya ödeme işleminiz bulunmuyor.
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

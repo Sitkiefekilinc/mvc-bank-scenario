@@ -1,0 +1,17 @@
+﻿.bill-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #fdf2f8; /* Hafif pembe çerçeve */
+}
+
+.form-label {
+    font-weight: 600;
+    color: #334155;
+}
+
+.form-select, .form-control {
+    padding: 12px 15px;
+    border-radius: 10px;
+}

@@ -1,0 +1,114 @@
+﻿.transfer-page-root {
+    background-color: #f8fafc;
+    min-height: 100vh;
+    padding-bottom: 50px;
+}
+
+/* --- Header --- */
+.transfer-header {
+    background: white;
+    padding: 40px 0;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 40px;
+}
+
+/* --- Action Cards --- */
+.action-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    height: 100%;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none; /* Link alt çizgisini kaldır */
+}
+
+    .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px -10px rgba(30, 58, 138, 0.15);
+        border-color: #3b82f6;
+    }
+
+.icon-wrapper {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    font-size: 2.5rem;
+    transition: transform 0.3s;
+}
+
+.action-card:hover .icon-wrapper {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+/* Renk Temaları */
+.theme-eft .icon-wrapper {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.theme-bill .icon-wrapper {
+    background: #fdf2f8;
+    color: #db2777;
+}
+
+.card-title {
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.card-desc {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.action-btn {
+    margin-top: auto; /* Butonu en alta it */
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+/* --- Recent Transactions Table --- */
+.recent-table-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.badge-eft {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.badge-bill {
+    background: #fce7f3;
+    color: #9d174d;
+}
+
+</style >
