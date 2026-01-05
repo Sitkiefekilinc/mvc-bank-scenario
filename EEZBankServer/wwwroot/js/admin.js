@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-    // Örnek Veri Ekleme (Seed Data)
     $('#btnSeedData').on('click', function (e) {
         e.preventDefault();
 
@@ -14,7 +13,6 @@
             cancelButtonText: 'Vazgeç'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Merkezi yükleniyor uyarısı
                 EEZ.ShowLoading();
 
                 fetch('/Admin/FakeVeriUret', {

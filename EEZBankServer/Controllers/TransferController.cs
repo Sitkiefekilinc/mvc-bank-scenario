@@ -191,5 +191,112 @@ namespace EEZBankServer.Controllers
             }
 
         }
+
+        [HttpGet]
+        public IActionResult IslemGecmisi()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetIslemGecmisi()
+        {
+            try
+            {
+                var draw = Request.Form["draw"].FirstOrDefault();
+                var start = Request.Form["start"].FirstOrDefault();  
+                var length = Request.Form["length"].FirstOrDefault(); 
+                var searchValue = Request.Form["search[value]"].FirstOrDefault(); 
+                var sortColumnIndex = Request.Form["order[0][column]"].FirstOrDefault(); 
+                var sortDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+
+                int pageSize = length != null ? Convert.ToInt32(length) : 10;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+                var query = _context.Islemler
+                    .Include(x => x.AliciBankaHesabi).ThenInclude(h => h.User)
+                    .Include(x => x.GonderenBankaHesabi).ThenInclude(h => h.User)
+                    .AsQueryable();
+
+                query = query.Where(x =>
+                    (x.GonderenBankaHesabi.UserId == userId) ||
+                    (x.AliciBankaHesabi != null && x.AliciBankaHesabi.UserId == userId)
+                );
+
+                if (!string.IsNullOrEmpty(searchValue))
+                {
+                    query = query.Where(x =>
+                        (x.Aciklama != null && x.Aciklama.Contains(searchValue)) ||
+                        (x.IslemMiktari.ToString().Contains(searchValue)) ||
+                        (x.AliciBankaHesabi != null && x.AliciBankaHesabi.User.UserName.Contains(searchValue)) ||
+                        (x.GonderenBankaHesabi.User.UserName.Contains(searchValue))
+                    );
+                }
+
+                var recordsTotal = await query.CountAsync();
+
+                switch (sortColumnIndex)
+                {
+                    case "1": 
+                    case "2": 
+                        query = sortDirection == "asc" ? query.OrderBy(x => x.IslemMiktari) : query.OrderByDescending(x => x.IslemMiktari);
+                        break;
+                    case "0":
+                    default:
+                        query = sortDirection == "asc" ? query.OrderBy(x => x.IslemTarihi) : query.OrderByDescending(x => x.IslemTarihi);
+                        break;
+                }
+
+                var rawData = await query
+                    .Skip(skip)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+ 
+                var data = rawData.Select(x => {
+
+                    bool gonderenBenim = x.GonderenBankaHesabi.UserId == userId;
+                    string karsiTaraf = "Bilinmiyor";
+                    string islemTuruBadge = "";
+
+
+                    if (x.Tur == IslemTuru.Odeme)
+                    {
+                        karsiTaraf = x.Aciklama ?? "Fatura";
+                        islemTuruBadge = "Fatura";
+                    }
+                    else
+                    {
+                        if (gonderenBenim)
+                            karsiTaraf = x.AliciBankaHesabi?.User != null
+                                ? $"{x.AliciBankaHesabi.User.UserName} {x.AliciBankaHesabi.User.UserSurname}"
+                                : (x.Aciklama ?? "Bilinmeyen");
+                        else
+                            karsiTaraf = x.GonderenBankaHesabi?.User != null
+                                ? $"{x.GonderenBankaHesabi.User.UserName} {x.GonderenBankaHesabi.User.UserSurname}"
+                                : "Gönderen Bilinmiyor";
+
+                        islemTuruBadge = "Transfer";
+                    }
+
+                    return new
+                    {
+                        Tarih = x.IslemTarihi.ToString("dd.MM.yyyy HH:mm"),
+                        KarsiTaraf = karsiTaraf,
+                        Aciklama = x.Tur == IslemTuru.Odeme ? "Kurum Ödemesi" : x.Aciklama,
+                        Tutar = x.IslemMiktari.ToString("N2"),
+                        Yon = gonderenBenim ? "out" : "in", 
+                        Tur = islemTuruBadge
+                    };
+                });
+
+                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { draw = 0, recordsFiltered = 0, recordsTotal = 0, data = "" });
+            }
+        }
     }
 }

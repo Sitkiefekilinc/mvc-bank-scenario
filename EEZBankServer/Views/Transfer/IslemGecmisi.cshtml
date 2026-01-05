@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "İşlem Geçmişi";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" />
+<link rel="stylesheet" href="~/css/Transfer/IslemGecmisi.css"></link>
+
+<div class="container py-5">
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h2 class="fw-black text-dark-eez m-0">İşlem Geçmişi</h2>
+            <p class="text-secondary m-0">Tüm finansal hareketlerinizi buradan takip edebilirsiniz.</p>
+        </div>
+        <a asp-controller="Transfer" asp-action="Index" class="btn btn-light border">
+            <i class="fas fa-arrow-left me-2"></i> Geri Dön
+        </a>
+    </div>
+
+    <div class="history-card shadow-sm p-4">
+        <table id="tblHistory" class="table table-hover w-100 align-middle">
+            <thead>
+                <tr>
+                    <th>Tarih</th>
+                    <th>Karşı Taraf</th>
+                    <th>Açıklama</th>
+                    <th>Tutar</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="~/js/jquerry-data-tables.js"></script>
+}
