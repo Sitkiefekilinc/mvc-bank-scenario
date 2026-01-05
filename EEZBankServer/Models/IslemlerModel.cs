@@ -35,7 +35,7 @@ namespace EEZBankServer.Models
 
     public enum IslemTuru
     {
-        Havale,
+        Havale = 0,
         EFT,
         Odeme,
         Yatirim

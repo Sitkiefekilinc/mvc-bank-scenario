@@ -46,7 +46,6 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        @* GİRİŞ YAPMIŞ KULLANICI PANELLERİ *@
                         <li class="eez-nav-item">
                             <a asp-controller="Account" asp-action="Profile" class="eez-user-btn">
                                 <i class="fas fa-user-circle"></i> @User.FindFirst("FullName")?.Value
@@ -58,7 +57,6 @@
                     }
                     else
                     {
-                        @* MİSAFİR KULLANICI PANELLERİ *@
                         <li class="eez-nav-item">
                             <a asp-controller="Account" asp-action="Register" class="eez-nav-link">Müşteri Ol</a>
                         </li>

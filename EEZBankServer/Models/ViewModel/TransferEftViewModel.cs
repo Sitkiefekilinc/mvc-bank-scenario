@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EEZBankServer.Models
+namespace EEZBankServer.Models.ViewModel
 {
     public class TransferEftViewModel
     {

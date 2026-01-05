@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using EEZBankServer.EfCore;
 using Microsoft.AspNetCore.Authorization;
+using EEZBankServer.Models.ViewModel;
 
 namespace EEZBankServer.Controllers
 {
@@ -41,7 +42,6 @@ namespace EEZBankServer.Controllers
         {
             var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            // Kullanıcının hesaplarını çekip ViewModel'e koyuyoruz
             var model = new TransferEftViewModel
             {
                 KullaniciHesaplari = await _context.Hesaplar
@@ -100,7 +100,7 @@ namespace EEZBankServer.Controllers
                     IslemMiktari = model.Tutar,
                     Aciklama = string.IsNullOrEmpty(model.Aciklama) ? $"{model.AliciAdSoyad} kişisine transfer" : model.Aciklama,
                     IslemTarihi = DateTime.Now,
-                    Tur = IslemTuru.Havale
+                    Tur = IslemTuru.EFT
                 };
 
                 await _context.Islemler.AddAsync(islemKaydi);

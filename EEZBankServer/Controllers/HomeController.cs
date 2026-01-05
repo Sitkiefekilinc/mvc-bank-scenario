@@ -1,11 +1,10 @@
 using System.Diagnostics;
-using System.Linq;
 using System.Security.Claims;
 using EEZBankServer.EfCore;
-using EEZBankServer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using EEZBankServer.Models.ViewModel;
+
 
 namespace EEZBankServer.Controllers
 {

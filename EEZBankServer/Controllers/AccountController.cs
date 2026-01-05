@@ -1,5 +1,6 @@
 ﻿using EEZBankServer.EfCore;
 using EEZBankServer.Models;
+using EEZBankServer.Models.ViewModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;

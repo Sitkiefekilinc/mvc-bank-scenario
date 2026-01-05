@@ -1,4 +1,5 @@
 ﻿using EEZBankServer.Models;
+using EEZBankServer.Models.ViewModel;
 
 namespace EEZBankServer.Services
 {

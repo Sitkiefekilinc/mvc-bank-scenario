@@ -1,8 +1,9 @@
-﻿@{
+﻿@using EEZBankServer.Models.ViewModel
+@{
     ViewData["Title"] = "Ana Sayfa";
 }
 
-@model EEZBankServer.Models.HesapOzetiViewModel
+@model HesapOzetiViewModel
 
 <link rel="stylesheet" href="~/css/Home/index.css" />
 
@@ -13,7 +14,6 @@
             <div class="col-12">
                 @if (!User.Identity.IsAuthenticated)
                 {
-                    /* --- DURUM 1: MİSAFİR KULLANICI --- */
                     <div class="hero-premium">
                         <div class="hero-premium-content">
                             <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill fw-bold">
@@ -168,14 +168,8 @@
                             <div class="icon-box bg-soft-purple"><i class="fas fa-mobile-alt"></i></div>
                             <h5>Dijital Bankacılık</h5>
                             <p>Fatura ödemeden yatırım işlemlerine kadar her şey cebinizde.</p>
-                            @if (!User.Identity.IsAuthenticated)
-                            {
-                                <a asp-controller="Account" asp-action="Register" class="stretched-link"></a>
-                            }
-                            else
-                            {
-                                <a asp-controller="Account" asp-action="Profile" class="stretched-link"></a>
-                            }
+                            <a asp-controller="Account" asp-action="Profile" class="stretched-link"></a>
+
                         </div>
                     </div>
 

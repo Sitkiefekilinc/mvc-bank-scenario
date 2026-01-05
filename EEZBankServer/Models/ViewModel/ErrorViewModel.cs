@@ -1,4 +1,4 @@
-namespace EEZBankServer.Models
+namespace EEZBankServer.Models.ViewModel
 {
     public class ErrorViewModel
     {
