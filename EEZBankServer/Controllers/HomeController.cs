@@ -22,51 +22,24 @@ namespace EEZBankServer.Controllers
         {
             if (User.Identity.IsAuthenticated )
             {
-                IslemYonu islemYonu = 0; 
+                var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-
-                var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-                var hesaplar = await _context.Hesaplar
-                    .Where(x=>x.UserId==userId).ToListAsync();
-
-                var islemler = new List<IslemlerViewModel>();
-
-                foreach (var item in hesaplar)
+                var model = new TransferIndexViewModel
                 {
-                         islemler = await _context.Islemler
-                        .Where(x => x.GonderenHesapId == item.HesapId)
-                        .Select(x => new IslemlerViewModel
-                        {
-                            Yon = IslemYonu.Giden,
-                            Tutar = x.IslemMiktari,
-                            KullaniciAdi = x.GonderenBankaHesabi.User.UserName,
-                            KarsiKullaniciAdi = x.AliciBankaHesabi.User.UserName,
-                            HesapAdi = x.GonderenBankaHesabi.AccountName,
-                            Islemtarihi = x.IslemTarihi
-                        }).ToListAsync();
-                    var gelenIslem = await _context.Islemler
-                        .Where(x => x.AliciHesapId == item.HesapId)
-                        .Select(x => new IslemlerViewModel
-                        {
-                            Yon = IslemYonu.Gelen,
-                            Tutar = x.IslemMiktari,
-                            KullaniciAdi = x.AliciBankaHesabi.User.UserName,
-                            KarsiKullaniciAdi = x.GonderenBankaHesabi.User.UserName,
-                            HesapAdi = x.AliciBankaHesabi.AccountName,
-                            Islemtarihi = x.IslemTarihi
-                        }).ToListAsync();
-                    islemler.AddRange(gelenIslem);
-                }
+                    Hesaplar = await _context.Hesaplar
+                        .Where(x => x.UserId == userId)
+                        .ToListAsync(),
 
-
-                var model = new HesapOzetiViewModel
-                {
-                    Hesaplar = hesaplar,
-                    Islemler = islemler.OrderByDescending(x => x.Islemtarihi).Take(10).ToList(),
-                    ToplamBakiye = hesaplar.Sum(x => x.Balance)
+                    SonIslemler = await _context.Islemler
+                    .Where(x => x.GonderenBankaHesabi.UserId == userId || x.AliciBankaHesabi != null && x.AliciBankaHesabi.UserId == userId)
+                    .OrderByDescending(x => x.IslemTarihi)
+                    .Take(5)
+                    .Include(x => x.AliciBankaHesabi)
+                    .ThenInclude(x => x.User)
+                    .Include(x => x.GonderenBankaHesabi)
+                    .ToListAsync(),
                 };
-                
+
                 return View(model);
             }
             else

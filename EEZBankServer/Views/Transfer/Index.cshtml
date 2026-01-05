@@ -72,7 +72,7 @@
                             <thead class="bg-light text-muted small text-uppercase">
                                 <tr>
                                     <th class="py-3 ps-4">İşlem Türü</th>
-                                    <th class="py-3">Açıklama / Alıcı</th>
+                                    <th class="py-3">Gönderen / Alıcı</th>
                                     <th class="py-3">Tarih</th>
                                     <th class="py-3 text-end pe-4">Tutar</th>
                                 </tr>
@@ -82,11 +82,38 @@
                                 {
                                     @foreach (var islem in Model.SonIslemler)
                                     {
+                                        Model.GonderenMi = Model.Hesaplar.Any(x => x.HesapId == islem.GonderenHesapId);
+
+                                        var textClass = Model.GonderenMi ? "text-danger" : "text - success";
+                                        var isaret = Model.GonderenMi ? "-" : "+";
+
+                                        Model.KarsiTarafAdi = "Bilinmiyor";
+
+                                        if (Model.GonderenMi)
+                                        {
+                                            Model.KarsiTarafAdi = islem.AliciBankaHesabi?.User?.FullName ?? islem.Aciklama ?? "Ödeme";
+                                        }
+                                        else
+                                        {
+                                            Model.KarsiTarafAdi = islem.GonderenBankaHesabi?.User?.FullName?? "Bilinmeyen Gönderici";
+                                        }
+
                                         <tr>
                                             <td class="ps-4">
                                                 @if (islem.Tur == EEZBankServer.Models.IslemTuru.EFT || islem.Tur == EEZBankServer.Models.IslemTuru.Havale)
                                                 {
-                                                    <span class="status-badge badge-eft"><i class="fas fa-exchange-alt me-1"></i> Transfer</span>
+                                                    if (Model.GonderenMi)
+                                                    {
+                                                        <span class="status-badge badge-eft text-danger bg-danger bg-opacity-10">
+                                                            <i class="fas fa-arrow-up me-1"></i> Giden
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="status-badge badge-eft text-success bg-success bg-opacity-10">
+                                                            <i class="fas fa-arrow-down me-1"></i> Gelen
+                                                        </span>
+                                                    }
                                                 }
                                                 else
                                                 {
@@ -96,17 +123,19 @@
                                             <td>
                                                 <div class="d-flex flex-column">
                                                     <span class="fw-bold text-dark">
-                                                        @(islem.AliciBankaHesabi?.AccountName ?? islem.Aciklama ?? "Bilinmeyen İşlem")
+                                                        @Model.KarsiTarafAdi
                                                     </span>
-                                                    <span class="small text-muted">@islem.Aciklama</span>
+                                                    <span class="small text-muted">
+                                                        @islem.Aciklama
+                                                    </span>
                                                 </div>
                                             </td>
                                             <td class="text-muted small">
                                                 @islem.IslemTarihi.ToString("dd.MM.yyyy HH:mm")
                                             </td>
                                             <td class="text-end pe-4">
-                                                <span class="fw-bold text-danger">
-                                                    - @islem.IslemMiktari.ToString("N2") ₺
+                                                <span class="fw-bold @textClass">
+                                                    @isaret @islem.IslemMiktari.ToString("N2") ₺
                                                 </span>
                                             </td>
                                         </tr>

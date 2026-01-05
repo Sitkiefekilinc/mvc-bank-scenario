@@ -24,15 +24,18 @@ namespace EEZBankServer.Controllers
 
             var model = new TransferIndexViewModel
             {
-                Hesaplar = await _context.Hesaplar.Where(x => x.UserId == userId).ToListAsync(),
+                Hesaplar = await _context.Hesaplar
+                    .Where(x => x.UserId == userId)
+                    .ToListAsync(),
 
                 SonIslemler = await _context.Islemler
-                    .Where(x => x.GonderenBankaHesabi.UserId == userId &&
-                               (x.Tur == IslemTuru.EFT || x.Tur == IslemTuru.Odeme))
-                    .OrderByDescending(x => x.IslemTarihi)
-                    .Take(5)
-                    .Include(x => x.AliciBankaHesabi) 
-                    .ToListAsync()
+                .Where(x => x.GonderenBankaHesabi.UserId == userId || x.AliciBankaHesabi != null && x.AliciBankaHesabi.UserId == userId)
+                .OrderByDescending(x => x.IslemTarihi)
+                .Take(5)
+                .Include(x => x.AliciBankaHesabi)
+                .ThenInclude(x=> x.User)
+                .Include(x => x.GonderenBankaHesabi)
+                .ToListAsync(),
             };
 
             return View(model);

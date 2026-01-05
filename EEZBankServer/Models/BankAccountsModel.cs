@@ -14,7 +14,7 @@ namespace EEZBankServer.Models
 
         public string AccountNumbers { get; set; }
 
-        [ForeignKey("Users")]
+        [ForeignKey("UserId")]
         public Guid UserId { get; set; }
         public UserAccountInfos User { get; set; }
 
@@ -23,7 +23,6 @@ namespace EEZBankServer.Models
         [StringLength(26, MinimumLength = 26, ErrorMessage = "IBAN numarası tam 26 karakter olmalıdır.")]
         [Column(TypeName = "char(26)")]
         public string Iban { get; set; }
-
         [Display(Name = "Bakiye")]
         [Required]
         [Column(TypeName = "decimal(18, 2)")]

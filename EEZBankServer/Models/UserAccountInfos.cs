@@ -16,6 +16,10 @@ namespace EEZBankServer.Models
         [Required(ErrorMessage = "Bu alan boş bırakılamaz")]
         [StringLength(30, MinimumLength = 2, ErrorMessage = "Karakter sayısı 2 ile 30 arasında olmalı")]
         public string UserSurname { get; set; }
+
+        [NotMapped]
+        public string FullName => $"{UserName} {UserSurname}";
+
         [Display(Name = "E-Posta Adresi: ")]
         [Required(ErrorMessage = "Bu alan boş bırakılamaz")]
         [EmailAddress]
