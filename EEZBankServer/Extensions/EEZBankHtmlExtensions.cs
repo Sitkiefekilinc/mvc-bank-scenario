@@ -9,15 +9,18 @@ namespace EEZBankServer.Extensions
         public static IHtmlContent EezInputGroup(this IHtmlHelper htmlHelper, string name, string label, string placeholder, string inputType = "text")
         {
             var divBuilder = new TagBuilder("div");
-            divBuilder.MergeAttribute("style", "margin-bottom:20px;");
+            divBuilder.AddCssClass("input-group");
 
             var labelBuilder = new TagBuilder("label");
+            labelBuilder.Attributes.Add("for", name); 
             labelBuilder.InnerHtml.Append(label);
 
             var inputBuilder = new TagBuilder("input");
             inputBuilder.Attributes.Add("type", inputType);
             inputBuilder.Attributes.Add("name", name);
-            inputBuilder.AddCssClass("form-control");
+            inputBuilder.Attributes.Add("id", name); 
+
+
             inputBuilder.Attributes.Add("placeholder", placeholder);
             inputBuilder.Attributes.Add("required", "required");
 
